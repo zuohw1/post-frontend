@@ -6,26 +6,6 @@ export default {
     collapsed: false,
     menus: [
       {
-        id: 1,
-        menuName: '组织管理',
-        pid: 0,
-        iconUrl: 'sync',
-      },
-      {
-        id: 101,
-        menuName: '组织信息查询',
-        url: '/org/search',
-        pid: 1,
-        iconUrl: 'sync',
-      },
-      {
-        id: 102,
-        menuName: '组织批文前置流程',
-        url: '/org/approval',
-        pid: 1,
-        iconUrl: 'sync',
-      },
-      {
         id: 2,
         menuName: '职位管理',
         pid: 0,
@@ -51,13 +31,6 @@ export default {
         url: '/post/keyresprank',
         pid: 2,
         iconUrl: 'user',
-      },
-      {
-        id: 3,
-        menuName: '人员管理',
-        url: null,
-        pid: 0,
-        iconUrl: 'tag-o',
       },
     ],
   },
