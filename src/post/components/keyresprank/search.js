@@ -3,8 +3,7 @@ import {
   Form, Row, Col, Input, Button, Icon, Select, DatePicker,
 } from 'antd';
 import SyncTreeSelect from '../../../components/SyncTreeSelect';
-import Checkbox from "../../../../node_modules/antd/es/checkbox/Checkbox";
-import CheckboxGroup from "../../../../node_modules/antd/es/checkbox/Group";
+import CheckboxGroup from '../../../../node_modules/antd/es/checkbox/Group';
 
 
 const FormItem = Form.Item;
@@ -95,13 +94,12 @@ export default (props) => {
           <Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>
             <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
               {getFieldDecorator(queryCols[i].itemKey)(
-                <CheckboxGroup options={queryCols[i].list}  onChange={handleonchangeckbx} />,
+                <CheckboxGroup options={queryCols[i].list} onChange={handleonchangeckbx} />,
               )}
             </FormItem>
           </Col>,
         );
-
-      }else if (queryCols[i].itemType === 'OrgSelect') {
+      } else if (queryCols[i].itemType === 'OrgSelect') {
         children.push(
           <Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>
             <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
