@@ -5,7 +5,6 @@ import {
 import SyncTreeSelect from '../../../components/SyncTreeSelect';
 import CheckboxGroup from '../../../../node_modules/antd/es/checkbox/Group';
 
-
 const FormItem = Form.Item;
 const { Option } = Select;
 
@@ -14,7 +13,6 @@ export default (props) => {
     form,
     actions,
     expand,
-    queryCols,
   } = props;
   const { getFieldDecorator } = form;
   const { listTable, setToggle } = actions;
@@ -55,8 +53,18 @@ export default (props) => {
 
   };
 
+  const queryCols = [{
+    itemName: '职责范围', itemKey: 'sequenceName', itemType: 'OrgSelect', required: true,
+  },
+  {
+    itemName: '关键职责', itemKey: 'respName', itemType: 'String', required: false,
+  },
+  {
+    itemName: '组织层级', itemKey: 'cRespName', itemType: 'Checkbox', required: false, list: [{ label: '集团', value: 'J' }, { label: '省', value: 'S' }, { label: '市', value: 'D' }, { label: '区/县', value: 'X' }],
+  },
+  ];
+
   function getFields() {
-    console.log(queryCols);
     const count = expand ? queryCols.length : 4;
     const children = [];
     for (let i = 0; i < queryCols.length; i += 1) {
@@ -126,6 +134,15 @@ export default (props) => {
         );
       }
     }
+    children.push(
+      <Col span={6} style={{ textAlign: 'right' }}>
+        <Button htmlType="submit">查询</Button>
+        <Button style={{ marginLeft: 8 }} onClick={handleReset}>
+          导出
+        </Button>
+        {collapse}
+      </Col>,
+    );
     return children;
   }
 
@@ -144,14 +161,5 @@ export default (props) => {
       onSubmit={handleSearch}
     >
       <Row gutter={24}>{getFields()}</Row>
-      <Row>
-        <Col span={24} style={{ textAlign: 'right' }}>
-          <Button htmlType="submit">查询</Button>
-          <Button style={{ marginLeft: 8 }} onClick={handleReset}>
-            导出
-          </Button>
-          {collapse}
-        </Col>
-      </Row>
     </Form>);
 };
