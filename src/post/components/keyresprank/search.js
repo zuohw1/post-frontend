@@ -63,7 +63,7 @@ export default (props) => {
       if (queryCols[i].itemType === 'String') {
         children.push(
           <Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>
-            <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
+            <FormItem label={queryCols[i].itemName}>
               {getFieldDecorator(queryCols[i].itemKey, {
                 rules: [{
                   required: queryCols[i].required,
@@ -78,7 +78,7 @@ export default (props) => {
       } else if (queryCols[i].itemType === 'Select') {
         children.push(
           <Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>
-            <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
+            <FormItem label={queryCols[i].itemName}>
               {getFieldDecorator(queryCols[i].itemKey)(
                 <Select style={{ width: 220, marginLeft: 5, marginRight: 20 }} placeholder="请选择" allowClear>
                   {
@@ -92,7 +92,7 @@ export default (props) => {
       } else if (queryCols[i].itemType === 'Checkbox') {
         children.push(
           <Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>
-            <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
+            <FormItem label={queryCols[i].itemName}>
               {getFieldDecorator(queryCols[i].itemKey)(
                 <CheckboxGroup options={queryCols[i].list} onChange={handleonchangeckbx} />,
               )}
@@ -102,7 +102,7 @@ export default (props) => {
       } else if (queryCols[i].itemType === 'OrgSelect') {
         children.push(
           <Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>
-            <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
+            <FormItem label={queryCols[i].itemName}>
               {getFieldDecorator(queryCols[i].itemKey)(
                 <SyncTreeSelect treeId={37838} treeSelectChange={treeSelectChange} refUrl={refUrl} checkbox />,
               )}
@@ -112,7 +112,7 @@ export default (props) => {
       } else if (queryCols[i].itemType === 'Date') {
         children.push(
           <Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>
-            <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
+            <FormItem label={queryCols[i].itemName}>
               {getFieldDecorator(queryCols[i].itemKey, {
                 rules: [{
                   required: queryCols[i].required,

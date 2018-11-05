@@ -12,12 +12,12 @@ const { TreeNode } = Tree;
 const KeyResp = () => {
   return (
     <React.Fragment>
-      <Breadcrumb style={{ margin: '16px 0' }}>
+      <Breadcrumb style={{ margin: '10px 0' }}>
         <Breadcrumb.Item>职位管理</Breadcrumb.Item>
-        <Breadcrumb.Item>关键职责库维护</Breadcrumb.Item>
+        <Breadcrumb.Item><strong>关键职责库维护</strong></Breadcrumb.Item>
       </Breadcrumb>
       <Content style={{
-        background: '#fff', padding: 24, margin: 0, minHeight: 280,
+        background: '#fff', padding: '15px', margin: 0, minHeight: 280,
       }}
       >
         <Row gutter={50}>

@@ -216,6 +216,7 @@ class EditableTable extends React.Component {
           bordered
           dataSource={dataSource}
           columns={columns}
+          size="small"
         />
       </div>
     );

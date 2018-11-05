@@ -50,6 +50,8 @@ export default ({
         showTotal={tota => `共 ${tota} 条`}
         showSizeChanger
         style={{ marginTop: 10, float: 'right' }}
+        size="small"
+        scroll={{ y: document.body.scrollHeight - 460 }}
       />
     </div>
   );
