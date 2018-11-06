@@ -31,6 +31,12 @@ export default {
         url: '/post/keyresprank',
         pid: 2,
         iconUrl: 'user',
+      },{
+        id: 204,
+        menuName: '集团基准岗位列表',
+        url: '/post/groupposstandardlist',
+        pid: 2,
+        iconUrl: 'user',
       },
     ],
   },

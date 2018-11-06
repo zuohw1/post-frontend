@@ -10,7 +10,7 @@ import Manpower from './Manpower';
 import KeyRespQuery from '../../post/containers/keyrespquery';
 import KeyResp from '../../post/containers/keyresp';
 import KeyRespRank from '../../post/containers/keyresprank';
-
+import GroupPosStandardList from '../../post/containers/groupposstandardlist';
 
 const { SubMenu } = Menu;
 
@@ -83,6 +83,7 @@ const MainLayout = (state) => {
             <Route exact path="/post/keyrespquery" component={KeyRespQuery} />
             <Route exact path="/post/keyresp" component={KeyResp} />
             <Route exact path="/post/keyresprank" component={KeyRespRank} />
+            <Route exact path="/post/groupposstandardlist" component={GroupPosStandardList} />
           </Switch>
         </Layout>
       </Layout>
