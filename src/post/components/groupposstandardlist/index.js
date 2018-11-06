@@ -9,7 +9,7 @@ const { Content } = Layout;
 const GroupPosStandardList = (state) => {
   return (
     <React.Fragment>
-      <Breadcrumb style={{ margin: '16px 0' }}>
+      <Breadcrumb style={{ margin: '10px 0' }}>
         <Breadcrumb.Item>
           职位管理
         </Breadcrumb.Item>

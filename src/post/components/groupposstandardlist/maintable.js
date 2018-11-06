@@ -28,6 +28,7 @@ export default ({
 
   const { current, size, total } = tableData;
 
+  /* 列表字段 */
   const tableCols = [{
     title: '序号',
     dataIndex: 'key',
@@ -80,7 +81,7 @@ export default ({
 
   return (
     <div>
-      <Table columns={getFields()} loading={loading} dataSource={data} pagination={false} size="small" scroll={{ y: document.body.scrollHeight - 460 }}/>
+      <Table columns={getFields()} loading={loading} dataSource={data} pagination={false} size="small" scroll={{ y: document.body.scrollHeight - 460 }} />
       <Pagination
         showQuickJumper
         current={current}

@@ -119,7 +119,8 @@ export default (props) => {
                   treeId={37838}
                   treeSelectChange={treeSelectChange}
                   refUrl={refUrl}
-                  checkbox />,
+                  checkbox
+                />,
               )}
             </FormItem>
           </Col>,

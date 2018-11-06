@@ -35,9 +35,8 @@ export default (props) => {
   };
 
   const handleExportGroupPos = () => {
-    alert("导出，待处理");
+    alert('导出，待处理');
     form.resetFields();
-
   };
 
   const handleMoreQry = () => {
@@ -45,7 +44,7 @@ export default (props) => {
     // setToggle(!expand);
   };
   const toggle = () => {
-    alert("enxpand；"+expand);
+    alert(`enxpand；${expand}`);
     setToggle(!expand);
   };
 
@@ -65,24 +64,25 @@ export default (props) => {
 
   };
 
+  /* 查询字段 */
   const queryCols = [{
     itemName: '岗位序列', itemKey: 'test_def1', itemType: 'Select', required: false, list: [{ id: '0', title: '测试序列' }, { id: '1', title: '管理序列' }, { id: '2', title: '技术序列' }, { id: '3', title: '支撑序列' }],
   },
-    {
-      itemName: '子序列', itemKey: 'ATTRIBUTE8', itemType: 'Select', required: false, list: [{ id: '0', title: '党群、纪检、工会' }, { id: '1', title: '管理' }, { id: '2', title: '国际业务销售' }, { id: '3', title: '采购管理' }, { id: '4', title: '集团客户销售' }, { id: '5', title: '综合行政与后勤' }],
-    },
-    {
-      itemName: '关键词', itemKey: 'test_def3', itemType: 'String', disabled: true, //TODO 不可用
-    },
-    {
-      itemName: '组织层级', itemKey: 'cRespName', itemType: 'Checkbox', required: false, list: [{ label: '集团', value: 'J' }, { label: '省', value: 'S' }, { label: '市', value: 'D' }, { label: '区/县', value: 'X' }],
-    },
-    {
-      itemName: '是否核心', itemKey: 'def4', itemType: 'Select', required: false, list: [{ id: '0', title: '是' }, { id: '1', title: '否' }],
-    },
-    {
-      itemName: '学历要求', itemKey: 'def5', itemType: 'Select', required: false, list: [{ id: '0', title: '博士' }, { id: '1', title: '硕士' }, { id: '2', title: '本科' }, { id: '3', title: '大专' }],
-    }];
+  {
+    itemName: '子序列', itemKey: 'ATTRIBUTE8', itemType: 'Select', required: false, list: [{ id: '0', title: '党群、纪检、工会' }, { id: '1', title: '管理' }, { id: '2', title: '国际业务销售' }, { id: '3', title: '采购管理' }, { id: '4', title: '集团客户销售' }, { id: '5', title: '综合行政与后勤' }],
+  },
+  {
+    itemName: '关键词', itemKey: 'test_def3', itemType: 'String', disabled: true, // TODO 不可用
+  },
+  {
+    itemName: '组织层级', itemKey: 'cRespName', itemType: 'Checkbox', required: false, list: [{ label: '集团', value: 'J' }, { label: '省', value: 'S' }, { label: '市', value: 'D' }, { label: '区/县', value: 'X' }],
+  },
+  {
+    itemName: '是否核心', itemKey: 'def4', itemType: 'Select', required: false, list: [{ id: '0', title: '是' }, { id: '1', title: '否' }],
+  },
+  {
+    itemName: '学历要求', itemKey: 'def5', itemType: 'Select', required: false, list: [{ id: '0', title: '博士' }, { id: '1', title: '硕士' }, { id: '2', title: '本科' }, { id: '3', title: '大专' }],
+  }];
 
 
   function getFields(isOneLine) {
@@ -92,10 +92,10 @@ export default (props) => {
     let beginI = 0;
     let endI = queryCols.length;
 
-    if(isOneLine===undefined){
-      endI = 3 ;
-    }else if(isOneLine===2){
-      beginI = 3 ;
+    if (isOneLine === undefined) {
+      endI = 3;
+    } else if (isOneLine === 2) {
+      beginI = 3;
     }
     // for (let i = 0; i < queryCols.length; i += 1) {
     for (let i = beginI; i < endI; i += 1) {
@@ -144,14 +144,19 @@ export default (props) => {
           <Col span={6} key={i} style={{ display: 'block' }}>
             <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
               {getFieldDecorator(queryCols[i].itemKey)(
-                <SyncTreeSelect treeId={37838} treeSelectChange={treeSelectChange} refUrl={refUrl} checkbox />,
+                <SyncTreeSelect
+                  treeId={37838}
+                  treeSelectChange={treeSelectChange}
+                  refUrl={refUrl}
+                  checkbox
+                />,
               )}
             </FormItem>
           </Col>,
         );
       } else if (queryCols[i].itemType === 'Date') {
         children.push(
-          <Col span={6} key={i} style={{ display:  'block' }}>
+          <Col span={6} key={i} style={{ display: 'block' }}>
             <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
               {getFieldDecorator(queryCols[i].itemKey, {
                 rules: [{

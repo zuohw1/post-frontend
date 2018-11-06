@@ -28,6 +28,7 @@ export default ({
 
   const { current, size, total } = tableData;
 
+  /* 列表字段 */
   const tableCols = [{
     title: '序号',
     dataIndex: 'key',
