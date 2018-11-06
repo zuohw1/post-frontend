@@ -11,12 +11,11 @@ import KeyRespQuery from '../../post/containers/keyrespquery';
 import KeyResp from '../../post/containers/keyresp';
 import KeyRespRank from '../../post/containers/keyresprank';
 import GroupPosStandardList from '../../post/containers/groupposstandardlist';
+import ProvincePosStandard from '../../post/containers/provinceposstandard';
 
 const { SubMenu } = Menu;
 
 const MainLayout = (state) => {
-  //console.log(state);
-  //console.log(state.menus);
   return (
     <div className={app.App}>
       <div className={app.AppHeader}>
@@ -84,6 +83,7 @@ const MainLayout = (state) => {
             <Route exact path="/post/keyresp" component={KeyResp} />
             <Route exact path="/post/keyresprank" component={KeyRespRank} />
             <Route exact path="/post/groupposstandardlist" component={GroupPosStandardList} />
+            <Route exact path="/post/provinceposstandard" component={ProvincePosStandard} />
           </Switch>
         </Layout>
       </Layout>
