@@ -2,6 +2,7 @@
 export default {
   namespace: 'keyRespQuery',
   state: {
+    /* 列表数据 */
     tableData: {
       total: 0,
       size: 0,
@@ -9,16 +10,10 @@ export default {
       records: [],
       pages: 0,
     },
+    /* 查询是否展开 */
     expand: false,
+    /* 查询条件数据 */
     search: {
-      batchCode: '',
-      workFlowStatus: '',
-      batchVerifier: '',
-      fullName: '',
-      batDateS: '',
-      batDateE: '',
-      pageSize: 10,
-      pageNumber: 1,
     },
   },
   reducers: {
