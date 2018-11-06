@@ -4,6 +4,10 @@ import {
   Pagination,
 } from 'antd';
 
+/* table size统一设置为small 固定表头，
+   scroll={{ y: document.body.scrollHeight - 460 }}
+   460为其他控件宽度之和
+*/
 export default ({
   tableData,
   actions,
