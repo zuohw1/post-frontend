@@ -199,7 +199,7 @@ export default (props) => {
           <Button style={{ marginLeft: 8 }} onClick={handleReset}>
             重置
           </Button>
-          <Button style={{ marginLeft: 8 }} icon="download" onClick={handleExportGroupPos}>
+          <Button style={{ marginLeft: 8 }} onClick={handleExportGroupPos}>
             导出集团岗位
           </Button>
 
