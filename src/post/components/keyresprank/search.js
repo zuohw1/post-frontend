@@ -41,8 +41,10 @@ export default (props) => {
     return (<Option value={item.id} key={item.id}> {item.title} </Option>);
   };
 
+  /* 组织下拉查询地址 */
   const refUrl = 'org/allData?id=';
 
+  /* 组织下拉选中后事件 */
   const treeSelectChange = (value, label, extra) => {
     form.setFieldsValue({
       orgid: `${extra.triggerNode.props.id}`,
@@ -53,6 +55,7 @@ export default (props) => {
 
   };
 
+  /* 查询条件 */
   const queryCols = [{
     itemName: '职责范围', itemKey: 'sequenceName', itemType: 'OrgSelect', required: true,
   },
@@ -112,7 +115,11 @@ export default (props) => {
           <Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>
             <FormItem label={queryCols[i].itemName}>
               {getFieldDecorator(queryCols[i].itemKey)(
-                <SyncTreeSelect treeId={37838} treeSelectChange={treeSelectChange} refUrl={refUrl} checkbox />,
+                <SyncTreeSelect
+                  treeId={37838}
+                  treeSelectChange={treeSelectChange}
+                  refUrl={refUrl}
+                  checkbox />,
               )}
             </FormItem>
           </Col>,
