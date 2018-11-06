@@ -77,13 +77,11 @@ export default ({
     dataIndex: 'def5',
     key: 'def5',
     align: 'center',
-    render: (text, record) => (
+    render: () => (
       <span>
         <a href="javascript:;" onClick={handleShowPosDuty}>查看职责</a>
         <Divider type="vertical" />
         <a href="javascript:;" onClick={handleDIYpos}>定制</a>
-        <Divider type="vertical" />
-        {record.def5.map(df => <a href="javascript:;" onClick={handleShowPosDuty(df)} key={df}>{df}</a>)}
       </span>
     ),
   }];
