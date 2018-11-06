@@ -82,7 +82,7 @@ export default {
             ATTRIBUTE10: '2013-01-01',
             def5: ['查看职责', '定制'],
           }],
-        },{
+        }, {
           key: '3',
           DOC_CODE: '（集团）实体渠道管理岗',
           ATTRIBUTE8: '市场序列.渠道管理',
