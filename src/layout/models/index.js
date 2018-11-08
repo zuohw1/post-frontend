@@ -32,7 +32,8 @@ export default {
         url: '/post/keyresprank',
         pid: 2,
         iconUrl: 'user',
-      },{
+      },
+      {
         id: 204,
         menuName: '集团基准岗位列表',
         url: '/post/groupposstandardlist',
@@ -48,6 +49,13 @@ export default {
       {
         menuName: '本地网基础岗位查询',
         url: '/post/localjobs',
+        pid: 2,
+        iconUrl: 'user',
+      },
+      {
+        id: 206,
+        menuName: '省基准岗位查询',
+        url: '/post/provpostquery',
         pid: 2,
         iconUrl: 'user',
       },
