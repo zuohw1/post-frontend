@@ -45,6 +45,12 @@ export default {
         pid: 2,
         iconUrl: 'user',
       },
+      {
+        menuName: '本地网基础岗位查询',
+        url: '/post/localjobs',
+        pid: 2,
+        iconUrl: 'user',
+      },
     ],
   },
   reducers: {

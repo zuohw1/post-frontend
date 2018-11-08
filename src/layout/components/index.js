@@ -12,6 +12,7 @@ import KeyResp from '../../post/containers/keyresp';
 import KeyRespRank from '../../post/containers/keyresprank';
 import GroupPosStandardList from '../../post/containers/groupposstandardlist';
 import ProvincePosStandard from '../../post/containers/provinceposstandard';
+import LocalJobs from '../../post/containers/localjobs';
 
 const { SubMenu } = Menu;
 
@@ -83,6 +84,7 @@ const MainLayout = (state) => {
             <Route exact path="/post/keyresp" component={KeyResp} />
             <Route exact path="/post/keyresprank" component={KeyRespRank} />
             <Route exact path="/post/groupposstandardlist" component={GroupPosStandardList} />
+            <Route exact path="/post/localjobs" component={LocalJobs} />
             <Route exact path="/post/provinceposstandard" component={ProvincePosStandard} />
           </Switch>
         </Layout>
