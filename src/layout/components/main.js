@@ -58,7 +58,7 @@ class Main extends Component {
                   <div className="part1LeftBottom">
                     <Card
                       title="快速开始"
-                      extra={<a href="jacascript::void(0)">设置</a>}
+                      extra={<a href="#">设置</a>}
                     >
                       <div className="part1LeftBottompart"><p>考群设置</p><p>项目考核</p></div>
                       <div className="part1LeftBottompart"><p>绩效手册设置</p><p>排版管理</p></div>
@@ -75,7 +75,7 @@ class Main extends Component {
                     <div className="part1RightLBottom">
                       <Card
                         title="编辑"
-                        extra={<a href="jacascript::void(0)">更多>></a>}
+                        extra={<a href="#">更多</a>}
                       >
                         <p>09:30&nbsp;&nbsp;1058房间新人......</p>
                         <p>13:30&nbsp;&nbsp;考核计划执行</p>
