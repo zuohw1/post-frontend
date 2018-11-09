@@ -2,7 +2,7 @@ import { connect } from 'dva';
 import { bindActionCreators } from 'redux';
 import { Form } from 'antd';
 import Index from '../components/keyrespquery/index';
-import * as actions from '../actions/keyrespquery';
+import * as actions from '../actions/key-resp-query';
 
 /* 建立组件跟 store 的 state 的映射关系 */
 const mapStateToProps = state => ({

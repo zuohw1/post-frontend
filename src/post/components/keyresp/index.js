@@ -4,7 +4,7 @@ import {
 } from 'antd';
 import '../../../assets/styles/module.less';
 import '../asset/styles/index.less';
-import EditableTable from './EditableTable';
+import EditableTable from './editable-table';
 
 const { Content } = Layout;
 const { TreeNode } = Tree;
