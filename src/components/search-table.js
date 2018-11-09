@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Input, Pagination } from 'antd';
+import { Input, Pagination, Table } from 'antd';
 import request from '../utils/request';
 
 /**
@@ -26,7 +26,7 @@ class SearchTable extends React.PureComponent {
       pageSize: 10,
     },
     refData: [],
-  }
+  };
 
   async componentDidMount() {
     const { refUrl } = this.props;
@@ -43,11 +43,9 @@ class SearchTable extends React.PureComponent {
   formatTableData = (tableData) => {
     const num = tableData.current * 10 - 10;
     const table = tableData.records.map((item, index) => {
-      const ite = { ...item, key: index + 1 + num };
-      return ite;
+      return { ...item, key: index + 1 + num };
     });
-    const formatTable = { ...tableData, records: table };
-    return formatTable;
+    return { ...tableData, records: table };
   };
 
   onSearch = (value) => {
@@ -55,7 +53,7 @@ class SearchTable extends React.PureComponent {
     const { search } = this.state;
     const searchF = { ...search, name: value };
     this.refreshData(refUrl, searchF);
-  }
+  };
 
   onChangePage = (pageNumber, pageSize) => {
     const { refUrl } = this.props;
@@ -82,7 +80,7 @@ class SearchTable extends React.PureComponent {
       this.setState({ refData: formatTable });
       resolve();
     });
-  }
+  };
 
   render() {
     const { columns, rowSelection } = this.props;
