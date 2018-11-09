@@ -18,8 +18,6 @@ import ProvinceQuery from '../../post/containers/provpostquery';
 const { SubMenu } = Menu;
 
 const MainLayout = (state) => {
-  //console.log(state);
-  //console.log(state.menus);
   return (
     <div className={app.App}>
       <div className={app.AppHeader}>
