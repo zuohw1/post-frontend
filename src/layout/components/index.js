@@ -12,7 +12,7 @@ import KeyResp from '../../post/containers/key-resp';
 import KeyRespRank from '../../post/containers/key-resp-rank';
 import GroupPosStandardList from '../../post/containers/group-post-standard-list';
 import ProvincePosStandard from '../../post/containers/province-post-standard';
-import LocalJobs from '../../post/containers/localjobs';
+import LocalJobs from '../../post/containers/local-jobs';
 import ProvinceQuery from '../../post/containers/provpostquery';
 
 const { SubMenu } = Menu;

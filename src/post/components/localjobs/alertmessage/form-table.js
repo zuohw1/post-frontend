@@ -1,47 +1,18 @@
 import React, { Component } from 'react';
-import { Form, Col, Row, Input, Select, DatePicker,Divider, Icon,Checkbox,Modal } from 'antd';
-import MainTable from './maintable';
+import {
+  Form, Col, Row, Input, Select, DatePicker, Table,
+} from 'antd';
 import SyncTreeSelect from '../../../../components/sync-tree-select';
 import CheckboxGroup from '../../../../../node_modules/antd/es/checkbox/Group';
 
 const FormItem = Form.Item;
 const { Option } = Select;
-
 class Search extends Component {
-  constructor(...props) {
-    super(...props);
-  }
-
-  state = { visible: false };
-
-  showModal = () => {
-    this.setState({
-      visible: true,
-    });
-  }
-
-  handleOk = (e) => {
-    console.log(e);
-    this.setState({
-      visible: false,
-    });
-  }
-
-  handleCancel = (e) => {
-    console.log(e);
-    this.setState({
-      visible: false,
-    });
-  }
-
+  props;
 
   render() {
-    const { form,expand, } = this.props;
-    const { getFieldDecorator,getFieldError, isFieldTouched } = form;
-    const userNameError = isFieldTouched('userName') && getFieldError('userName');
-    const passwordError = isFieldTouched('password') && getFieldError('password');
-
-
+    const { form } = this.props;
+    const { getFieldDecorator } = form;
     const apply = (item) => {
       return (<Option value={item.id} key={item.id}> {item.title} </Option>);
     };
@@ -61,10 +32,10 @@ class Search extends Component {
     /* 查询字段 */
     const queryCols = [
       {
-        itemName: '岗位名称', itemKey: 'test_def3', itemType: 'String', disabled: true, // TODO 不可用
+        itemName: '岗位名称', itemKey: 'test_def3', itemType: 'String', disabled: true,
       },
       {
-        itemName: '所属子序列', itemKey: 'test_def3', itemType: 'String', disabled: true, // TODO 不可用
+        itemName: '所属子序列', itemKey: 'test_def3', itemType: 'String', disabled: true,
       },
       {
         itemName: '是否核心', itemKey: 'def4', itemType: 'Select', required: false, list: [{ id: '0', title: '是' }, { id: '1', title: '否' }],
@@ -76,16 +47,14 @@ class Search extends Component {
         itemName: '组织层级', itemKey: 'cRespName', itemType: 'Checkbox', required: false, list: [{ label: '省', value: 'S' }, { label: '市', value: 'D' }, { label: '区/县', value: 'X' }],
       },
       {
-        itemName: '开始日期', itemKey: 'test_def3', itemType: 'Date', disabled: true, // TODO 不可用
+        itemName: '开始日期', itemKey: 'test_def3', itemType: 'Date', disabled: true,
       },
       {
-        itemName: '结束日期', itemKey: 'test_def4', itemType: 'Date', disabled: true, // TODO 不可用
+        itemName: '结束日期', itemKey: 'test_def4', itemType: 'Date', disabled: true,
       },
     ];
 
-
     function getFields(isOneLine) {
-      const count = expand ? queryCols.length : 3;
       const children = [];
       let beginI = 0;
       let endI = queryCols.length;
@@ -95,12 +64,10 @@ class Search extends Component {
       } else if (isOneLine === 2) {
         beginI = 3;
       }
-      // for (let i = 0; i < queryCols.length; i += 1) {
       for (let i = beginI; i < endI; i += 1) {
         if (queryCols[i].itemType === 'String') {
           children.push(
-            /*  {<Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>}  */
-            <Col span={8} key={i} style={{ display: 'block' }} >
+            <Col span={8} key={i} style={{ display: 'block' }}>
               <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
                 {getFieldDecorator(queryCols[i].itemKey, {
                   rules: [{
@@ -108,7 +75,7 @@ class Search extends Component {
                     message: '不能为空!',
                   }],
                 })(
-                  <Input placeholder="请输入" style={{width:220,marginLeft:5}}/>,
+                  <Input placeholder="请输入" style={{ width: 220, marginLeft: 5 }} />,
                 )}
               </FormItem>
             </Col>,
@@ -162,7 +129,7 @@ class Search extends Component {
                     message: '不能为空!',
                   }],
                 })(
-                  <DatePicker style={{width:220,marginLeft:5}}/>,
+                  <DatePicker style={{ width: 220, marginLeft: 5 }} />,
                 )}
               </FormItem>
             </Col>,
@@ -172,30 +139,48 @@ class Search extends Component {
       return children;
     }
 
+    const columns = [{
+      title: '主要岗位职责',
+      dataIndex: 'name',
+      key: 'name',
+      align: 'center',
+      width: 100,
+    }, {
+      title: '',
+      dataIndex: 'age',
+      key: 'age',
+    }];
+    /* 列表信息 */
+    const data = [{
+      name: '1',
+      age: '系统建设.架构设计.技术评审的组织',
+    }, {
+      name: '1',
+      age: '系统建设.架构设计.技术评审的组织',
+    }, {
+      name: '1',
+      age: '系统建设.架构设计.技术评审的组织',
+    }, {
+      name: '1',
+      age: '系统建设.架构设计.技术评审的组织',
+    }, {
+      name: '1',
+      age: '系统建设.架构设计.技术评审的组织',
+    },
+    ];
     return (
       <div>
-        <a onClick={this.showModal}>
-          详细信息
-        </a>
-        <Modal
-          title="基本信息"
-          width={1000}
-          visible={this.state.visible}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
-          footer={null}
+        <Form
+          className="ant-advanced-search-form"
         >
-          <Form
-            className="ant-advanced-search-form"
-          >
-            <Row gutter={24}>{getFields()}</Row>
-            <Row gutter={24}>{getFields(2)}</Row>
-          </Form>
-          <MainTable></MainTable>
-        </Modal>
+          <Row gutter={24}>{getFields()}</Row>
+          <Row gutter={24}>{getFields(2)}</Row>
+        </Form>
+        <Table columns={columns} dataSource={data} pagination={false} size="small" scroll={{ y: document.body.scrollHeight - 460 }} />
       </div>
     );
   }
 }
-const App = Form.create()(Search);
-export default App;
+
+const FormTable = Form.create()(Search);
+export default FormTable;

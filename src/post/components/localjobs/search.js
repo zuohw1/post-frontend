@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Form, Row, Col, Input, Button, Icon, Select, DatePicker,Checkbox
+  Form, Row, Col, Input, Button, Select, DatePicker,
 } from 'antd';
 import SyncTreeSelect from '../../../components/sync-tree-select';
 import CheckboxGroup from '../../../../node_modules/antd/es/checkbox/Group';
@@ -16,12 +16,9 @@ export default (props) => {
     expand,
   } = props;
 
-  const { getFieldDecorator,getFieldError, isFieldTouched } = form;
+  const { getFieldDecorator } = form;
   const { listTable, setToggle } = actions;
 
-  // Only show error after a field is touched.
-  const userNameError = isFieldTouched('userName') && getFieldError('userName');
-  const passwordError = isFieldTouched('password') && getFieldError('password');
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -44,8 +41,8 @@ export default (props) => {
     form.resetFields();
   };
 
-  const handleMoreQry = () => {
-    alert("handleMoreQry()--更多查询条件，待处理"+"enxpand；"+expand);
+  const toggle = () => {
+    alert('更多查询条件，待处理');
     setToggle(!expand);
   };
 
@@ -69,8 +66,8 @@ export default (props) => {
   /* 查询字段 */
   const queryCols = [
     {
-    itemName: '岗位序列', itemKey: 'test_def1', itemType: 'Select', required: false, list: [{ id: '0', title: '测试序列' }, { id: '1', title: '管理序列' }, { id: '2', title: '技术序列' }, { id: '3', title: '支撑序列' }],
-  },
+      itemName: '岗位序列', itemKey: 'test_def1', itemType: 'Select', required: false, list: [{ id: '0', title: '测试序列' }, { id: '1', title: '管理序列' }, { id: '2', title: '技术序列' }, { id: '3', title: '支撑序列' }],
+    },
     {
       itemName: '子序列', itemKey: 'ATTRIBUTE8', itemType: 'Select', required: false, list: [{ id: '0', title: '党群、纪检、工会' }, { id: '1', title: '管理' }, { id: '2', title: '国际业务销售' }, { id: '3', title: '采购管理' }, { id: '4', title: '集团客户销售' }, { id: '5', title: '综合行政与后勤' }],
     },
@@ -87,7 +84,7 @@ export default (props) => {
       itemName: '学历要求', itemKey: 'def5', itemType: 'Select', required: false, list: [{ id: '0', title: '博士' }, { id: '1', title: '硕士' }, { id: '2', title: '本科' }, { id: '3', title: '大专' }],
     },
     {
-      itemName: '', itemKey: 'cRespName', itemType: 'Checkbox', required: false, list: [{ label: '展示有效岗位', value: 'Y'}, { label: '展示无效岗位', value: 'N'}],
+      itemName: '', itemKey: 'cRespName', itemType: 'Checkbox', required: false, list: [{ label: '展示有效岗位', value: 'Y' }, { label: '展示无效岗位', value: 'N' }],
     },
   ];
 
@@ -116,7 +113,7 @@ export default (props) => {
                   message: '不能为空!',
                 }],
               })(
-                <Input placeholder="请输入" style={{width:220,marginLeft:5}}/>,
+                <Input placeholder="请输入" style={{ width: 220, marginLeft: 5 }} />,
               )}
             </FormItem>
           </Col>,
@@ -190,9 +187,6 @@ export default (props) => {
       <Row>
         <Col span={24} style={{ textAlign: 'right' }}>
           <Button htmlType="submit">查询</Button>
-          <Button style={{ marginLeft: 8 }} onClick={handleMoreQry}>
-            更多条件
-          </Button>
           <Button style={{ marginLeft: 8 }} onClick={handleReset}>
             重置
           </Button>
