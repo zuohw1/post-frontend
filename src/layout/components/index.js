@@ -6,7 +6,7 @@ import { Route, Switch, Link } from 'dva/router';
 import logoImg from '../../assets/images/logo.png';
 import 'antd/dist/antd.less';
 import app from '../../assets/styles/App.css';
-import Manpower from './Manpower';
+import Main from './main';
 import KeyRespQuery from '../../post/containers/key-resp-query';
 import KeyResp from '../../post/containers/key-resp';
 import KeyRespRank from '../../post/containers/keyresprank';
@@ -82,7 +82,7 @@ const MainLayout = (state) => {
         </Layout.Sider>
         <Layout style={{ padding: '5px' }}>
           <Switch>
-            <Route exact path="/" component={Manpower} />
+            <Route exact path="/" component={Main} />
             <Route exact path="/post/keyrespquery" component={KeyRespQuery} />
             <Route exact path="/post/keyresp" component={KeyResp} />
             <Route exact path="/post/keyresprank" component={KeyRespRank} />

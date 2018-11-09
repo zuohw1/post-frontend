@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Col, Row, Input, Select, DatePicker,Divider, Icon,Checkbox,Modal } from 'antd';
 import MainTable from './maintable';
-import SyncTreeSelect from '../../../../components/SyncTreeSelect';
+import SyncTreeSelect from '../../../../components/sync-tree-select';
 import CheckboxGroup from '../../../../../node_modules/antd/es/checkbox/Group';
 
 const FormItem = Form.Item;

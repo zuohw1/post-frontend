@@ -16,7 +16,7 @@ function onPanelChange(value, mode) {
   console.log(value, mode);
 }
 
-class Manpower extends Component {
+class Main extends Component {
   render() {
     return (
       <div className="Manpower">
@@ -110,4 +110,4 @@ class Manpower extends Component {
   }
 }
 
-export default Manpower;
+export default Main;
