@@ -83,11 +83,11 @@ const MainLayout = (state) => {
             <Route exact path="/" component={Main} />
             <Route exact path="/post/keyRespQuery" component={KeyRespQuery} />
             <Route exact path="/post/keyResp" component={KeyResp} />
-            <Route exact path="/post/keyresprank" component={KeyRespRank} />
-            <Route exact path="/post/groupposstandardlist" component={GroupPosStandardList} />
-            <Route exact path="/post/localjobs" component={LocalJobs} />
-            <Route exact path="/post/provinceposstandard" component={ProvincePosStandard} />
-            <Route exact path="/post/provpostquery" component={ProvinceQuery} />
+            <Route exact path="/post/keyRespRank" component={KeyRespRank} />
+            <Route exact path="/post/groupPosStandardList" component={GroupPosStandardList} />
+            <Route exact path="/post/localJobs" component={LocalJobs} />
+            <Route exact path="/post/provincePosStandard" component={ProvincePosStandard} />
+            <Route exact path="/post/provPostQuery" component={ProvinceQuery} />
           </Switch>
         </Layout>
       </Layout>
