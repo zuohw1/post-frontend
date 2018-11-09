@@ -1,6 +1,6 @@
 
 export default {
-  namespace: 'provincePosStandard',
+  namespace: 'provincePostStandard',
   state: {
     /* 列表数据 */
     tableData: {
@@ -25,7 +25,7 @@ export default {
             ATTRIBUTE11: '是',
             DOC_STATUS: '本科',
             ATTRIBUTE10: '2015-04-21',
-            def5: ['查看职责', '定制'],
+            def5: ['更改职责', '终止', '删除'],
           }, {
             key: 12,
             DOC_CODE: '维系成本及渠道管理岗',
@@ -34,7 +34,7 @@ export default {
             ATTRIBUTE11: '是',
             DOC_STATUS: '本科',
             ATTRIBUTE10: '2016-11-11',
-            def5: ['查看职责', '定制'],
+            def5: ['更改职责', '终止', '删除'],
           }, {
             key: 13,
             DOC_CODE: '核心渠道管理',
@@ -43,7 +43,7 @@ export default {
             ATTRIBUTE11: '是',
             DOC_STATUS: '本科',
             ATTRIBUTE10: '2013-01-01',
-            def5: ['查看职责', '定制'],
+            def5: ['更改职责', '终止', '删除'],
           }],
         }, {
           key: '2',
@@ -62,7 +62,7 @@ export default {
             ATTRIBUTE11: '是',
             DOC_STATUS: '本科',
             ATTRIBUTE10: '2015-04-21',
-            def5: ['查看职责', '定制'],
+            def5: ['更改职责', '终止', '删除'],
           }, {
             key: 22,
             DOC_CODE: '运营支撑',
@@ -71,7 +71,7 @@ export default {
             ATTRIBUTE11: '是',
             DOC_STATUS: '本科',
             ATTRIBUTE10: '2016-11-11',
-            def5: ['查看职责', '定制'],
+            def5: ['更改职责', '终止', '删除'],
           }, {
             key: 23,
             DOC_CODE: '渠道规划与建设',
@@ -80,7 +80,7 @@ export default {
             ATTRIBUTE11: '是',
             DOC_STATUS: '本科',
             ATTRIBUTE10: '2013-01-01',
-            def5: ['查看职责', '定制'],
+            def5: ['更改职责', '终止', '删除'],
           }],
         }, {
           key: '3',
@@ -99,7 +99,7 @@ export default {
             ATTRIBUTE11: '是',
             DOC_STATUS: '本科',
             ATTRIBUTE10: '2015-04-21',
-            def5: ['查看职责', '定制'],
+            def5: ['更改职责', '终止', '删除'],
           }, {
             key: 32,
             DOC_CODE: '维系成本及渠道管理岗',
@@ -108,7 +108,7 @@ export default {
             ATTRIBUTE11: '是',
             DOC_STATUS: '本科',
             ATTRIBUTE10: '2016-11-11',
-            def5: ['查看职责', '定制'],
+            def5: ['更改职责', '终止', '删除'],
           }, {
             key: 33,
             DOC_CODE: '核心渠道管理',
@@ -117,7 +117,7 @@ export default {
             ATTRIBUTE11: '是',
             DOC_STATUS: '本科',
             ATTRIBUTE10: '2013-01-01',
-            def5: ['查看职责', '定制'],
+            def5: ['更改职责', '终止', '删除'],
           }],
         },
 
@@ -130,7 +130,7 @@ export default {
     search: {
     },
   },
-  reducers: {
+  reducers: { //
     stateWillUpdate(state, { payload }) {
       return {
         ...state,

@@ -1,13 +1,13 @@
 import { connect } from 'dva';
 import { bindActionCreators } from 'redux';
 import { Form } from 'antd';
-import Index from '../components/provinceposstandard/index';
-import * as actions from '../actions/provinceposstandard';
+import Index from '../components/provincepoststandard/index';
+import * as actions from '../actions/province-post-standard';
 
 /* 建立组件跟 store 的 state 的映射关系 */
 const mapStateToProps = state => ({
-  ...state.provincePosStandard,
-  loading: state.loading.models.provincePosStandard,
+  ...state.provincePostStandard,
+  loading: state.loading.models.provincePostStandard,
 });
 
 const WrappedApp = Form.create()(Index);

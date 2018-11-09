@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-  Form, Row, Col, Input, Button, Icon, Select, DatePicker,
+  Form, Row, Col, Input, Button, Select, DatePicker,
 } from 'antd';
-import SyncTreeSelect from '../../../components/sync-tree-select';
+// import SyncTreeSelect from '../../../components/SyncTreeSelect';
 import CheckboxGroup from '../../../../node_modules/antd/es/checkbox/Group';
 
 
@@ -13,10 +13,9 @@ export default (props) => {
   const {
     form,
     actions,
-    expand,
   } = props;
   const { getFieldDecorator } = form;
-  const { listTable, setToggle } = actions;
+  const { listTable } = actions;
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -35,45 +34,45 @@ export default (props) => {
   };
 
   const handleExportGroupPos = () => {
-    alert('导出集团岗位，待处理');
+    // 导出集团岗位，待处理
     form.resetFields();
   };
   const handleExportProvPos = () => {
-    alert('导出省岗位，待处理');
+    // 导出省岗位，待处理
     form.resetFields();
   };
 
   const handleSave = () => {
-    alert('处理保存逻辑，待处理');
+    // 处理保存逻辑，待处理
   };
 
   const handleViewProvPos = () => {
-    alert('弹框展现省基准岗位，待处理');
+    // 弹框展现省基准岗位，待处理
   };
 
   const handleImportProvPos = () => {
-    alert('处理导入省基准岗位，待处理');
+    // 处理导入省基准岗位，待处理
   };
 
   const handleMoreQry = () => {
 
   };
-  const toggle = () => {
-    alert(`enxpand；${expand}`);
-    setToggle(!expand);
-  };
+  // const toggle = () => {
+  //   alert(`enxpand；${expand}`);
+  //   setToggle(!expand);
+  // };
 
   const apply = (item) => {
     return (<Option value={item.id} key={item.id}> {item.title} </Option>);
   };
 
-  const refUrl = 'org/allData?id=';
-
-  const treeSelectChange = (value, label, extra) => {
-    form.setFieldsValue({
-      orgid: `${extra.triggerNode.props.id}`,
-    });
-  };
+  // const refUrl = 'org/allData?id=';
+  //
+  // const treeSelectChange = (value, label, extra) => {
+  //   form.setFieldsValue({
+  //     orgid: `${extra.triggerNode.props.id}`,
+  //   });
+  // };
 
   const handleonchangeckbx = () => {
 
@@ -107,8 +106,7 @@ export default (props) => {
 
 
   function getFields(isOneLine) {
-    // console.log(queryCols);
-    const count = expand ? queryCols.length : 3;
+    // const count = expand ? queryCols.length : 3;
     const children = [];
     let beginI = 0;
     let endI = queryCols.length;
@@ -161,20 +159,20 @@ export default (props) => {
           </Col>,
         );
       } else if (queryCols[i].itemType === 'OrgSelect') {
-        children.push(
-          <Col span={6} key={i} style={{ display: 'block' }}>
-            <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
-              {getFieldDecorator(queryCols[i].itemKey)(
-                <SyncTreeSelect
-                  treeId={37838}
-                  treeSelectChange={treeSelectChange}
-                  refUrl={refUrl}
-                  checkbox
-                />,
-              )}
-            </FormItem>
-          </Col>,
-        );
+        // children.push(
+        //   <Col span={6} key={i} style={{ display: 'block' }}>
+        //     <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
+        //       {getFieldDecorator(queryCols[i].itemKey)(
+        //         <SyncTreeSelect
+        //           treeId={37838}
+        //           treeSelectChange={treeSelectChange}
+        //           refUrl={refUrl}
+        //           checkbox
+        //         />,
+        //       )}
+        //     </FormItem>
+        //   </Col>,
+        // );
       } else if (queryCols[i].itemType === 'Date') {
         children.push(
           <Col span={6} key={i} style={{ display: 'block' }}>
@@ -195,15 +193,6 @@ export default (props) => {
     return children;
   }
 
-  let collapse = null;
-  if (queryCols.length > 4) {
-    collapse = (
-      <a style={{ marginLeft: 8, fontSize: 12 }} onClick={toggle}>
-      更多 <Icon type={expand ? 'up' : 'down'} />
-      </a>
-    );
-  }
-
   return (
     <Form
       className="ant-advanced-search-form"
@@ -214,25 +203,25 @@ export default (props) => {
       <Row>
         <Col span={24} style={{ textAlign: 'right' }}>
           <Button htmlType="submit">查询</Button>
-          <Button style={{ marginLeft: 8 }} onClick={handleMoreQry}>
+          <Button htmlType="button" style={{ marginLeft: 8 }} onClick={handleMoreQry}>
             更多条件
           </Button>
-          <Button style={{ marginLeft: 8 }} onClick={handleReset}>
+          <Button htmlType="button" style={{ marginLeft: 8 }} onClick={handleReset}>
             重置
           </Button>
-          <Button style={{ marginLeft: 8 }} onClick={handleExportGroupPos}>
+          <Button htmlType="button" style={{ marginLeft: 8 }} onClick={handleExportGroupPos}>
             导出集团岗位
           </Button>
-          <Button style={{ marginLeft: 8 }} onClick={handleExportProvPos}>
+          <Button htmlType="button" style={{ marginLeft: 8 }} onClick={handleExportProvPos}>
             导出省岗位
           </Button>
-          <Button style={{ marginLeft: 8 }} onClick={handleSave}>
+          <Button htmlType="button" style={{ marginLeft: 8 }} onClick={handleSave}>
             保存
           </Button>
-          <Button style={{ marginLeft: 8 }} onClick={handleViewProvPos}>
+          <Button htmlType="button" style={{ marginLeft: 8 }} onClick={handleViewProvPos}>
             查看省基准岗位
           </Button>
-          <Button style={{ marginLeft: 8 }} onClick={handleImportProvPos}>
+          <Button htmlType="button" style={{ marginLeft: 8 }} onClick={handleImportProvPos}>
             导入省基准岗位
           </Button>
         </Col>
