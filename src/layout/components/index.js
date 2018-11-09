@@ -30,15 +30,15 @@ const MainLayout = (state) => {
             <Input.Search
               placeholder="请输入功能或服务关键字"
               enterButton="搜索"
-              onSearch={value => console.log(value)}
+              onSearch={value => value}
             />
           </div>
         </div>
         <div className={app.headerBottom}>
           <nav>
-            <a href="jacascript::void(0)">员工服务大厅</a>
-            <a href="jacascript::void(0)" className={app.navActive}>人力业务管理</a>
-            <a href="jacascript::void(0)">数据决策中心</a>
+            <a href="#">员工服务大厅</a>
+            <a href="#" className={app.navActive}>人力业务管理</a>
+            <a href="#">数据决策中心</a>
           </nav>
         </div>
       </div>
