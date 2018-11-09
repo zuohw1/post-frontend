@@ -42,7 +42,7 @@ export default {
       }, {
         id: 205,
         menuName: '省基准岗位维护',
-        url: '/post/provincePosStandard',
+        url: '/post/provincePostStandard',
         pid: 2,
         iconUrl: 'user',
       },
