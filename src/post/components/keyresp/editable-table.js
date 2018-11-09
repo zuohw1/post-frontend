@@ -20,19 +20,21 @@ class EditableCell extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.editable) {
+    const { editable } = this.props;
+    if (editable) {
       document.addEventListener('click', this.handleClickOutside, true);
     }
   }
 
   componentWillUnmount() {
-    if (this.props.editable) {
+    const { editable } = this.props;
+    if (editable) {
       document.removeEventListener('click', this.handleClickOutside, true);
     }
   }
 
   toggleEdit = () => {
-    const editing = !this.state.editing;
+    const { editing } = !this.state;
     this.setState({ editing }, () => {
       if (editing) {
         this.input.focus();
