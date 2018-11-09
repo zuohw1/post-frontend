@@ -114,7 +114,7 @@ export default ({
 
   return (
     <div style={{ marginTop: '10px' }}>
-      <Button htmlType="button" type="primary" style={{ marginLeft: '0', marginBottom: '2px', marginTop: '2px' }} onClick={handleExportGroupPos}>
+      <Button htmlType="button" type="primary" style={{ marginLeft: '0' }} onClick={handleExportGroupPos}>
         导出集团岗位
       </Button>
       <Button htmlType="button" type="primary" style={{ marginLeft: '10px' }} onClick={handleExportProvPos}>
