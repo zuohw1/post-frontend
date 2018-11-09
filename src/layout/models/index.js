@@ -15,14 +15,14 @@ export default {
       {
         id: 201,
         menuName: '关键职责库维护',
-        url: '/post/keyresp',
+        url: '/post/keyResp',
         pid: 2,
         iconUrl: 'user',
       },
       {
         id: 202,
         menuName: '关键职责库查询',
-        url: '/post/keyrespquery',
+        url: '/post/keyRespQuery',
         pid: 2,
         iconUrl: 'user',
       },
@@ -39,7 +39,7 @@ export default {
         url: '/post/groupposstandardlist',
         pid: 2,
         iconUrl: 'user',
-      },{
+      }, {
         id: 205,
         menuName: '省基准岗位维护',
         url: '/post/provinceposstandard',

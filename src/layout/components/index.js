@@ -81,8 +81,8 @@ const MainLayout = (state) => {
         <Layout style={{ padding: '5px' }}>
           <Switch>
             <Route exact path="/" component={Main} />
-            <Route exact path="/post/keyrespquery" component={KeyRespQuery} />
-            <Route exact path="/post/keyresp" component={KeyResp} />
+            <Route exact path="/post/keyRespQuery" component={KeyRespQuery} />
+            <Route exact path="/post/keyResp" component={KeyResp} />
             <Route exact path="/post/keyresprank" component={KeyRespRank} />
             <Route exact path="/post/groupposstandardlist" component={GroupPosStandardList} />
             <Route exact path="/post/localjobs" component={LocalJobs} />
