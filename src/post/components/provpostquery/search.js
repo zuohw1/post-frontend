@@ -3,7 +3,7 @@ import React from 'react';
 import {
   Form, Row, Col, Input, Button, Icon, Select, DatePicker,
 } from 'antd';
-import SyncTreeSelect from '../../../components/SyncTreeSelect';
+import SyncTreeSelect from '../../../components/sync-tree-select';
 import CheckboxGroup from '../../../../node_modules/antd/es/checkbox/Group';
 
 
