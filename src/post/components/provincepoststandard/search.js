@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-  Form, Row, Col, Input, Button, Select, DatePicker,
+  Form, Row, Col, Input, Button, Icon, Select, DatePicker,
 } from 'antd';
-// import SyncTreeSelect from '../../../components/SyncTreeSelect';
+import SyncTreeSelect from '../../../components/sync-tree-select';
 import CheckboxGroup from '../../../../node_modules/antd/es/checkbox/Group';
 
 
@@ -13,9 +13,10 @@ export default (props) => {
   const {
     form,
     actions,
+    expand,
   } = props;
   const { getFieldDecorator } = form;
-  const { listTable } = actions;
+  const { listTable, setToggle } = actions;
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -33,46 +34,21 @@ export default (props) => {
     form.resetFields();
   };
 
-  const handleExportGroupPos = () => {
-    // 导出集团岗位，待处理
-    form.resetFields();
+  const toggle = () => {
+    setToggle(!expand);
   };
-  const handleExportProvPos = () => {
-    // 导出省岗位，待处理
-    form.resetFields();
-  };
-
-  const handleSave = () => {
-    // 处理保存逻辑，待处理
-  };
-
-  const handleViewProvPos = () => {
-    // 弹框展现省基准岗位，待处理
-  };
-
-  const handleImportProvPos = () => {
-    // 处理导入省基准岗位，待处理
-  };
-
-  const handleMoreQry = () => {
-
-  };
-  // const toggle = () => {
-  //   alert(`enxpand；${expand}`);
-  //   setToggle(!expand);
-  // };
 
   const apply = (item) => {
     return (<Option value={item.id} key={item.id}> {item.title} </Option>);
   };
 
-  // const refUrl = 'org/allData?id=';
-  //
-  // const treeSelectChange = (value, label, extra) => {
-  //   form.setFieldsValue({
-  //     orgid: `${extra.triggerNode.props.id}`,
-  //   });
-  // };
+  const refUrl = 'org/allData?id=';
+
+  const treeSelectChange = (value, label, extra) => {
+    form.setFieldsValue({
+      orgid: `${extra.triggerNode.props.id}`,
+    });
+  };
 
   const handleonchangeckbx = () => {
 
@@ -104,24 +80,23 @@ export default (props) => {
     itemName: '', itemKey: 'cRespName', itemType: 'Checkbox', required: false, list: [{ label: '展示有效岗位', value: 'effectivepos' }, { label: '展示无效岗位  ', value: 'invalidpos' }],
   }];
 
+  let collapse = null;
+  if (queryCols.length > 3) {
+    collapse = (
+      <a style={{ marginLeft: 8, fontSize: 14 }} onClick={toggle}>
+        更多 <Icon type={expand ? 'up' : 'down'} />
+      </a>
+    );
+  }
 
-  function getFields(isOneLine) {
-    // const count = expand ? queryCols.length : 3;
+  function getFields() {
+    const count = expand ? queryCols.length : 3;
     const children = [];
-    let beginI = 0;
-    let endI = queryCols.length;
 
-    if (isOneLine === undefined) {
-      endI = 4;
-    } else if (isOneLine === 2) {
-      beginI = 4;
-    }
-    // for (let i = 0; i < queryCols.length; i += 1) {
-    for (let i = beginI; i < endI; i += 1) {
+    for (let i = 0; i < queryCols.length; i += 1) {
       if (queryCols[i].itemType === 'String') {
         children.push(
-          /*  {<Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>}  */
-          <Col span={6} key={i} style={{ display: 'block' }}>
+          <Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>
             <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
               {getFieldDecorator(queryCols[i].itemKey, {
                 rules: [{
@@ -136,7 +111,7 @@ export default (props) => {
         );
       } else if (queryCols[i].itemType === 'Select') {
         children.push(
-          <Col span={6} key={i} style={{ display: 'block' }}>
+          <Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>
             <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
               {getFieldDecorator(queryCols[i].itemKey)(
                 <Select style={{ width: 220, marginLeft: 5, marginRight: 20 }} placeholder="请选择" allowClear>
@@ -150,7 +125,7 @@ export default (props) => {
         );
       } else if (queryCols[i].itemType === 'Checkbox') {
         children.push(
-          <Col span={6} key={i} style={{ display: 'block' }}>
+          <Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>
             <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
               {getFieldDecorator(queryCols[i].itemKey)(
                 <CheckboxGroup options={queryCols[i].list} onChange={handleonchangeckbx} />,
@@ -159,23 +134,23 @@ export default (props) => {
           </Col>,
         );
       } else if (queryCols[i].itemType === 'OrgSelect') {
-        // children.push(
-        //   <Col span={6} key={i} style={{ display: 'block' }}>
-        //     <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
-        //       {getFieldDecorator(queryCols[i].itemKey)(
-        //         <SyncTreeSelect
-        //           treeId={37838}
-        //           treeSelectChange={treeSelectChange}
-        //           refUrl={refUrl}
-        //           checkbox
-        //         />,
-        //       )}
-        //     </FormItem>
-        //   </Col>,
-        // );
-      } else if (queryCols[i].itemType === 'Date') {
         children.push(
           <Col span={6} key={i} style={{ display: 'block' }}>
+            <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
+              {getFieldDecorator(queryCols[i].itemKey)(
+                <SyncTreeSelect
+                  treeId={37838}
+                  treeSelectChange={treeSelectChange}
+                  refUrl={refUrl}
+                  checkbox
+                />,
+              )}
+            </FormItem>
+          </Col>,
+        );
+      } else if (queryCols[i].itemType === 'Date') {
+        children.push(
+          <Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>
             <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
               {getFieldDecorator(queryCols[i].itemKey, {
                 rules: [{
@@ -190,6 +165,24 @@ export default (props) => {
         );
       }
     }
+
+    if (expand) {
+      for (let i = 0; i < 7 - count; i += 1) {
+        children.push(
+          <Col span={6} key={count + i} style={{ display: 'block' }} />,
+        );
+      }
+    }
+    children.push(
+      <Col span={6} key={count + 5} style={{ textAlign: 'right', marginTop: 5 }}>
+        <Button htmlType="submit">查询</Button>
+        <Button htmlType="button" style={{ marginLeft: 8 }} onClick={handleReset}>
+          重置
+        </Button>
+        {collapse}
+      </Col>,
+    );
+
     return children;
   }
 
@@ -197,34 +190,11 @@ export default (props) => {
     <Form
       className="ant-advanced-search-form"
       onSubmit={handleSearch}
+      style={{ padding: 10 }}
+      layout="inline"
     >
       <Row gutter={24}>{getFields()}</Row>
-      <Row gutter={24}>{getFields(2)}</Row>
-      <Row>
-        <Col span={24} style={{ textAlign: 'right' }}>
-          <Button htmlType="submit">查询</Button>
-          <Button htmlType="button" style={{ marginLeft: 8 }} onClick={handleMoreQry}>
-            更多条件
-          </Button>
-          <Button htmlType="button" style={{ marginLeft: 8 }} onClick={handleReset}>
-            重置
-          </Button>
-          <Button htmlType="button" style={{ marginLeft: 8 }} onClick={handleExportGroupPos}>
-            导出集团岗位
-          </Button>
-          <Button htmlType="button" style={{ marginLeft: 8 }} onClick={handleExportProvPos}>
-            导出省岗位
-          </Button>
-          <Button htmlType="button" style={{ marginLeft: 8 }} onClick={handleSave}>
-            保存
-          </Button>
-          <Button htmlType="button" style={{ marginLeft: 8 }} onClick={handleViewProvPos}>
-            查看省基准岗位
-          </Button>
-          <Button htmlType="button" style={{ marginLeft: 8 }} onClick={handleImportProvPos}>
-            导入省基准岗位
-          </Button>
-        </Col>
-      </Row>
-    </Form>);
+    </Form>
+
+  );
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Table,
+  Button,
   Pagination,
 } from 'antd';
 import PosDuty from './postduty/index';
@@ -25,6 +26,22 @@ export default ({
   const onChangePageSize = (current, size) => {
     const searchF = { ...search, pageSize: size, pageNumber: current };
     listTable(searchF);
+  };
+
+
+  const handleExportGroupPos = () => {
+  };
+  const handleExportProvPos = () => {
+  };
+
+  const handleSave = () => {
+
+  };
+
+  const handleViewProvPos = () => {
+  };
+
+  const handleImportProvPos = () => {
   };
 
   const { current, size, total } = tableData;
@@ -96,7 +113,22 @@ export default ({
   }
 
   return (
-    <div>
+    <div style={{ marginTop: '10px' }}>
+      <Button htmlType="button" type="primary" style={{ marginLeft: '0', marginBottom: '2px', marginTop: '2px' }} onClick={handleExportGroupPos}>
+        导出集团岗位
+      </Button>
+      <Button htmlType="button" type="primary" style={{ marginLeft: '10px' }} onClick={handleExportProvPos}>
+        导出省岗位
+      </Button>
+      <Button htmlType="button" type="primary" style={{ marginLeft: '10px' }} onClick={handleSave}>
+        保存
+      </Button>
+      <Button htmlType="button" type="primary" style={{ marginLeft: '10px' }} onClick={handleViewProvPos}>
+        查看省基准岗位
+      </Button>
+      <Button htmlType="button" type="primary" style={{ marginLeft: '10px' }} onClick={handleImportProvPos}>
+        导入省基准岗位
+      </Button>
       <Table
         columns={getFields()}
         loading={loading}
@@ -105,6 +137,7 @@ export default ({
         size="small"
         scroll={{ y: document.body.scrollHeight - 460 }}
         bordered
+        style={{ marginTop: '10px' }}
       />
       <Pagination
         showQuickJumper
