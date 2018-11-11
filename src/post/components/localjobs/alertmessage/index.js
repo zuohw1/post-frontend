@@ -26,9 +26,7 @@ class Modall extends Component {
   render() {
     return (
       <div>
-        <a onClick={this.showModal}>
-          详细信息
-        </a>
+        <a href="javascript:;" onClick={this.showModal.bind(this)}>详细信息</a>
         <Modal
           title="基本信息"
           width={1000}

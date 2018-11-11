@@ -97,6 +97,7 @@ export default ({
     width: 150,
 
     render: (text, record) => (
+
       <span>
         {record.def5.map(tag => <PosDuty posKey={record.key} posName={tag} />)}
       </span>

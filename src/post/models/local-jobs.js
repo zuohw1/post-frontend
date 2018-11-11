@@ -18,7 +18,7 @@ export default {
           DOC_STATUS: '本科',
           ATTRIBUTE10: '2018-1-1',
           ATTRIBUTE11: '2018-12-12',
-          ATTRIBUTE12: '详细信息',
+          ATTRIBUTE12: ['详细信息'],
         },
         {
           key: '团青工作岗',
@@ -29,6 +29,8 @@ export default {
           DOC_STATUS: '本科',
           ATTRIBUTE10: '2018-1-1',
           ATTRIBUTE11: '2018-12-12',
+          ATTRIBUTE12: ['详细信息'],
+
         },
         {
           key: '采购管理',
@@ -39,6 +41,8 @@ export default {
           DOC_STATUS: '本科',
           ATTRIBUTE10: '2018-1-1',
           ATTRIBUTE11: '2018-12-12',
+          ATTRIBUTE12: ['详细信息'],
+
         },
       ],
       pages: 0,

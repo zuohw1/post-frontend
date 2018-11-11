@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Pagination } from 'antd';
-import Modall from './alertmessage/modal';
+import Modall from './alertmessage/index';
 
 class Table1 extends Component {
   render() {
@@ -79,7 +79,14 @@ class Table1 extends Component {
       key: 'ATTRIBUTE12',
       align: 'center',
       width: 100,
-      render: () => <Modall />,
+
+      render: (text, record) => (
+
+        <span>
+          {record.ATTRIBUTE12.map(tag => <Modall posKey={record.key} posName={tag} />)}
+        </span>
+      ),
+
     }];
 
 
