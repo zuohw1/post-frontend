@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars,react/destructuring-assignment,no-useless-constructor,react/jsx-indent,max-len,no-trailing-spaces,spaced-comment,lines-between-class-members */
+/* eslint-disable no-unused-vars,react/destructuring-assignment,no-useless-constructor,react/jsx-indent,max-len,no-trailing-spaces,spaced-comment,lines-between-class-members,no-undef */
 import React, { Component } from 'react';
 import {
   Form, Col, Row, Input, Select, Checkbox, Table, DatePicker,
@@ -13,12 +13,8 @@ class Search extends Component {
     super(...props);
   }
   render() {
-    const { form, expand } = this.props;
-    const { getFieldDecorator, getFieldError, isFieldTouched } = form;
-    const userNameError = isFieldTouched('userName') && getFieldError('userName');
-    const passwordError = isFieldTouched('password') && getFieldError('password');
-
-
+    const { form } = this.props;
+    const { getFieldDecorator } = form;
     const apply = (item) => {
       return (<Option value={item.id} key={item.id}> {item.title} </Option>);
     };
@@ -59,7 +55,6 @@ class Search extends Component {
       },
     ];
     function getFields(isOneLine) {
-      const count = expand ? queryCols.length : 3;
       const children = [];
       let beginI = 0;
       let endI = queryCols.length;
@@ -169,5 +164,5 @@ class Search extends Component {
     );
   }
 }
-const App = Form.create()(Search);
-export default App;
+const DetailList = Form.create()(Search);
+export default DetailList;

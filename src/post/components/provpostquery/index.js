@@ -10,7 +10,7 @@ import '../../../assets/styles/module.less';
 
 const { Content } = Layout;
 
-const GroupPosStandardList = (state) => {
+const ProvPostQuery = (state) => {
   return (
     <React.Fragment>
       <Breadcrumb style={{ margin: '10px 0' }}>
@@ -34,4 +34,4 @@ const GroupPosStandardList = (state) => {
   );
 };
 
-export default GroupPosStandardList;
+export default ProvPostQuery;
