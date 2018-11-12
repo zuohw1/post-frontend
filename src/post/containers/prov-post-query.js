@@ -2,7 +2,7 @@ import { connect } from 'dva';
 import { bindActionCreators } from 'redux';
 import { Form } from 'antd';
 import Index from '../components/provpostquery/index';
-import * as actions from '../actions/provpostquery';
+import * as actions from '../actions/prov-post-query';
 
 /* 建立组件跟 store 的 state 的映射关系 */
 const mapStateToProps = state => ({
