@@ -41,7 +41,7 @@ class PosDuty extends React.Component {
     const { posListVisiable, updPosListVisiable } = this.state;
     return (
       <div>
-        <a href="#" onClick={this.showModal.bind(this)}> {posName}</a>
+        <a href=" javascript:;" onClick={this.showModal.bind(this)}> {posName}</a>
 
         <Modal
           title="岗位职责列表"
