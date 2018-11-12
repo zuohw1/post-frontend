@@ -1,3 +1,7 @@
+/* eslint-disable no-return-assign,
+react/no-multi-comp,
+react/destructuring-assignment,
+react/no-access-state-in-setstate */
 import React from 'react';
 import {
   Table, Input, Button, Popconfirm, Form,

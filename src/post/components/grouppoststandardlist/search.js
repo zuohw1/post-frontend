@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Form, Row, Col, Input, Button, Icon, Select, DatePicker,
+  Form, Row, Col, Input, Button, Select, DatePicker,
 } from 'antd';
 import SyncTreeSelect from '../../../components/sync-tree-select';
 import CheckboxGroup from '../../../../node_modules/antd/es/checkbox/Group';
@@ -13,10 +13,9 @@ export default (props) => {
   const {
     form,
     actions,
-    expand,
   } = props;
   const { getFieldDecorator } = form;
-  const { listTable, setToggle } = actions;
+  const { listTable } = actions;
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -42,10 +41,6 @@ export default (props) => {
   const handleMoreQry = () => {
     // alert("handleMoreQry()--更多查询条件，待处理"+"enxpand；"+expand);
     // setToggle(!expand);
-  };
-  const toggle = () => {
-    alert(`enxpand；${expand}`);
-    setToggle(!expand);
   };
 
   const apply = (item) => {
@@ -87,7 +82,6 @@ export default (props) => {
 
   function getFields(isOneLine) {
     // console.log(queryCols);
-    const count = expand ? queryCols.length : 3;
     const children = [];
     let beginI = 0;
     let endI = queryCols.length;
@@ -172,15 +166,6 @@ export default (props) => {
       }
     }
     return children;
-  }
-
-  let collapse = null;
-  if (queryCols.length > 4) {
-    collapse = (
-      <a style={{ marginLeft: 8, fontSize: 12 }} onClick={toggle}>
-      更多 <Icon type={expand ? 'up' : 'down'} />
-      </a>
-    );
   }
 
   return (

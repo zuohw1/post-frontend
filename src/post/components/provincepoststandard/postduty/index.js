@@ -10,11 +10,12 @@ class PosDuty extends React.Component {
   };
 
   showModal = () => {
-    if (this.props.posName === '查看职责') {
+    const { posName } = this.props;
+    if (posName === '查看职责') {
       this.setState({
         posListVisiable: true,
       });
-    } else if (this.props.posName === '更改职责') {
+    } else if (posName === '更改职责') {
       this.setState({
         updPosListVisiable: true,
       });
@@ -36,13 +37,15 @@ class PosDuty extends React.Component {
   };
 
   render() {
+    const { posName } = this.props;
+    const { posListVisiable, updPosListVisiable } = this.state;
     return (
       <div>
-        <a href="javascript:;" onClick={this.showModal.bind(this)}> {this.props.posName}</a>
+        <a href="#" onClick={this.showModal.bind(this)}> {posName}</a>
 
         <Modal
           title="岗位职责列表"
-          visible={this.state.posListVisiable}
+          visible={posListVisiable}
           width={1000}
           footer={null}
           onOk={this.handleOk}
@@ -55,7 +58,7 @@ class PosDuty extends React.Component {
 
         <Modal
           title="基准岗位维护"
-          visible={this.state.updPosListVisiable}
+          visible={updPosListVisiable}
           width={1000}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
@@ -73,7 +76,6 @@ class PosDuty extends React.Component {
 }
 
 PosDuty.propTypes = {
-  posKey: PropTypes.string.isRequired,
   posName: PropTypes.string.isRequired,
 };
 export default PosDuty;

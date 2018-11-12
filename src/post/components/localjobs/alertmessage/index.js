@@ -24,13 +24,14 @@ class Modall extends Component {
   }
 
   render() {
+    const { visible } = this.state;
     return (
       <div>
-        <a href="javascript:;" onClick={this.showModal.bind(this)}>详细信息</a>
+        <a href="#" onClick={this.showModal.bind(this)}>详细信息</a>
         <Modal
           title="基本信息"
           width={1000}
-          visible={this.state.visible}
+          visible={visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
           footer={null}

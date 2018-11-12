@@ -13,11 +13,10 @@ export default (props) => {
   const {
     form,
     actions,
-    expand,
   } = props;
 
   const { getFieldDecorator } = form;
-  const { listTable, setToggle } = actions;
+  const { listTable } = actions;
 
 
   const handleSearch = (e) => {
@@ -40,12 +39,6 @@ export default (props) => {
     alert('导出，待处理');
     form.resetFields();
   };
-
-  const toggle = () => {
-    alert('更多查询条件，待处理');
-    setToggle(!expand);
-  };
-
 
   const apply = (item) => {
     return (<Option value={item.id} key={item.id}> {item.title} </Option>);
@@ -90,7 +83,6 @@ export default (props) => {
 
 
   function getFields(isOneLine) {
-    const count = expand ? queryCols.length : 3;
     const children = [];
     let beginI = 0;
     let endI = queryCols.length;
