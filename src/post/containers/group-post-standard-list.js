@@ -1,13 +1,13 @@
 import { connect } from 'dva';
 import { bindActionCreators } from 'redux';
 import { Form } from 'antd';
-import Index from '../components/keyresprank/index';
-import * as actions from '../actions/keyresprank';
+import Index from '../components/grouppoststandardlist/index';
+import * as actions from '../actions/group-post-standard-list';
 
 /* 建立组件跟 store 的 state 的映射关系 */
 const mapStateToProps = state => ({
-  ...state.keyRespRank,
-  loading: state.loading.models.keyRespRank,
+  ...state.groupPosStandardList,
+  loading: state.loading.models.groupPosStandardList,
 });
 
 const WrappedApp = Form.create()(Index);

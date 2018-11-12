@@ -1,40 +1,16 @@
-import React ,{Component}from 'react';
-import { Table, Pagination, } from 'antd';
-import Detail from './alertmessage/index';
-/* table size统一设置为small 固定表头，
-   scroll={{ y: document.body.scrollHeight - 460 }}
-   460为其他控件宽度之和
-*/
-// { tableData, actions, search, loading, }
-class Table1 extends Component{
-  render(){
-    //console.log(this.state.son);
-    const { tableData, actions, search, loading, }=this.props;
+import React, { Component } from 'react';
+import { Table, Pagination } from 'antd';
+import Modall from './alertmessage/index';
+
+class Table1 extends Component {
+  render() {
+    const {
+      tableData, actions, search, loading,
+    } = this.props;
     const { listTable } = actions;
 
-    const data = [{
-      key: '系统测试与培训岗',
-      DOC_CODE: '办公系统管理',
-      ATTRIBUTE8: '技术序列，信息化',
-      ATTRIBUTE9: '.省.市',
-      DOC_VERIFIER: '是',
-      DOC_STATUS:'本科',
-      ATTRIBUTE10:'2018-1-1',
-      ATTRIBUTE11:'2018-12-12',
-      ATTRIBUTE12:'详细信息'
-    },
-      {
-        key: '团青工作岗',
-        DOC_CODE: '团青工作岗',
-        ATTRIBUTE8: '支撑序列.党群、纪检、工会',
-        ATTRIBUTE9: '.市.县',
-        DOC_VERIFIER: '是',
-        DOC_STATUS:'本科',
-        ATTRIBUTE10:'2018-1-1',
-        ATTRIBUTE11:'2018-12-12',
-        ATTRIBUTE12:'详细信息'
-      }
-    ];
+    const data = tableData.records;
+
 
     const onChange = (pageNumber, pageSize) => {
       const searchF = { ...search, pageSize, pageNumber };
@@ -103,7 +79,14 @@ class Table1 extends Component{
       key: 'ATTRIBUTE12',
       align: 'center',
       width: 100,
-      render: ()=><Detail></Detail>,
+
+      render: (text, record) => (
+
+        <span>
+          {record.ATTRIBUTE12.map(tag => <Modall posKey={record.key} posName={tag} />)}
+        </span>
+      ),
+
     }];
 
 
@@ -133,5 +116,3 @@ class Table1 extends Component{
   }
 }
 export default Table1;
-
-

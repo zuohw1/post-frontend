@@ -9,10 +9,10 @@ import app from '../../assets/styles/App.css';
 import Main from './main';
 import KeyRespQuery from '../../post/containers/key-resp-query';
 import KeyResp from '../../post/containers/key-resp';
-import KeyRespRank from '../../post/containers/keyresprank';
-import GroupPosStandardList from '../../post/containers/groupposstandardlist';
-import ProvincePosStandard from '../../post/containers/provinceposstandard';
-import LocalJobs from '../../post/containers/localjobs';
+import KeyRespRank from '../../post/containers/key-resp-rank';
+import GroupPosStandardList from '../../post/containers/group-post-standard-list';
+import ProvincePosStandard from '../../post/containers/province-post-standard';
+import LocalJobs from '../../post/containers/local-jobs';
 import ProvinceQuery from '../../post/containers/provpostquery';
 
 const { SubMenu } = Menu;
@@ -86,7 +86,7 @@ const MainLayout = (state) => {
             <Route exact path="/post/keyRespRank" component={KeyRespRank} />
             <Route exact path="/post/groupPosStandardList" component={GroupPosStandardList} />
             <Route exact path="/post/localJobs" component={LocalJobs} />
-            <Route exact path="/post/provincePosStandard" component={ProvincePosStandard} />
+            <Route exact path="/post/provincePostStandard" component={ProvincePosStandard} />
             <Route exact path="/post/provPostQuery" component={ProvinceQuery} />
           </Switch>
         </Layout>
