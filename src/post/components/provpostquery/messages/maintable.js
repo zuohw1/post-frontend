@@ -1,32 +1,52 @@
+/* eslint-disable no-unused-vars,react/destructuring-assignment,no-useless-constructor,no-undef,indent,max-len */
 import React, { Component } from 'react';
-import { Table } from 'antd';
+import {
+  Form, Select, Modal,
+} from 'antd';
+import Search from './search';
+
+const FormItem = Form.Item;
+const { Option } = Select;
 
 class MainTable extends Component {
-  render() {
-    const columns = [{
-      title: '主要岗位职责',
-      dataIndex: 'name',
-      width: 150,
-    }, {
-      title: '',
-      dataIndex: 'address',
-    }];
+  state = { visible: false };
 
-    const data = [];
-    for (let i = 1; i < 20; i++) {
-      data.push({
-        key: i,
-        name: ` ${i}`,
-        address: `London, Park Lane no. ${i}`,
-      });
-    }
+  showModal = () => {
+    this.setState({
+      visible: true,
+    });
+  }
+
+  handleOk = (e) => {
+    this.setState({
+      visible: false,
+    });
+  }
+
+  handleCancel = (e) => {
+    this.setState({
+      visible: false,
+    });
+  }
+
+  render() {
     return (
-      <Table columns={columns} dataSource={data} pagination={false} size="small" scroll={{ y: document.body.scrollHeight - 460 }} />
+      <div>
+        <a onClick={this.showModal}>
+          详细信息
+        </a>
+        <Modal
+          title="基本信息"
+          width={1000}
+          visible={this.state.visible}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+          footer={null}
+        >
+          <Search />
+        </Modal>
+      </div>
     );
   }
 }
-
 export default MainTable;
-
-
-
