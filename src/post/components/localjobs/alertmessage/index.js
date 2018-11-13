@@ -42,4 +42,6 @@ class Modall extends Component {
     );
   }
 }
+
+
 export default Modall;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Pagination } from 'antd';
+import { Table, Pagination, Button } from 'antd';
 import Modall from './alertmessage/index';
 
 class Table1 extends Component {
@@ -21,6 +21,10 @@ class Table1 extends Component {
       const searchF = { ...search, pageSize: size, pageNumber: current };
       listTable(searchF);
     };
+
+    const handleExportGroupPos = () => {
+    };
+
 
     const { current, size, total } = tableData;
 
@@ -81,13 +85,13 @@ class Table1 extends Component {
       width: 100,
 
       render: (text, record) => (
-
         <span>
           {record.ATTRIBUTE12.map(tag => <Modall posKey={record.key} posName={tag} />)}
         </span>
       ),
 
-    }];
+    },
+    ];
 
 
     function getFields() {
@@ -98,8 +102,20 @@ class Table1 extends Component {
       return children;
     }
     return (
-      <div>
-        <Table columns={getFields()} loading={loading} dataSource={data} pagination={false} size="small" scroll={{ y: document.body.scrollHeight - 460 }} />
+      <div style={{ marginTop: '10px' }}>
+        <Button htmlType="button" type="primary" style={{ marginLeft: '0' }} onClick={handleExportGroupPos}>
+          导出本地岗位
+        </Button>
+        <Table
+          columns={getFields()}
+          loading={loading}
+          dataSource={data}
+          pagination={false}
+          size="small"
+          scroll={{ y: document.body.scrollHeight - 460 }}
+          bordered
+          style={{ marginTop: '10px' }}
+        />
         <Pagination
           showQuickJumper
           current={current}
