@@ -75,7 +75,7 @@ class Search extends Component {
                     message: '不能为空!',
                   }],
                 })(
-                  <Input placeholder="请输入" style={{ width: 220, marginLeft: 5 }} />,
+                  <Input placeholder="请输入" style={{ width: 220, marginLeft: 5 }} disabled />,
                 )}
               </FormItem>
             </Col>,
@@ -85,7 +85,7 @@ class Search extends Component {
             <Col span={8} key={i} style={{ display: 'block' }}>
               <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
                 {getFieldDecorator(queryCols[i].itemKey)(
-                  <Select style={{ width: 220, marginLeft: 5, marginRight: 20 }} placeholder="请选择" allowClear>
+                  <Select style={{ width: 220, marginLeft: 5, marginRight: 20 }} placeholder="请选择" allowClear disabled>
                     {
                       queryCols[i].list.map(apply)
                     }
@@ -99,7 +99,11 @@ class Search extends Component {
             <Col span={10} key={i} style={{ display: 'block' }}>
               <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
                 {getFieldDecorator(queryCols[i].itemKey)(
-                  <CheckboxGroup options={queryCols[i].list} onChange={handleonchangeckbx} />,
+                  <CheckboxGroup
+                    options={queryCols[i].list}
+                    onChange={handleonchangeckbx}
+                    disabled
+                  />,
                 )}
               </FormItem>
             </Col>,
@@ -114,6 +118,7 @@ class Search extends Component {
                     treeSelectChange={treeSelectChange}
                     refUrl={refUrl}
                     checkbox
+                    disabled
                   />,
                 )}
               </FormItem>
@@ -129,7 +134,7 @@ class Search extends Component {
                     message: '不能为空!',
                   }],
                 })(
-                  <DatePicker style={{ width: 220, marginLeft: 5 }} />,
+                  <DatePicker style={{ width: 220, marginLeft: 5 }} disabled />,
                 )}
               </FormItem>
             </Col>,
@@ -139,32 +144,34 @@ class Search extends Component {
       return children;
     }
 
-    const columns = [{
-      title: '主要岗位职责',
+    const tableCols = [{
+      title: '序号',
       dataIndex: 'name',
       key: 'name',
       align: 'center',
-      width: 100,
+      width: 150,
     }, {
-      title: '',
+      title: '职责',
       dataIndex: 'age',
       key: 'age',
+      align: 'center',
+      width: 950,
     }];
     /* 列表信息 */
     const data = [{
-      name: '1',
+      name: '001',
       age: '系统建设.架构设计.技术评审的组织',
     }, {
-      name: '1',
+      name: '002',
+      age: '系统建设.架构设计.技术评审的组织.系统建设',
+    }, {
+      name: '003',
+      age: '系统建设.架构设计.技术评审的组织.系统建设.系统建设',
+    }, {
+      name: '004',
       age: '系统建设.架构设计.技术评审的组织',
     }, {
-      name: '1',
-      age: '系统建设.架构设计.技术评审的组织',
-    }, {
-      name: '1',
-      age: '系统建设.架构设计.技术评审的组织',
-    }, {
-      name: '1',
+      name: '005',
       age: '系统建设.架构设计.技术评审的组织',
     },
     ];
@@ -176,7 +183,7 @@ class Search extends Component {
           <Row gutter={24}>{getFields()}</Row>
           <Row gutter={24}>{getFields(2)}</Row>
         </Form>
-        <Table columns={columns} dataSource={data} pagination={false} size="small" scroll={{ y: document.body.scrollHeight - 460 }} />
+        <Table columns={tableCols} dataSource={data} pagination={false} size="middle" bordered scroll={{ y: document.body.scrollHeight - 160 }} />
       </div>
     );
   }
