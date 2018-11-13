@@ -66,7 +66,7 @@ export default (props) => {
       itemName: '关键词', itemKey: 'test_def3', itemType: 'String', required: false,
     },
     {
-      itemName: '', itemKey: 'cRespName', itemType: 'Checkbox', required: false,
+      itemName: '', itemKey: 'cRespName', itemType: 'Checkbox', required: false, list: [{ label: '展示有效岗位', value: 'effectivepos' }, { label: '展示无效岗位  ', value: 'invalidpos' }],
     },
     {
       itemName: '组织层级', itemKey: 'cRespName', itemType: 'Checkbox', required: false, list: [{ label: '集团', value: 'J' }, { label: '省', value: 'S' }, { label: '市', value: 'D' }, { label: '区/县', value: 'X' }],
@@ -77,9 +77,7 @@ export default (props) => {
     {
       itemName: '学历要求', itemKey: 'def5', itemType: 'Select', required: false, list: [{ id: '0', title: '博士' }, { id: '1', title: '硕士' }, { id: '2', title: '本科' }, { id: '3', title: '大专' }],
     },
-    {
-      itemName: '', itemKey: 'cRespName', itemType: 'Checkbox', required: false, list: [{ label: '展示有效岗位', value: 'effectivepos' }, { label: '展示无效岗位  ', value: 'invalidpos' }],
-    }];
+    ];
 
   let collapse = null;
   if (queryCols.length > 3) {

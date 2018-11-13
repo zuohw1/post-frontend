@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   Table,
-  Pagination,
+  Pagination, Button,
 } from 'antd';
 
 /* table size统一设置为small 固定表头，
@@ -30,6 +30,9 @@ export default ({
     listTable(searchF);
   };
 
+  const handleExportGroupPos = () => {
+    alert('导出，待处理');
+  };
   const { current, size, total } = tableData;
 
   /* 列表字段 */
@@ -84,8 +87,11 @@ export default ({
   }
 
   return (
-    <div>
-      <Table columns={getFields()} loading={loading} dataSource={data} pagination={false} size="small" scroll={{ y: document.body.scrollHeight - 460 }} />
+    <div style={{ marginTop: '10px' }}>
+      <Button htmlType="button" type="primary" style={{ marginLeft: '0' }} onClick={handleExportGroupPos}>
+        导出集团岗位
+      </Button>
+      <Table columns={getFields()} loading={loading} dataSource={data} pagination={false} size="small" scroll={{ y: document.body.scrollHeight - 460 }} style={{ marginTop: '10px' }} />
       <Pagination
         showQuickJumper
         current={current}

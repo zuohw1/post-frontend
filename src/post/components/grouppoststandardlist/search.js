@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Form, Row, Col, Input, Button, Select, DatePicker,
+  Form, Row, Col, Input, Button, Icon, Select, DatePicker,
 } from 'antd';
 import SyncTreeSelect from '../../../components/sync-tree-select';
 import CheckboxGroup from '../../../../node_modules/antd/es/checkbox/Group';
@@ -13,9 +13,10 @@ export default (props) => {
   const {
     form,
     actions,
+    expand,
   } = props;
   const { getFieldDecorator } = form;
-  const { listTable } = actions;
+  const { listTable, setToggle } = actions;
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -33,14 +34,8 @@ export default (props) => {
     form.resetFields();
   };
 
-  const handleExportGroupPos = () => {
-    alert('导出，待处理');
-    form.resetFields();
-  };
-
-  const handleMoreQry = () => {
-    // alert("handleMoreQry()--更多查询条件，待处理"+"enxpand；"+expand);
-    // setToggle(!expand);
+  const toggle = () => {
+    setToggle(!expand);
   };
 
   const apply = (item) => {
@@ -67,7 +62,7 @@ export default (props) => {
     itemName: '子序列', itemKey: 'ATTRIBUTE8', itemType: 'Select', required: false, list: [{ id: '0', title: '党群、纪检、工会' }, { id: '1', title: '管理' }, { id: '2', title: '国际业务销售' }, { id: '3', title: '采购管理' }, { id: '4', title: '集团客户销售' }, { id: '5', title: '综合行政与后勤' }],
   },
   {
-    itemName: '关键词', itemKey: 'test_def3', itemType: 'String', disabled: true, // TODO 不可用
+    itemName: '关键词', itemKey: 'test_def3', itemType: 'String', required: false,
   },
   {
     itemName: '组织层级', itemKey: 'cRespName', itemType: 'Checkbox', required: false, list: [{ label: '集团', value: 'J' }, { label: '省', value: 'S' }, { label: '市', value: 'D' }, { label: '区/县', value: 'X' }],
@@ -79,24 +74,22 @@ export default (props) => {
     itemName: '学历要求', itemKey: 'def5', itemType: 'Select', required: false, list: [{ id: '0', title: '博士' }, { id: '1', title: '硕士' }, { id: '2', title: '本科' }, { id: '3', title: '大专' }],
   }];
 
+  let collapse = null;
+  if (queryCols.length > 3) {
+    collapse = (
+      <a style={{ marginLeft: 8, fontSize: 14 }} onClick={toggle}>
+        更多 <Icon type={expand ? 'up' : 'down'} />
+      </a>
+    );
+  }
 
-  function getFields(isOneLine) {
-    // console.log(queryCols);
+  function getFields() {
+    const count = expand ? queryCols.length : 3;
     const children = [];
-    let beginI = 0;
-    let endI = queryCols.length;
-
-    if (isOneLine === undefined) {
-      endI = 3;
-    } else if (isOneLine === 2) {
-      beginI = 3;
-    }
-    // for (let i = 0; i < queryCols.length; i += 1) {
-    for (let i = beginI; i < endI; i += 1) {
+    for (let i = 0; i < queryCols.length; i += 1) {
       if (queryCols[i].itemType === 'String') {
         children.push(
-          /*  {<Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>}  */
-          <Col span={6} key={i} style={{ display: 'block' }}>
+          <Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>
             <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
               {getFieldDecorator(queryCols[i].itemKey, {
                 rules: [{
@@ -111,7 +104,7 @@ export default (props) => {
         );
       } else if (queryCols[i].itemType === 'Select') {
         children.push(
-          <Col span={6} key={i} style={{ display: 'block' }}>
+          <Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>
             <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
               {getFieldDecorator(queryCols[i].itemKey)(
                 <Select style={{ width: 220, marginLeft: 5, marginRight: 20 }} placeholder="请选择" allowClear>
@@ -125,7 +118,7 @@ export default (props) => {
         );
       } else if (queryCols[i].itemType === 'Checkbox') {
         children.push(
-          <Col span={6} key={i} style={{ display: 'block' }}>
+          <Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>
             <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
               {getFieldDecorator(queryCols[i].itemKey)(
                 <CheckboxGroup options={queryCols[i].list} onChange={handleonchangeckbx} />,
@@ -135,7 +128,7 @@ export default (props) => {
         );
       } else if (queryCols[i].itemType === 'OrgSelect') {
         children.push(
-          <Col span={6} key={i} style={{ display: 'block' }}>
+          <Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>
             <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
               {getFieldDecorator(queryCols[i].itemKey)(
                 <SyncTreeSelect
@@ -150,7 +143,7 @@ export default (props) => {
         );
       } else if (queryCols[i].itemType === 'Date') {
         children.push(
-          <Col span={6} key={i} style={{ display: 'block' }}>
+          <Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>
             <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
               {getFieldDecorator(queryCols[i].itemKey, {
                 rules: [{
@@ -165,31 +158,34 @@ export default (props) => {
         );
       }
     }
+
+    if (expand) {
+      for (let i = 0; i < 7 - count; i += 1) {
+        children.push(
+          <Col span={6} key={count + i} style={{ display: 'block' }} />,
+        );
+      }
+    }
+    children.push(
+      <Col span={6} key={count + 5} style={{ textAlign: 'right', marginTop: 5 }}>
+        <Button htmlType="submit">查询</Button>
+        <Button htmlType="button" style={{ marginLeft: 8 }} onClick={handleReset}>
+          重置
+        </Button>
+        {collapse}
+      </Col>,
+    );
     return children;
   }
+
 
   return (
     <Form
       className="ant-advanced-search-form"
       onSubmit={handleSearch}
+      style={{ padding: 10 }}
+      layout="inline"
     >
       <Row gutter={24}>{getFields()}</Row>
-      <Row gutter={24}>{getFields(2)}</Row>
-      <Row>
-        <Col span={24} style={{ textAlign: 'right' }}>
-          <Button htmlType="submit">查询</Button>
-          <Button style={{ marginLeft: 8 }} onClick={handleMoreQry}>
-            更多条件
-          </Button>
-          <Button style={{ marginLeft: 8 }} onClick={handleReset}>
-            重置
-          </Button>
-          <Button style={{ marginLeft: 8 }} onClick={handleExportGroupPos}>
-            导出集团岗位
-          </Button>
-
-
-        </Col>
-      </Row>
     </Form>);
 };
