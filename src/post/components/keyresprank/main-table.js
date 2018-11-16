@@ -41,62 +41,62 @@ export default ({
     width: 50,
   }, {
     title: '岗位序列',
-    dataIndex: 'SEQ',
-    key: 'SEQ',
+    dataIndex: 'sEQ',
+    key: 'sEQ',
     align: 'center',
     width: 100,
   }, {
     title: '子序列',
-    dataIndex: 'CSEQ',
-    key: 'CSEQ',
+    dataIndex: 'cSEQ',
+    key: 'cSEQ',
     align: 'center',
     width: 100,
   }, {
     title: '专业',
-    dataIndex: 'MAJOR',
-    key: 'MAJOR',
+    dataIndex: 'mAJOR',
+    key: 'mAJOR',
     align: 'center',
     width: 150,
   }, {
     title: '关键职责',
-    dataIndex: 'KEYRESP',
-    key: 'KEYRESP',
+    dataIndex: 'kEYRESP',
+    key: 'kEYRESP',
     align: 'center',
     width: 150,
   }, {
     title: '基准职级',
-    dataIndex: 'JZRANK',
-    key: 'JZRANK',
+    dataIndex: 'jZRANK',
+    key: 'jZRANK',
     align: 'center',
     width: 100,
   }, {
     title: '集团职级',
-    dataIndex: 'JTRANK',
-    key: 'JTRANK',
+    dataIndex: 'jTRANK',
+    key: 'jTRANK',
     align: 'center',
     width: 100,
   }, {
     title: '省份职级',
-    dataIndex: 'SFRANK',
-    key: 'SFRANK',
+    dataIndex: 'sFRANK',
+    key: 'sFRANK',
     align: 'center',
     width: 100,
   }, {
     title: '地市职级',
-    dataIndex: 'DSRANK',
-    key: 'DSRANK',
+    dataIndex: 'dSRANK',
+    key: 'dSRANK',
     align: 'center',
     width: 100,
   }, {
     title: '区县职级',
-    dataIndex: 'QXRANK',
-    key: 'QXRANK',
+    dataIndex: 'qXRANK',
+    key: 'qXRANK',
     align: 'center',
     width: 100,
   }, {
     title: '组织层级',
-    dataIndex: 'LEVELTYPE',
-    key: 'LEVELTYPE',
+    dataIndex: 'lEVELTYPE',
+    key: 'lEVELTYPE',
     align: 'center',
     width: 100,
   }];
@@ -119,6 +119,7 @@ export default ({
         pageSize={size}
         onChange={onChange}
         onShowSizeChange={onChangePageSize}
+        pageSizeOptions={['10', '50', '100', '200']}
         showTotal={tota => `共 ${tota} 条`}
         showSizeChanger
         style={{ marginTop: 10, float: 'right' }}
