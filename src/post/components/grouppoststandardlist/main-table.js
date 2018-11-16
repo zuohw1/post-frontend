@@ -99,6 +99,7 @@ export default ({
         pageSize={size}
         onChange={onChange}
         onShowSizeChange={onChangePageSize}
+        pageSizeOptions={['10', '50', '100', '200']}
         showTotal={tota => `共 ${tota} 条`}
         showSizeChanger
         style={{ marginTop: 10, float: 'right' }}
