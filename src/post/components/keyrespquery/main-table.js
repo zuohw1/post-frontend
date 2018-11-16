@@ -20,13 +20,14 @@ export default ({
 
   const data = tableData.records;
 
-  const onChange = (pageNumber, pageSize) => {
-    const searchF = { ...search, pageSize, pageNumber };
+  const onChange = (currentPageNum, recordNum) => {
+    const searchF = { ...search, currentPageNum, recordNum };
     listTable(searchF);
   };
 
   const onChangePageSize = (current, size) => {
-    const searchF = { ...search, pageSize: size, pageNumber: current };
+    console.log(current, size);
+    const searchF = { ...search, recordNum: size, currentPageNum: current };
     listTable(searchF);
   };
 
@@ -41,56 +42,56 @@ export default ({
     width: 50,
   }, {
     title: '岗位序列',
-    dataIndex: 'DOC_CODE',
-    key: 'DOC_CODE',
+    dataIndex: 'seq',
+    key: 'seq',
     align: 'center',
     width: 100,
   }, {
     title: '子序列',
-    dataIndex: 'ATTRIBUTE8',
-    key: 'ATTRIBUTE8',
+    dataIndex: 'cseq',
+    key: 'cseq',
     align: 'center',
     width: 100,
   }, {
     title: '专业',
-    dataIndex: 'ATTRIBUTE9',
-    key: 'ATTRIBUTE9',
+    dataIndex: 'major',
+    key: 'major',
     align: 'center',
     width: 200,
   }, {
     title: '关键职责',
-    dataIndex: 'DOC_VERIFIER',
-    key: 'DOC_VERIFIER',
+    dataIndex: 'keyresp',
+    key: 'keyresp',
     align: 'center',
     width: 200,
   }, {
     title: '学历',
-    dataIndex: 'DOC_STATUS',
-    key: 'DOC_STATUS',
+    dataIndex: 'etu',
+    key: 'etu',
     align: 'center',
     width: 50,
   }, {
     title: '工作经验',
-    dataIndex: 'ATTRIBUTE10',
-    key: 'ATTRIBUTE10',
+    dataIndex: 'workexp',
+    key: 'workexp',
     align: 'center',
     width: 200,
   }, {
     title: '是否核心',
-    dataIndex: 'ATTRIBUTE11',
-    key: 'ATTRIBUTE11',
+    dataIndex: 'iscore',
+    key: 'iscore',
     align: 'center',
     width: 70,
   }, {
     title: '子职责',
-    dataIndex: 'ATTRIBUTE12',
-    key: 'ATTRIBUTE12',
+    dataIndex: 'ckeyresp',
+    key: 'ckeyresp',
     align: 'center',
     width: 100,
   }, {
     title: '组织层级',
-    dataIndex: 'ATTRIBUTE13',
-    key: 'ATTRIBUTE13',
+    dataIndex: 'leveltype',
+    key: 'leveltype',
     align: 'center',
     width: 100,
   }];
@@ -113,6 +114,7 @@ export default ({
         pageSize={size}
         onChange={onChange}
         onShowSizeChange={onChangePageSize}
+        pageSizeOptions={['10', '50', '100', '200']}
         showTotal={tota => `共 ${tota} 条`}
         showSizeChanger
         style={{ marginTop: 10, float: 'right' }}

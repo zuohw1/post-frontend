@@ -1,8 +1,9 @@
 import React from 'react';
 import {
-  Form, Row, Col, Input, Button, Icon, Select, DatePicker,
+  Form, Row, Col, Input, Button, Select, DatePicker,
 } from 'antd';
 import SyncTreeSelect from '../../../components/sync-tree-select';
+import request from '../../../utils/request';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -14,15 +15,15 @@ export default (props) => {
     expand,
   } = props;
   const { getFieldDecorator } = form;
-  const { listTable, setToggle } = actions;
+  const { listTable } = actions;
 
   const handleSearch = (e) => {
     e.preventDefault();
     form.validateFields((err, values) => {
       if (!err) {
-        const pageSize = 10;
-        const pageNumber = 1;
-        const select = { ...values, pageSize, pageNumber };
+        const recordNum = 10;
+        const currentPageNum = 1;
+        const select = { ...values, recordNum, currentPageNum };
         listTable(select);
       }
     });
@@ -30,10 +31,7 @@ export default (props) => {
 
   const handleReset = () => {
     form.resetFields();
-  };
-
-  const toggle = () => {
-    setToggle(!expand);
+    request.get('posElement/export');
   };
 
   const apply = (item) => {
@@ -41,7 +39,7 @@ export default (props) => {
   };
 
   /* 组织下拉查询地址 */
-  const refUrl = 'org/allData?id=';
+  const refUrl = 'posElement/list';
 
   /* 组织下拉选择后事件 */
   const treeSelectChange = (value, label, extra) => {
@@ -51,18 +49,20 @@ export default (props) => {
   };
 
   /* 查询条件字段 */
-  const queryCols = [{
-    itemName: '职责范围', itemKey: 'sequenceName', itemType: 'OrgSelect', required: true,
-  },
-  {
-    itemName: '关键职责', itemKey: 'respName', itemType: 'String', required: false,
-  },
-  {
-    itemName: '子职责', itemKey: 'cRespName', itemType: 'String', required: false,
-  },
-  {
-    itemName: '状态', itemKey: 'status', itemType: 'Select', required: false, list: [{ id: '0', title: '全部' }, { id: '1', title: '有效' }, { id: '2', title: '过期' }],
-  }];
+  const queryCols = [
+    {
+      itemName: '职责范围', itemKey: 'sequenceName', itemType: 'OrgSelect', required: true,
+    },
+    {
+      itemName: '关键职责', itemKey: 'respName', itemType: 'String', required: false,
+    },
+    {
+      itemName: '子职责', itemKey: 'cRespName', itemType: 'String', required: false,
+    },
+    {
+      itemName: '状态', itemKey: 'status', itemType: 'Select', required: false, list: [{ id: '0', title: '全部' }, { id: '1', title: '有效' }, { id: '2', title: '过期' }],
+    },
+  ];
 
   function getFields() {
     const count = expand ? queryCols.length : 4;
@@ -129,32 +129,15 @@ export default (props) => {
         );
       }
     }
-    if (expand) {
-      for (let i = 0; i < 9 - count; i += 1) {
-        children.push(
-          <Col span={5} key={count + i} style={{ display: 'block' }} />,
-        );
-      }
-    }
     children.push(
       <Col span={4} key={count + 6} style={{ textAlign: 'right', marginTop: 5 }}>
         <Button htmlType="submit">查询</Button>
         <Button style={{ marginLeft: 8 }} onClick={handleReset}>
           导出
         </Button>
-        {collapse}
       </Col>,
     );
     return children;
-  }
-
-  let collapse = null;
-  if (queryCols.length > 4) {
-    collapse = (
-      <a style={{ marginLeft: 8, fontSize: 12 }} onClick={toggle}>
-      更多 <Icon type={expand ? 'up' : 'down'} />
-      </a>
-    );
   }
 
   return (
