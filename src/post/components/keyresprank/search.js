@@ -3,6 +3,7 @@ import {
   Form, Row, Col, Input, Button, Icon, Select, DatePicker,
 } from 'antd';
 import CheckboxGroup from '../../../../node_modules/antd/es/checkbox/Group';
+import config from '../../../env.config';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -51,13 +52,33 @@ export default (state) => {
   }
 
 
-  const handleReset = () => {
-    form.resetFields();
-  };
-
+  // const handleReset = () => {
+  //   form.resetFields();
+  // };
 
   const handleExport = () => {
-    handleReset();
+    form.validateFields((err, values) => {
+      if (!err) {
+        const pageSize = 10;
+        const pageNumber = 1;
+        const select = {
+          ...values, pageSize, pageNumber,
+        };
+
+        let expUrl = `${config.api}/api/PosElementStructure/exportRespsInfo?pageNum=${select.pageNumber}&pageSize=${select.pageSize}`;
+        if (select.levelType && select.levelType !== '') {
+          expUrl += `&levelType=${select.levelType}`;
+        }
+        if (select.sequence && select.sequence !== '') {
+          expUrl += `&sequence=${select.sequence}`;
+        }
+        if (select.respName && select.respName !== '') {
+          expUrl += `&respName=${select.respName}`;
+        }
+        window.open(expUrl, '_self');
+      }
+    });
+    // handleReset();
   };
 
   const toggle = () => {
@@ -149,8 +170,8 @@ export default (state) => {
               {getFieldDecorator(queryCols[i].itemKey)(
                 <Select style={{ width: 220, marginLeft: 5, marginRight: 20 }} placeholder="请选择" allowClear>
                   {
-                      respList.map(apply)
-                    }
+                    respList.map(apply)
+                  }
                 </Select>,
               )}
             </FormItem>
