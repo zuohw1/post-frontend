@@ -1,7 +1,8 @@
 import React from 'react';
-import { Modal, Row, Col } from 'antd';
+import { Modal } from 'antd';
 import PropTypes from 'prop-types';
 import PostListTable from './post-duty-list';
+import UpdPost from './upd-post';
 
 class PosDuty extends React.Component {
   state = {
@@ -63,12 +64,13 @@ class PosDuty extends React.Component {
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
-          <div style={{ height: 400 }}>
+          <UpdPost />
+          {/* <div style={{ height: 400 }}>
             <Row>
               <Col span={10}>关键职责库</Col>
               <Col span={14}>岗位职责列表</Col>
             </Row>
-          </div>
+          </div> */}
         </Modal>
       </div>
     );
