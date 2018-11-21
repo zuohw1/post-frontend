@@ -13,7 +13,7 @@ export default ({
   form,
   tableData,
   actions,
-  search,
+  // search,
   loading,
 }) => {
   const {
@@ -23,13 +23,25 @@ export default ({
   const data = tableData.records;
 
   const onChange = (pageNumber, pageSize) => {
-    const searchF = { ...search, pageSize, pageNumber };
-    listTable(searchF);
+    // const searchF = {  ...search, pageSize, pageNumber };
+    // listTable(searchF);
+    form.validateFields((err, values) => {
+      if (!err) {
+        const select = { ...values, pageSize, pageNumber };
+        listTable(select);
+      }
+    });
   };
 
   const onChangePageSize = (current, size) => {
-    const searchF = { ...search, pageSize: size, pageNumber: current };
-    listTable(searchF);
+    // const searchF = { ...search, pageSize: size, pageNumber: current };
+    // listTable(searchF);
+    form.validateFields((err, values) => {
+      if (!err) {
+        const select = { ...values, size, current };
+        listTable(select);
+      }
+    });
   };
 
   const handleExport = () => {
