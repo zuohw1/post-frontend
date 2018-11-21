@@ -1,14 +1,16 @@
 import React from 'react';
 import {
   Table,
-  Pagination,
+  Pagination, Button,
 } from 'antd';
+import config from '../../../env.config';
 
 /* table size统一设置为small 固定表头，
    scroll={{ y: document.body.scrollHeight - 460 }}
    460为其他控件宽度之和
 */
 export default ({
+  form,
   tableData,
   actions,
   search,
@@ -28,6 +30,31 @@ export default ({
   const onChangePageSize = (current, size) => {
     const searchF = { ...search, pageSize: size, pageNumber: current };
     listTable(searchF);
+  };
+
+  const handleExport = () => {
+    form.validateFields((err, values) => {
+      if (!err) {
+        const pageSize = 10;
+        const pageNumber = 1;
+        const select = {
+          ...values, pageSize, pageNumber,
+        };
+
+        let expUrl = `${config.api}/api/PosElementStructure/exportRespsInfo?pageNum=${select.pageNumber}&pageSize=${select.pageSize}`;
+        if (select.levelType && select.levelType !== '') {
+          expUrl += `&levelType=${select.levelType}`;
+        }
+        if (select.sequence && select.sequence !== '') {
+          expUrl += `&sequence=${select.sequence}`;
+        }
+        if (select.respName && select.respName !== '') {
+          expUrl += `&respName=${select.respName}`;
+        }
+        window.open(expUrl, '_self');
+      }
+    });
+    // handleReset();
   };
 
   const { current, size, total } = tableData;
@@ -110,8 +137,11 @@ export default ({
   }
 
   return (
-    <div>
-      <Table columns={getFields()} loading={loading} dataSource={data} pagination={false} size="small" scroll={{ y: document.body.scrollHeight - 460 }} />
+    <div style={{ marginTop: '10px' }}>
+      <Button htmlType="button" type="primary" style={{ marginLeft: 8 }} onClick={handleExport}>
+        导出
+      </Button>
+      <Table columns={getFields()} loading={loading} dataSource={data} pagination={false} size="small" scroll={{ y: document.body.scrollHeight - 460 }} style={{ marginTop: '10px' }} />
       <Pagination
         showQuickJumper
         current={current}

@@ -3,7 +3,6 @@ import {
   Form, Row, Col, Input, Button, Icon, Select, DatePicker,
 } from 'antd';
 import CheckboxGroup from '../../../../node_modules/antd/es/checkbox/Group';
-import config from '../../../env.config';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -55,31 +54,6 @@ export default (state) => {
   // const handleReset = () => {
   //   form.resetFields();
   // };
-
-  const handleExport = () => {
-    form.validateFields((err, values) => {
-      if (!err) {
-        const pageSize = 10;
-        const pageNumber = 1;
-        const select = {
-          ...values, pageSize, pageNumber,
-        };
-
-        let expUrl = `${config.api}/api/PosElementStructure/exportRespsInfo?pageNum=${select.pageNumber}&pageSize=${select.pageSize}`;
-        if (select.levelType && select.levelType !== '') {
-          expUrl += `&levelType=${select.levelType}`;
-        }
-        if (select.sequence && select.sequence !== '') {
-          expUrl += `&sequence=${select.sequence}`;
-        }
-        if (select.respName && select.respName !== '') {
-          expUrl += `&respName=${select.respName}`;
-        }
-        window.open(expUrl, '_self');
-      }
-    });
-    // handleReset();
-  };
 
   const toggle = () => {
     setToggle(!expand);
@@ -182,9 +156,6 @@ export default (state) => {
     children.push(
       <Col span={6} style={{ textAlign: 'right' }}>
         <Button htmlType="submit">查询</Button>
-        <Button style={{ marginLeft: 8 }} onClick={handleExport}>
-          导出
-        </Button>
         {collapse}
       </Col>,
     );
