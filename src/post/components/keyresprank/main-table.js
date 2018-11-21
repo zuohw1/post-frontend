@@ -138,7 +138,7 @@ export default ({
 
   return (
     <div style={{ marginTop: '10px' }}>
-      <Button htmlType="button" type="primary" style={{ marginLeft: 8 }} onClick={handleExport}>
+      <Button htmlType="button" type="primary" style={{ marginLeft: '0' }} onClick={handleExport}>
         导出
       </Button>
       <Table columns={getFields()} loading={loading} dataSource={data} pagination={false} size="small" scroll={{ y: document.body.scrollHeight - 460 }} style={{ marginTop: '10px' }} />
