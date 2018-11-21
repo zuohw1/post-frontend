@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Table, Input, Popconfirm, Form,
+  Table, Input, Popconfirm, Form, Row, Col, Button,
 } from 'antd';
 import PropTypes from 'prop-types';
 
@@ -190,17 +190,33 @@ class UpdPostList extends React.Component {
     return (
       <div>
         <div>
-          <p>岗位职责列表</p>
+          <Row gutter={5}>
+            <Col span={16}>
+              <p>岗位职责列表</p>
+            </Col>
+            <Col span={5}>
+              <p>匹配率：100%</p>
+            </Col>
+            <Col span={3}>
+              <Button onClick={this.handleSave}>保存</Button>
+            </Col>
+          </Row>
+
         </div>
-        <Table
-          components={components}
-          rowClassName={() => 'editable-row'}
-          bordered
-          dataSource={listDataSource}
-          columns={columns}
-          size="small"
-          scroll={{ y: 320 }}
-        />
+        <div style={{
+          height: 480, border: 10, borderColor: 'blue', overflowY: 'scroll', overflowX: 'scroll',
+        }}
+        >
+          <Table
+            components={components}
+            rowClassName={() => 'editable-row'}
+            bordered
+            dataSource={listDataSource}
+            columns={columns}
+            size="small"
+            scroll="undefined"
+          />
+        </div>
       </div>
     );
   }

@@ -61,6 +61,7 @@ class PosDuty extends React.Component {
           title="基准岗位维护"
           visible={updPosListVisiable}
           width={1000}
+          footer={null}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >

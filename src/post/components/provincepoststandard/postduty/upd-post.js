@@ -31,7 +31,8 @@ class UpdPost extends React.Component {
 
   handleCheckTreeNode = (checkedKeys, info) => {
     const { listCount, listDataSource } = this.state;
-    const nodeName = info.node.props.title;
+    // const nodeName = info.node.props.title;
+    const nodeName = info.node.props.value;
     const isChecked = info.checked;
     if (isChecked === true) {
       const newData = {
@@ -61,8 +62,8 @@ class UpdPost extends React.Component {
     } = this.state;
     return (
       <div>
-        <div style={{ height: 400, border: 10, borderColor: 'blue' }}>
-          <Row gutter={50}>
+        <div style={{ height: 500, border: 10, borderColor: 'blue' }}>
+          <Row gutter={5}>
             <Col span={10}>
               <UpdPostTree handleCheckTreeNode={this.handleCheckTreeNode.bind(this)} />
             </Col>
