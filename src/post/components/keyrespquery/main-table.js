@@ -11,7 +11,7 @@ import {
 export default ({
   tableData,
   actions,
-  search,
+  form,
   loading,
 }) => {
   const {
@@ -21,14 +21,21 @@ export default ({
   const data = tableData.records;
 
   const onChange = (currentPageNum, recordNum) => {
-    const searchF = { ...search, currentPageNum, recordNum };
-    listTable(searchF);
+    form.validateFields((err, values) => {
+      if (!err) {
+        const select = { ...values, recordNum, currentPageNum };
+        listTable(select);
+      }
+    });
   };
 
   const onChangePageSize = (current, size) => {
-    console.log(current, size);
-    const searchF = { ...search, recordNum: size, currentPageNum: current };
-    listTable(searchF);
+    form.validateFields((err, values) => {
+      if (!err) {
+        const select = { ...values, recordNum: size, currentPageNum: current };
+        listTable(select);
+      }
+    });
   };
 
   const { current, size, total } = tableData;

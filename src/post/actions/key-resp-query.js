@@ -7,3 +7,11 @@ export function listTable(search) {
     },
   };
 }
+/* 职责范围 参照查询 */
+export function getRespRangeRef() {
+  return {
+    type: 'keyRespQuery/getRespRangeRef',
+    payload: {
+    },
+  };
+}

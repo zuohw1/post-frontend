@@ -2,23 +2,24 @@ import React from 'react';
 import {
   Form, Row, Col, Input, Button, Select, DatePicker,
 } from 'antd';
-import SyncTreeSelect from '../../../components/sync-tree-select';
-import request from '../../../utils/request';
+import config from '../../../env.config';
 
 const FormItem = Form.Item;
 const { Option } = Select;
+let vflag = true;
+const respList = [];
 
 export default (props) => {
   const {
     form,
     actions,
     expand,
+    respRange,
   } = props;
   const { getFieldDecorator } = form;
-  const { listTable } = actions;
+  const { listTable, getRespRangeRef } = actions;
 
-  const handleSearch = (e) => {
-    e.preventDefault();
+  const handleSearch = () => {
     form.validateFields((err, values) => {
       if (!err) {
         const recordNum = 10;
@@ -29,29 +30,54 @@ export default (props) => {
     });
   };
 
-  const handleReset = () => {
-    form.resetFields();
-    request.get('posElement/export');
+  if (vflag === true) {
+    getRespRangeRef();
+    handleSearch(); // 进入节点展示无条件的默认查询结果
+    vflag = false;
+  }
+
+  if (respList.length === 0) {
+    for (let i = 0; i < respRange.length; i += 1) { // 首次可能请求后还没拿到数据，放此位置会执行多次，只当获取到数据后会进行处理；
+      const respV = {
+        id: respRange[i].menuId,
+        title: respRange[i].menuName,
+      };
+      respList.push(respV);
+    }
+  }
+
+  /* 导出按钮 */
+  const handleExport = () => {
+    form.validateFields((err, values) => {
+      if (!err) {
+        const recordNum = 10;
+        const currentPageNum = 1;
+        const select = { ...values, recordNum, currentPageNum };
+        console.log(select);
+        let expUrl = `${config.api}/api/posElement/export?1=1`;
+        if (select.sequence && select.sequence !== '') {
+          expUrl += `&sequence=${select.sequence}`;
+        }
+        if (select.respName && select.respName !== '') {
+          expUrl += `&respName=${select.respName}`;
+        }
+        if (select.cRespName && select.cRespName !== '') {
+          expUrl += `&cRespName=${select.cRespName}`;
+        }
+        window.open(expUrl, '_self');
+      }
+    });
   };
+
 
   const apply = (item) => {
     return (<Option value={item.id} key={item.id}> {item.title} </Option>);
   };
 
-  /* 组织下拉查询地址 */
-  const refUrl = 'posElement/list';
-
-  /* 组织下拉选择后事件 */
-  const treeSelectChange = (value, label, extra) => {
-    form.setFieldsValue({
-      orgid: `${extra.triggerNode.props.id}`,
-    });
-  };
-
   /* 查询条件字段 */
   const queryCols = [
     {
-      itemName: '职责范围', itemKey: 'sequenceName', itemType: 'OrgSelect', required: true,
+      itemName: '职责范围', itemKey: 'sequence', itemType: 'RespSelect', required: false, list: [],
     },
     {
       itemName: '关键职责', itemKey: 'respName', itemType: 'String', required: false,
@@ -97,17 +123,16 @@ export default (props) => {
             </FormItem>
           </Col>,
         );
-      } else if (queryCols[i].itemType === 'OrgSelect') {
+      } else if (queryCols[i].itemType === 'RespSelect') {
         children.push(
           <Col span={5} key={i} style={{ display: i < count ? 'block' : 'none' }}>
             <FormItem label={queryCols[i].itemName}>
               {getFieldDecorator(queryCols[i].itemKey)(
-                <SyncTreeSelect
-                  treeId={37838}
-                  treeSelectChange={treeSelectChange}
-                  refUrl={refUrl}
-                  checkbox
-                />,
+                <Select style={{ width: 220, marginLeft: 5, marginRight: 20 }} placeholder="请选择" allowClear>
+                  {
+                    respList.map(apply)
+                  }
+                </Select>,
               )}
             </FormItem>
           </Col>,
@@ -132,7 +157,7 @@ export default (props) => {
     children.push(
       <Col span={4} key={count + 6} style={{ textAlign: 'right', marginTop: 5 }}>
         <Button htmlType="submit">查询</Button>
-        <Button style={{ marginLeft: 8 }} onClick={handleReset}>
+        <Button style={{ marginLeft: 8 }} onClick={handleExport}>
           导出
         </Button>
       </Col>,
