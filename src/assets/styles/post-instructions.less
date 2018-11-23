@@ -1,0 +1,110 @@
+
+.w_h(@width:100%;@height:100%) {
+  width: @width;
+  height: @height;
+}
+
+:global{
+  .PostInstructions{
+  	.w_h();
+  	overflow-y: auto;
+  	.ant-collapse{
+  		.ant-collapse-item{
+  			.ant-collapse-content{
+  				.ant-collapse-content-box{
+  					padding: 0;
+  					.instructionsSearch{
+  						.w_h(100%, auto);
+  						.instructionsSearch_1{
+  							.w_h(100%, auto);
+  							display: flex;
+  							height: 34px;
+    						line-height: 32px;
+  							.SearchTitle{
+  								flex: 2;
+  								text-indent: 1em;
+  								border-right: 1px solid #d9d9d9;
+    							border-bottom: 1px solid #d9d9d9;
+  							}
+  							.SearchContent{
+  								flex: 3;
+  								border-right: 1px solid #d9d9d9;
+    							border-bottom: 1px solid #d9d9d9;
+    							.ant-select{
+    								.ant-select-selection--single{
+    									border: 0;
+    								}
+    							}
+  							}
+  							.SearchContent_4{
+  								display: flex;
+  								.SearchContent_4_1{
+  									flex: 1;
+  									margin-right: 6px;
+  									height: 33px;
+								    border-top: 0;
+								    border-bottom: 0;
+								    border-left: 0;
+  								}
+  								.SearchContent_4_2{
+  									margin-right: 6px;
+  								}
+  								.SearchContent_4_3{
+  									margin-right: 6px;
+  								}
+  							}
+  							.SearchContent_5{
+  								.ant-calendar-picker{
+  									.w_h(100%, 34px);
+  									div{
+  										height: 34px;
+  										.ant-calendar-picker-input{
+  											height: 33px;
+  											border: 0;
+  										}
+  									}
+  								}
+  							}
+  							.SearchContent_6{
+  								input{
+  									height: 33px;
+								    border: 0;
+  								}
+  							}
+  							.SearchSpan{
+  								height: 34px;
+  								line-height: 34px;
+  								padding-left: 9px;
+  								margin: 0 auto;
+  								button{
+  									margin-right: 9px;
+  								}
+  							}
+  						}
+  					}
+  				}
+  			}
+  		}
+  	}
+  	.instructionsList{
+  		border-radius: 0 0 4px 4px;
+  		line-height: 22px;
+	    padding: 12px 0 12px 40px;
+	    color: rgba(0, 0, 0, 0.85);
+	    cursor: pointer;
+	    position: relative;
+	    -webkit-transition: all .3s;
+	    transition: all .3s;
+	    font-family: "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	    font-size: 14px;
+	    font-variant: tabular-nums;
+	    list-style: none;
+	    margin: 0;
+	    list-style: none;
+	    background-color: #fafafa;
+	    border-radius: 4px;
+	    border: 1px solid #d9d9d9;
+	    margin-top: 2px;
+  	}
+  }
+}

@@ -15,14 +15,15 @@
     "jquery": "^3.3.1",
     "js-cookie": "^2.2.0",
     "json-bigint": "^0.3.0",
+    "less": "^2.6.0",
     "moment": "^2.22.2",
     "path-to-regexp": "^2.2.1",
+    "prop-types": "latest",
     "ramda": "^0.25.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "redux": "latest",
-    "redux-logger": "^3.0.6",
-    "prop-types": "latest"
+    "redux-logger": "^3.0.6"
   },
   "devDependencies": {
     "roadhog": "^2.0.0"

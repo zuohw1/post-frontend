@@ -6,15 +6,15 @@ import CadreAccount from './echarts/cadre-account';
 import SeniorCadreAccount from './echarts/senior-cadre-account';
 import VariousExamineAccount from './echarts/various-examine-account';
 import VariousCadreEducationDistribution from './echarts/various-cadre-education-distribution';
-import './assets/styles/main.css';
+import './assets/styles/main.less';
 
 const { Content } = Layout;
 
-function onPanelChange(value, mode) {
-  console.log(value, mode);
+function onPanelChange() {
+  // console.log(value, mode);value, mode
 }
 
-class Manpower extends Component {
+class Main extends Component {
   render() {
     return (
       <div className="Manpower">
@@ -92,7 +92,7 @@ class Manpower extends Component {
               </div>
               <div className="part2">
                 <Row gutter={16}>
-                  <Col span={8}>
+                  <Col span={8} className="part2RowFirst">
                     <Card title="实时培训看板" extra={<a href=" javascript:;">编辑</a>} bordered={false} className="part2SonFirst">
                       <p className="part2SonFirstP"><i>[签到率]</i><span className="part2SonFirstPSpan1">70%</span><span className="part2SonFirstPSpan2">产品经理课程</span></p>
                       <p className="part2SonFirstP"><i>[评价率]</i><span className="part2SonFirstPSpan1">20%</span><span className="part2SonFirstPSpan2">SPARK培训</span></p>
@@ -110,7 +110,7 @@ class Manpower extends Component {
                       <SeniorCadreAccount />
                     </Card>
                   </Col>
-                  <Col span={8}>
+                  <Col span={8} className="part2RowLast">
                     <Card title="各类考核占比" bordered={false} className="part2SonFirst">
                       <VariousExamineAccount />
                     </Card>
@@ -164,4 +164,4 @@ class Manpower extends Component {
   }
 }
 
-export default Manpower;
+export default Main;

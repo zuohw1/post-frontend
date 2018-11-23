@@ -59,6 +59,13 @@ export default {
         pid: 2,
         iconUrl: 'user',
       },
+      {
+        id: 207,
+        menuName: '岗位说明书维护',
+        url: '/post/postInstructions',
+        pid: 2,
+        iconUrl: 'user',
+      },
     ],
   },
   reducers: {
