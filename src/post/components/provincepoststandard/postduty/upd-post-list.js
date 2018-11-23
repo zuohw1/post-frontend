@@ -3,6 +3,7 @@ import {
   Table, Input, Popconfirm, Form, Row, Col, Button,
 } from 'antd';
 import PropTypes from 'prop-types';
+import Styles from '../../../../assets/styles/upd-post-list.less';
 
 // 基准岗位维护-列表
 
@@ -75,8 +76,8 @@ class EditableCell extends React.Component {
       dataIndex,
       title,
       record,
-      index,
-      handleSave,
+      // index,
+      // handleSave,
       ...restProps
     } = this.props;
     return (
@@ -163,6 +164,12 @@ class UpdPostList extends React.Component {
     this.setState({ dataSource: newData });
   }
 
+  setRowClassName = (record, index) => {
+    const { groupPostCount } = this.props;
+    return (index < groupPostCount ? Styles.csbsTypes : '');
+    // return (index < groupPostCount ? csbsTypes : '');
+  }
+
   render() {
     const { listDataSource } = this.props;
     const components = {
@@ -209,12 +216,13 @@ class UpdPostList extends React.Component {
         >
           <Table
             components={components}
-            rowClassName={() => 'editable-row'}
+            rowClassName={this.setRowClassName}
             bordered
             dataSource={listDataSource}
             columns={columns}
             size="small"
             scroll="undefined"
+            pagination={false}
           />
         </div>
       </div>
@@ -225,6 +233,7 @@ class UpdPostList extends React.Component {
 UpdPostList.propTypes = {
   listDataSource: PropTypes.array.isRequired,
   handleListDelete: PropTypes.func.isRequired,
+  groupPostCount: PropTypes.number.isRequired,
 };
 
 export default UpdPostList;
