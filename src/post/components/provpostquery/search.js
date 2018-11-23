@@ -1,4 +1,4 @@
-/* eslint-disable indent */
+/* eslint-disable indent,max-len */
 import React from 'react';
 import {
   Form, Row, Col, Input, Button, Icon, Select, DatePicker,
@@ -9,28 +9,83 @@ import CheckboxGroup from '../../../../node_modules/antd/es/checkbox/Group';
 
 const FormItem = Form.Item;
 const { Option } = Select;
-
-export default (props) => {
+let vflag = false;
+let vadd = false;
+let vass = false;
+const postList = [];
+const subList = [];
+const micList = [];
+export default (state) => {
   const {
     form,
     actions,
     expand,
-  } = props;
+    postSeq,
+    subSeq,
+    menSeq,
+  } = state;
   const { getFieldDecorator } = form;
-  const { listTable, setToggle } = actions;
+  const {
+    listTable, setToggle, getPostRangeRef, getRespRangeRef, getMeatRangeRef,
+  } = actions;
 
-  const handleSearch = (e) => {
-    e.preventDefault();
+  const handleSearch = () => {
+    // e.preventDefault();
     form.validateFields((err, values) => {
       if (!err) {
-        const pageSize = 10;
-        const pageNumber = 1;
-        const select = { ...values, pageSize, pageNumber };
+        const recordNum = 10;
+        const currentPageNum = 1;
+        const select = { ...values, recordNum, currentPageNum };
         listTable(select);
       }
     });
   };
+  // 动态获取 岗位序列
+  if (vflag === false) {
+    getPostRangeRef();
+    vflag = true;
+  }
+  if (postList.length === 0) {
+    for (let i = 0; i < postSeq.length; i += 1) {
+      const respV = {
+        id: postSeq[i].elementId,
+        title: postSeq[i].elementName,
+      };
+      postList.push(respV);
+    }
+  }
 
+  // 动态获取 子序列
+  if (vadd === false) {
+    getRespRangeRef();
+    vadd = true;
+  }
+  console.log('subSeq', subSeq);
+  if (subList.length === 0) {
+    for (let i = 0; i < subSeq.length; i += 1) {
+      const respV = {
+        id: subSeq[i].sid,
+        title: subSeq[i].sname,
+      };
+      subList.push(respV);
+    }
+  }
+
+  // 动态获取 学历要求
+  if (vass === false) {
+    getMeatRangeRef();
+    vass = true;
+  }
+  console.log('menSeq', menSeq);
+  if (micList.length === 0) {
+    for (let i = 0; i < menSeq.length; i += 1) {
+      const pageV = {
+        id: menSeq[i].lookupCode,
+        title: menSeq[i].meaning,
+      };
+      micList.push(pageV);
+    }
+  }
   const handleReset = () => {
     form.resetFields();
   };
@@ -57,27 +112,27 @@ export default (props) => {
 
   /* 查询字段 */
   const queryCols = [{
-    itemName: '岗位序列', itemKey: 'test_def1', itemType: 'Select', required: false, list: [{ id: '0', title: '测试序列' }, { id: '1', title: '管理序列' }, { id: '2', title: '技术序列' }, { id: '3', title: '支撑序列' }],
+    itemName: '岗位序列', itemKey: 'posCateId', itemType: 'PostSelect', required: false, list: [],
   },
     {
-      itemName: '子序列', itemKey: 'ATTRIBUTE8', itemType: 'Select', required: false, list: [{ id: '0', title: '党群、纪检、工会' }, { id: '1', title: '管理' }, { id: '2', title: '国际业务销售' }, { id: '3', title: '采购管理' }, { id: '4', title: '集团客户销售' }, { id: '5', title: '综合行政与后勤' }],
+      itemName: '子序列', itemKey: 'posSubcateId', itemType: 'SubSelect', required: false, list: [],
     },
     {
-      itemName: '关键词', itemKey: 'test_def3', itemType: 'String', required: false,
+      itemName: '关键词', itemKey: 'posName', itemType: 'String', required: false,
     },
     {
-      itemName: '', itemKey: 'cRespName', itemType: 'Checkbox', required: false, list: [{ label: '展示有效岗位', value: 'effectivepos' }, { label: '展示无效岗位  ', value: 'invalidpos' }],
+      itemName: '', itemKey: 'state', itemType: 'Checkbox', required: false, list: [{ label: '展示有效岗位', value: 'effectivepos' }, { label: '展示无效岗位  ', value: 'invalidpos' }],
     },
     {
-      itemName: '组织层级', itemKey: 'cRespName', itemType: 'Checkbox', required: false, list: [{ label: '集团', value: 'J' }, { label: '省', value: 'S' }, { label: '市', value: 'D' }, { label: '区/县', value: 'X' }],
+      itemName: '组织层级', itemKey: 'levelCode', itemType: 'Checkbox', required: false, list: [{ label: '省', value: 's' }, { label: '市', value: 'd' }, { label: '区/县', value: 'x' }],
     },
     {
-      itemName: '是否核心', itemKey: 'def4', itemType: 'Select', required: false, list: [{ id: '0', title: '是' }, { id: '1', title: '否' }],
+      itemName: '是否核心', itemKey: 'coreFlag', itemType: 'Select', required: false, list: [{ id: '0', title: '是' }, { id: '1', title: '否' }],
     },
     {
-      itemName: '学历要求', itemKey: 'def5', itemType: 'Select', required: false, list: [{ id: '0', title: '博士' }, { id: '1', title: '硕士' }, { id: '2', title: '本科' }, { id: '3', title: '大专' }],
+      itemName: '学历要求', itemKey: 'educationDegree', itemType: 'MenSelect', required: false, list: [],
     },
-    ];
+  ];
 
   let collapse = null;
   if (queryCols.length > 3) {
@@ -116,6 +171,48 @@ export default (props) => {
                 <Select style={{ width: 220, marginLeft: 5, marginRight: 20 }} placeholder="请选择" allowClear>
                   {
                     queryCols[i].list.map(apply)
+                  }
+                </Select>,
+              )}
+            </FormItem>
+          </Col>,
+        );
+      } else if (queryCols[i].itemType === 'PostSelect') { // 岗位序列
+        children.push(
+          <Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>
+            <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
+              {getFieldDecorator(queryCols[i].itemKey)(
+                <Select style={{ width: 220, marginLeft: 5, marginRight: 20 }} placeholder="请选择" allowClear>
+                  {
+                    postList.map(apply)
+                  }
+                </Select>,
+              )}
+            </FormItem>
+          </Col>,
+        );
+      } else if (queryCols[i].itemType === 'SubSelect') { // 子序列
+        children.push(
+          <Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>
+            <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
+              {getFieldDecorator(queryCols[i].itemKey)(
+                <Select style={{ width: 220, marginLeft: 5, marginRight: 20 }} placeholder="请选择" allowClear>
+                  {
+                    subList.map(apply)
+                  }
+                </Select>,
+              )}
+            </FormItem>
+          </Col>,
+        );
+      } else if (queryCols[i].itemType === 'MenSelect') { // 学历要求
+        children.push(
+          <Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>
+            <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
+              {getFieldDecorator(queryCols[i].itemKey)(
+                <Select style={{ width: 220, marginLeft: 5, marginRight: 20 }} placeholder="请选择" allowClear>
+                  {
+                    micList.map(apply)
                   }
                 </Select>,
               )}
