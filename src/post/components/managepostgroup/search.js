@@ -5,20 +5,18 @@ import {
 
 const FormItem = Form.Item;
 const { Option } = Select;
-let vflag = true;
-const respList = [];
 
 export default (props) => {
   const {
     form,
     actions,
     expand,
-    respRange,
   } = props;
   const { getFieldDecorator } = form;
-  const { listTable, getRespRangeRef } = actions;
+  const { listTable } = actions;
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault();
     form.validateFields((err, values) => {
       if (!err) {
         const recordNum = 10;
@@ -29,23 +27,6 @@ export default (props) => {
     });
   };
 
-  if (vflag === true) {
-    getRespRangeRef();
-    handleSearch(); // 进入节点展示无条件的默认查询结果
-    vflag = false;
-  }
-
-  if (respList.length === 0) {
-    for (let i = 0; i < respRange.length; i += 1) { // 首次可能请求后还没拿到数据，放此位置会执行多次，只当获取到数据后会进行处理；
-      const respV = {
-        id: respRange[i].menuId,
-        title: respRange[i].menuName,
-      };
-      respList.push(respV);
-    }
-  }
-
-
   const apply = (item) => {
     return (<Option value={item.id} key={item.id}> {item.title} </Option>);
   };
@@ -53,16 +34,10 @@ export default (props) => {
   /* 查询条件字段 */
   const queryCols = [
     {
-      itemName: '职责范围', itemKey: 'sequence', itemType: 'RespSelect', required: false, list: [],
+      itemName: '部门', itemKey: 'sequence', itemType: 'RespSelect', required: false, list: [{ id: '0', title: '中国联通总部' }, { id: '1', title: '北京市昌平区分公司' }, { id: '2', title: '北京市第八分区' }],
     },
     {
-      itemName: '关键职责', itemKey: 'respName', itemType: 'String', required: false,
-    },
-    {
-      itemName: '子职责', itemKey: 'cRespName', itemType: 'String', required: false,
-    },
-    {
-      itemName: '状态', itemKey: 'status', itemType: 'Select', required: false, list: [{ id: '0', title: '全部' }, { id: '1', title: '有效' }, { id: '2', title: '过期' }],
+      itemName: '关键职责', itemKey: 'status', itemType: 'Select', required: false, list: [{ id: '0', title: '集团本部门正职' }, { id: '1', title: '集团本部门副职' }, { id: '2', title: '其他' }],
     },
   ];
 
@@ -87,7 +62,7 @@ export default (props) => {
         );
       } else if (queryCols[i].itemType === 'Select') {
         children.push(
-          <Col span={5} key={i} style={{ display: i < count ? 'block' : 'none' }}>
+          <Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>
             <FormItem label={queryCols[i].itemName}>
               {getFieldDecorator(queryCols[i].itemKey)(
                 <Select placeholder="请选择" allowClear>
@@ -101,12 +76,12 @@ export default (props) => {
         );
       } else if (queryCols[i].itemType === 'RespSelect') {
         children.push(
-          <Col span={5} key={i} style={{ display: i < count ? 'block' : 'none' }}>
+          <Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>
             <FormItem label={queryCols[i].itemName}>
               {getFieldDecorator(queryCols[i].itemKey)(
-                <Select style={{ width: 220, marginLeft: 5, marginRight: 20 }} placeholder="请选择" allowClear>
+                <Select placeholder="请选择" allowClear>
                   {
-                    respList.map(apply)
+                    queryCols[i].list.map(apply)
                   }
                 </Select>,
               )}
@@ -131,7 +106,7 @@ export default (props) => {
       }
     }
     children.push(
-      <Col span={4} key={count + 6} style={{ textAlign: 'right', marginTop: 5 }}>
+      <Col span={4} key={count + 6} style={{ marginTop: 5 }}>
         <Button htmlType="submit">查询</Button>
       </Col>,
     );

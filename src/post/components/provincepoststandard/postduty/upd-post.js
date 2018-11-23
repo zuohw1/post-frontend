@@ -25,27 +25,9 @@ class UpdPost extends React.Component {
         key: '3',
         subposname: '实体渠道管理.渠道策略与规划.渠道见识源自、标准以及渠道引入、合作管理等',
       }],
-      listCount: 4,
+      listCount: 4, //  界面右侧列表记录条数，可变
+      groupPostCount: 4, // 集团基准岗位数 -- 后台获取界面不做变更；
     };
-  }
-
-  handleCheckTreeNode = (checkedKeys, info) => {
-    const { listCount, listDataSource } = this.state;
-    // const nodeName = info.node.props.title;
-    const nodeName = info.node.props.value;
-    const isChecked = info.checked;
-    if (isChecked === true) {
-      const newData = {
-        key: listCount,
-        subposname: nodeName,
-      };
-      this.setState({
-        checkTreeNodeName: nodeName,
-        isAddFlag: true,
-        listDataSource: [...listDataSource, newData],
-        listCount: listCount + 1,
-      });
-    }
   }
 
   handleListDelete = (key) => {
@@ -56,9 +38,49 @@ class UpdPost extends React.Component {
     });
   }
 
+  handleCheckTreeNode = (checkedKeys, info) => {
+    const { listCount, listDataSource } = this.state;
+    // const nodeName = info.node.props.title;
+    const postId = `${info.node.props.postId}`;
+    const nodeName = info.node.props.value;
+    const isChecked = info.checked;
+    if (isChecked === true) {
+      if (info.node.props.children === undefined) { // 选叶子节点
+        const newData = {
+          key: postId,
+          subposname: nodeName,
+        };
+        this.setState({
+          checkTreeNodeName: nodeName,
+          isAddFlag: true,
+          listDataSource: [...listDataSource, newData],
+          listCount: listCount + 1,
+        });
+      } else { // 选 非叶子节点
+        const postChidren = info.node.props.children;
+        const newDatas = [];
+        for (let j = 0; j < postChidren.length; j += 1) {
+          const pId = postChidren[j].props.postId;
+          const pvalue = postChidren[j].props.value;
+          const newData = {
+            key: pId,
+            subposname: pvalue,
+          };
+          newDatas.push(newData);
+          this.setState({
+            checkTreeNodeName: pvalue,
+            isAddFlag: true,
+            listDataSource: listDataSource.concat(newDatas),
+            listCount: listCount + 2,
+          });
+        }
+      }
+    }
+  }
+
   render() {
     const {
-      checkTreeNodeName, isAddFlag, listDataSource, listCount,
+      checkTreeNodeName, isAddFlag, listDataSource, listCount, groupPostCount,
     } = this.state;
     return (
       <div>
@@ -73,6 +95,7 @@ class UpdPost extends React.Component {
                 isAddFlag={isAddFlag}
                 listDataSource={listDataSource}
                 listCount={listCount}
+                groupPostCount={groupPostCount}
                 handleListDelete={this.handleListDelete.bind(this)}
               />
             </Col>

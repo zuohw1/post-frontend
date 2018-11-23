@@ -5,6 +5,7 @@ import {
   Pagination, Button,
 } from 'antd';
 import Popup from "./messages/index";
+import config from "../../../env.config";
 
 /* table size统一设置为small 固定表头，
    scroll={{ y: document.body.scrollHeight - 460 }}
@@ -14,95 +15,150 @@ import Popup from "./messages/index";
 class Table1 extends Component {
   render() {
     const {
-      tableData, actions, search, loading,
+      tableData, actions, search, loading,form
     } = this.props;
     const { listTable } = actions;
 
     const data = tableData.records;
 
 
-    const onChange = (pageNumber, pageSize) => {
-      const searchF = { ...search, pageSize, pageNumber };
+    const onChange = (currentPageNum, recordNum,) => {
+      const searchF = { ...search, recordNum ,currentPageNum };
       listTable(searchF);
     };
 
     const onChangePageSize = (current, size) => {
-      const searchF = { ...search, pageSize: size, pageNumber: current };
+      const searchF = { ...search, recordNum: size, currentPageNum: current };
       listTable(searchF);
     };
     const handleExportProvPos = () => {
+      form.validateFields((err, values) => {
+        if (!err) {
+          const recordNum = 10;
+          const currentPageNum = 1;
+          const select = {
+            ...values, recordNum, currentPageNum,
+          };
+          let expUrl = `${config.api}/api/posJposV/outExl?currentPageNum=${select.currentPageNum}&recordNum=${select.recordNum}`;
+          if (select.posCateId && select.posCateId !== '') {
+            expUrl += `&posCateId=${select.posCateId}`;
+          }
+          if (select.posSubcateId && select.posSubcateId !== '') {
+            expUrl += `&posSubcateId=${select.posSubcateId}`;
+          }
+          if (select.posName && select.posName !== '') {
+            expUrl += `&posName=${select.posName}`;
+          }
+          if (select.levelCode && select.levelCode !== '') {
+            const levelcode = select.levelCode;
+            levelcode.forEach((value) => {
+              if (value==='s') {
+                expUrl += `&orgLevelS=s`;
+              } else if (value==='s') {
+                expUrl += `&orgLevelD=d`;
+              } else if (value==='s') {
+                expUrl += `&orgLevelX=x`;
+              }
+            });
+          }
+          if (select.orgLevelS && select.orgLevelS !== '') {
+            expUrl += `&orgLevelS=${select.orgLevelS}`;
+          }
+          if (select.orgLevelD && select.orgLevelD !== '') {
+            expUrl += `&orgLevelD=${select.orgLevelD}`;
+          }
+          if (select.orgLevelX && select.orgLevelX !== '') {
+            expUrl += `&orgLevelX=${select.orgLevelX}`;
+          }
+          if (select.coreFlag && select.coreFlag !== '') {
+            expUrl += `&coreFlag=${select.coreFlag}`;
+          }
+          if (select.educationDegree && select.educationDegree !== '') {
+            expUrl += `&educationDegree=${select.educationDegree}`;
+          }
+          window.open(expUrl, '_self');
+        }
+      });
     };
     const { current, size, total } = tableData;
     /* 列表字段 */
     const tableCols = [{
-      title: '序号',
-      dataIndex: 'key',
-      key: 'key',
+      title: '集团基准岗位名称',
+      dataIndex: 'parentPosName',
+      key: 'parentPosName',
       align: 'center',
       width: 150,
     }, {
-      title: '基准岗位名称',
-      dataIndex: 'DOC_CODE',
-      key: 'DOC_CODE',
+      title: '省基准岗位名称',
+      dataIndex: 'posName',
+      key: 'posName',
       align: 'center',
       width: 150,
     }, {
       title: '所属子序列',
-      dataIndex: 'ATTRIBUTE8',
-      key: 'ATTRIBUTE8',
+      dataIndex: 'sname',
+      key: 'sname',
       align: 'center',
       width: 150,
     }, {
       title: '组织层级',
-      dataIndex: 'ATTRIBUTE13',
-      key: 'ATTRIBUTE13',
+      dataIndex: 'orgLevel',
+      key: 'orgLevel',
       align: 'center',
       width: 150,
     }, {
       title: '是否核心',
-      dataIndex: 'ATTRIBUTE11',
-      key: 'ATTRIBUTE11',
+      dataIndex: 'coreFlag',
+      key: 'coreFlag',
       align: 'center',
       width: 150,
+      render: (text) => {
+        if (text === 'Y') {
+          return '是';
+        } else if (text === 'N') {
+          return '否';
+        }
+      },
     }, {
       title: '学历要求',
-      dataIndex: 'DOC_STATUS',
-      key: 'DOC_STATUS',
+      dataIndex: 'educationDegree',
+      key: 'educationDegree',
       align: 'center',
       width: 150,
     }, {
       title: '开始日期',
-      dataIndex: 'ATTRIBUTE10',
-      key: 'ATTRIBUTE10',
+      dataIndex: 'activeStartDate',
+      key: 'activeStartDate',
       align: 'center',
       width: 150,
     }, {
-      title: '结束日期',
-      dataIndex: 'JHTRIBUTE10',
-      key: 'JHTRIBUTE10',
-      align: 'center',
-      width: 150,
-    }, {
-        title: '操作',
-        dataIndex: 'def5',
-        key: 'def5',
+        title: '结束日期',
+        dataIndex: 'activeEndDate',
+        key: 'activeEndDate',
         align: 'center',
         width: 150,
-        render: (text, record) => (
-          <span>
-          {record.def5.map(tag => <Popup posKey={record.key} posName={tag}/>)}
-          </span>
-        ),
-      }];
-
+      },];
     function getFields() {
       const children = [];
       for (let i = 0; i < tableCols.length; i += 1) {
         children.push(tableCols[i]);
       }
+      children.push(
+        {
+          title: '操作',
+          dataIndex: 'def5',
+          key: 'def5',
+          align: 'center',
+          width: 150,
+          // render: (text, record) => (
+          //   <span>
+          //    { record.def5.map(tag => <Popup posKey={record.key} posName={tag}/>)}
+          //   </span>
+          // ),
+        },
+      );
       return children;
     }
-
     return (
       <div style={{ marginTop: 10 }}>
         <Button htmlType="button" type="primary" style={{ marginLeft: '10px' }} onClick={handleExportProvPos}>
@@ -115,7 +171,6 @@ class Table1 extends Component {
           pagination={false}
           size="small"
           scroll={{ y: document.body.scrollHeight - 460 }}
-          bordered
           style={{ marginTop: '10px' }}
         />
         <Pagination
@@ -125,6 +180,7 @@ class Table1 extends Component {
           pageSize={size}
           onChange={onChange}
           onShowSizeChange={onChangePageSize}
+          pageSizeOptions={['10','50','100','200']}
           showTotal={tota => `共 ${tota} 条`}
           showSizeChanger
           style={{ marginTop: 10, float: 'right' }}
