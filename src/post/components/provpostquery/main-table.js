@@ -112,6 +112,13 @@ class Table1 extends Component {
       key: 'coreFlag',
       align: 'center',
       width: 150,
+      render: (text) => {
+        if (text === 'Y') {
+          return '是';
+        } else if (text === 'N') {
+          return '否';
+        }
+      },
     }, {
       title: '学历要求',
       dataIndex: 'educationDegree',
@@ -124,21 +131,18 @@ class Table1 extends Component {
       key: 'activeStartDate',
       align: 'center',
       width: 150,
-    },];
+    }, {
+        title: '结束日期',
+        dataIndex: 'activeEndDate',
+        key: 'activeEndDate',
+        align: 'center',
+        width: 150,
+      },];
     function getFields() {
       const children = [];
       for (let i = 0; i < tableCols.length; i += 1) {
         children.push(tableCols[i]);
       }
-      children.push(
-        {
-          title: '结束日期',
-          dataIndex: 'activeEndDate',
-          key: 'activeEndDate',
-          align: 'center',
-          width: 150,
-        },
-      );
       children.push(
         {
           title: '操作',
@@ -155,7 +159,6 @@ class Table1 extends Component {
       );
       return children;
     }
-
     return (
       <div style={{ marginTop: 10 }}>
         <Button htmlType="button" type="primary" style={{ marginLeft: '10px' }} onClick={handleExportProvPos}>

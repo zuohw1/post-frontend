@@ -127,7 +127,7 @@ export default (state) => {
       itemName: '组织层级', itemKey: 'levelCode', itemType: 'Checkbox', required: false, list: [{ label: '省', value: 's' }, { label: '市', value: 'd' }, { label: '区/县', value: 'x' }],
     },
     {
-      itemName: '是否核心', itemKey: 'coreFlag', itemType: 'Select', required: false, list: [{ id: '0', title: '是' }, { id: '1', title: '否' }],
+      itemName: '是否核心', itemKey: 'coreFlag', itemType: 'Select', required: false, list: [{ id: 'Y', title: '是' }, { id: 'N', title: '否' }],
     },
     {
       itemName: '学历要求', itemKey: 'educationDegree', itemType: 'MenSelect', required: false, list: [],
