@@ -59,6 +59,13 @@ export default {
         pid: 2,
         iconUrl: 'user',
       },
+      {
+        id: 207,
+        menuName: '管理人员职位管理(集团)',
+        url: '/post/managePostGroup',
+        pid: 2,
+        iconUrl: 'user',
+      },
     ],
   },
   reducers: {
