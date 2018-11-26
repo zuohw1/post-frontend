@@ -70,6 +70,13 @@ export default {
         pid: 2,
         iconUrl: 'user',
       },
+      {
+        id: 210,
+        menuName: '效率业务数据维护',
+        url: '/post/efficientDataMaintenance',
+        pid: 2,
+        iconUrl: 'user',
+      },
     ],
   },
   reducers: {
