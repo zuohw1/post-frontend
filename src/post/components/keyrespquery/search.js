@@ -104,7 +104,7 @@ export default (props) => {
           <Col span={5} key={i} style={{ display: i < count ? 'block' : 'none' }}>
             <FormItem label={queryCols[i].itemName}>
               {getFieldDecorator(queryCols[i].itemKey)(
-                <Select style={{ width: 220, marginLeft: 5, marginRight: 20 }} placeholder="请选择" allowClear>
+                <Select placeholder="请选择" allowClear>
                   {
                     respList.map(apply)
                   }
