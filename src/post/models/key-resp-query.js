@@ -1,4 +1,4 @@
-import KeyrespqueryService from '../services/key-resp-query';
+import KeyRespQueryService from '../services/key-resp-query';
 
 /* 格式化table的数据 */
 const formatTableData = (tableData) => {
@@ -18,6 +18,8 @@ const formatTableData = (tableData) => {
 export default {
   namespace: 'keyRespQuery',
   state: {
+    /* 职责范围数据 */
+    respRange: {},
     /* 列表数据 */
     tableData: {
       total: 0,
@@ -30,11 +32,6 @@ export default {
     expand: false,
     /* 查询条件数据 */
     search: {
-      sequence: '',
-      respName: '',
-      cRespName: '',
-      recordNum: 10,
-      currentPageNum: 1,
     },
   },
   reducers: {
@@ -46,9 +43,21 @@ export default {
     },
   },
   effects: {
+    /* 职责范围 参照查询 */
+    * getRespRangeRef({ payload: { search } }, { call, put }) {
+      console.log('search', search);
+      const respData = yield call(KeyRespQueryService.getRespRangeRef);
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          respRange: respData,
+        },
+      });
+    },
+
     /* 列表查询 */
     * fetch({ payload: { search } }, { call, put }) {
-      const tableData = yield call(KeyrespqueryService.list, search);
+      const tableData = yield call(KeyRespQueryService.list, search);
       const formatTable = formatTableData(tableData);
       yield put({
         type: 'stateWillUpdate',
@@ -60,15 +69,5 @@ export default {
     },
   },
   subscriptions: {
-    setup({ dispatch, history }) {
-      return history.listen(({ pathname }) => {
-        if (pathname === '/post/key-resp-query') {
-          dispatch({
-            type: 'fetch',
-            payload: { search: { currentPageNum: 1, recordNum: 10 } },
-          });
-        }
-      });
-    },
   },
 };

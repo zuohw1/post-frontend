@@ -1,0 +1,94 @@
+:global .PostInstructions {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+:global .PostInstructions .ant-collapse .ant-collapse-item .ant-collapse-content .ant-collapse-content-box {
+  padding: 0;
+}
+:global .PostInstructions .ant-collapse .ant-collapse-item .ant-collapse-content .ant-collapse-content-box .instructionsSearch {
+  width: 100%;
+  height: auto;
+}
+:global .PostInstructions .ant-collapse .ant-collapse-item .ant-collapse-content .ant-collapse-content-box .instructionsSearch .instructionsSearch_1 {
+  width: 100%;
+  height: auto;
+  display: flex;
+  height: 34px;
+  line-height: 32px;
+}
+:global .PostInstructions .ant-collapse .ant-collapse-item .ant-collapse-content .ant-collapse-content-box .instructionsSearch .instructionsSearch_1 .SearchTitle {
+  flex: 2;
+  text-indent: 1em;
+  border-right: 1px solid #d9d9d9;
+  border-bottom: 1px solid #d9d9d9;
+}
+:global .PostInstructions .ant-collapse .ant-collapse-item .ant-collapse-content .ant-collapse-content-box .instructionsSearch .instructionsSearch_1 .SearchContent {
+  flex: 3;
+  border-right: 1px solid #d9d9d9;
+  border-bottom: 1px solid #d9d9d9;
+}
+:global .PostInstructions .ant-collapse .ant-collapse-item .ant-collapse-content .ant-collapse-content-box .instructionsSearch .instructionsSearch_1 .SearchContent .ant-select .ant-select-selection--single {
+  border: 0;
+}
+:global .PostInstructions .ant-collapse .ant-collapse-item .ant-collapse-content .ant-collapse-content-box .instructionsSearch .instructionsSearch_1 .SearchContent_4 {
+  display: flex;
+}
+:global .PostInstructions .ant-collapse .ant-collapse-item .ant-collapse-content .ant-collapse-content-box .instructionsSearch .instructionsSearch_1 .SearchContent_4 .SearchContent_4_1 {
+  flex: 1;
+  margin-right: 6px;
+  height: 33px;
+  border-top: 0;
+  border-bottom: 0;
+  border-left: 0;
+}
+:global .PostInstructions .ant-collapse .ant-collapse-item .ant-collapse-content .ant-collapse-content-box .instructionsSearch .instructionsSearch_1 .SearchContent_4 .SearchContent_4_2 {
+  margin-right: 6px;
+}
+:global .PostInstructions .ant-collapse .ant-collapse-item .ant-collapse-content .ant-collapse-content-box .instructionsSearch .instructionsSearch_1 .SearchContent_4 .SearchContent_4_3 {
+  margin-right: 6px;
+}
+:global .PostInstructions .ant-collapse .ant-collapse-item .ant-collapse-content .ant-collapse-content-box .instructionsSearch .instructionsSearch_1 .SearchContent_5 .ant-calendar-picker {
+  width: 100%;
+  height: 34px;
+}
+:global .PostInstructions .ant-collapse .ant-collapse-item .ant-collapse-content .ant-collapse-content-box .instructionsSearch .instructionsSearch_1 .SearchContent_5 .ant-calendar-picker div {
+  height: 34px;
+}
+:global .PostInstructions .ant-collapse .ant-collapse-item .ant-collapse-content .ant-collapse-content-box .instructionsSearch .instructionsSearch_1 .SearchContent_5 .ant-calendar-picker div .ant-calendar-picker-input {
+  height: 33px;
+  border: 0;
+}
+:global .PostInstructions .ant-collapse .ant-collapse-item .ant-collapse-content .ant-collapse-content-box .instructionsSearch .instructionsSearch_1 .SearchContent_6 input {
+  height: 33px;
+  border: 0;
+}
+:global .PostInstructions .ant-collapse .ant-collapse-item .ant-collapse-content .ant-collapse-content-box .instructionsSearch .instructionsSearch_1 .SearchSpan {
+  height: 34px;
+  line-height: 34px;
+  padding-left: 9px;
+  margin: 0 auto;
+}
+:global .PostInstructions .ant-collapse .ant-collapse-item .ant-collapse-content .ant-collapse-content-box .instructionsSearch .instructionsSearch_1 .SearchSpan button {
+  margin-right: 9px;
+}
+:global .PostInstructions .instructionsList {
+  border-radius: 0 0 4px 4px;
+  line-height: 22px;
+  padding: 12px 0 12px 40px;
+  color: rgba(0, 0, 0, 0.85);
+  cursor: pointer;
+  position: relative;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  font-family: "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 14px;
+  font-variant: tabular-nums;
+  margin: 0;
+  list-style: none;
+  background-color: #fafafa;
+  border-radius: 4px;
+  border: 1px solid #d9d9d9;
+  margin-top: 2px;
+}
+/*# sourceMappingURL=post-instructions.css.map */

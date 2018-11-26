@@ -5,7 +5,7 @@ import {
 import { Route, Switch, Link } from 'dva/router';
 import logoImg from '../../assets/images/logo.png';
 import 'antd/dist/antd.less';
-import app from '../../assets/styles/App.css';
+import app from '../../assets/styles/app.less';
 import Main from './main';
 import KeyRespQuery from '../../post/containers/key-resp-query';
 import KeyResp from '../../post/containers/key-resp';
@@ -15,6 +15,9 @@ import ProvincePosStandard from '../../post/containers/province-post-standard';
 import LocalJobs from '../../post/containers/local-jobs';
 import ProvinceQuery from '../../post/containers/prov-post-query';
 import OrgProfMap from '../../post/containers/org-prof-map';
+import PostInstructions from '../../post/containers/post-instructions';
+import ManagePostGroup from '../../post/containers/manage-post-group';
+import EfficientDataMaintenance from '../../post/containers/efficient-data-maintenance';
 
 const { SubMenu } = Menu;
 
@@ -90,6 +93,9 @@ const MainLayout = (state) => {
             <Route exact path="/post/provincePostStandard" component={ProvincePosStandard} />
             <Route exact path="/post/provPostQuery" component={ProvinceQuery} />
             <Route exact path="/post/orgProfMap" component={OrgProfMap} />
+            <Route exact path="/post/postInstructions" component={PostInstructions} />
+            <Route exact path="/post/managePostGroup" component={ManagePostGroup} />
+            <Route exact path="/post/efficientDataMaintenance" component={EfficientDataMaintenance} />
           </Switch>
         </Layout>
       </Layout>

@@ -2,7 +2,9 @@ import React from 'react';
 import {
   Table,
   Pagination,
+  Button,
 } from 'antd';
+import config from '../../../env.config';
 
 /* table size统一设置为small 固定表头，
    scroll={{ y: document.body.scrollHeight - 460 }}
@@ -11,7 +13,7 @@ import {
 export default ({
   tableData,
   actions,
-  search,
+  form,
   loading,
 }) => {
   const {
@@ -21,14 +23,43 @@ export default ({
   const data = tableData.records;
 
   const onChange = (currentPageNum, recordNum) => {
-    const searchF = { ...search, currentPageNum, recordNum };
-    listTable(searchF);
+    form.validateFields((err, values) => {
+      if (!err) {
+        const select = { ...values, recordNum, currentPageNum };
+        listTable(select);
+      }
+    });
   };
 
   const onChangePageSize = (current, size) => {
-    console.log(current, size);
-    const searchF = { ...search, recordNum: size, currentPageNum: current };
-    listTable(searchF);
+    form.validateFields((err, values) => {
+      if (!err) {
+        const select = { ...values, recordNum: size, currentPageNum: current };
+        listTable(select);
+      }
+    });
+  };
+
+  /* 导出按钮 */
+  const handleExport = () => {
+    form.validateFields((err, values) => {
+      if (!err) {
+        const recordNum = 10;
+        const currentPageNum = 1;
+        const select = { ...values, recordNum, currentPageNum };
+        let expUrl = `${config.api}/api/posElement/export?1=1`;
+        if (select.sequence && select.sequence !== '') {
+          expUrl += `&sequence=${select.sequence}`;
+        }
+        if (select.respName && select.respName !== '') {
+          expUrl += `&respName=${select.respName}`;
+        }
+        if (select.cRespName && select.cRespName !== '') {
+          expUrl += `&cRespName=${select.cRespName}`;
+        }
+        window.open(expUrl, '_self');
+      }
+    });
   };
 
   const { current, size, total } = tableData;
@@ -105,8 +136,11 @@ export default ({
   }
 
   return (
-    <div>
-      <Table columns={getFields()} loading={loading} dataSource={data} pagination={false} size="small" scroll={{ y: document.body.scrollHeight - 460 }} />
+    <div style={{ marginTop: '10px' }}>
+      <Button htmlType="button" type="primary" style={{ marginLeft: '0' }} onClick={handleExport}>
+        导出
+      </Button>
+      <Table columns={getFields()} loading={loading} dataSource={data} pagination={false} size="small" scroll={{ y: document.body.scrollHeight - 460 }} style={{ marginTop: '10px' }} />
       <Pagination
         showQuickJumper
         current={current}
