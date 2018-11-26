@@ -16,6 +16,7 @@ import LocalJobs from '../../post/containers/local-jobs';
 import ProvinceQuery from '../../post/containers/prov-post-query';
 import PostInstructions from '../../post/containers/post-instructions';
 import ManagePostGroup from '../../post/containers/manage-post-group';
+import EfficientDataMaintenance from '../../post/containers/efficient-data-maintenance';
 
 
 const { SubMenu } = Menu;
@@ -93,6 +94,7 @@ const MainLayout = (state) => {
             <Route exact path="/post/provPostQuery" component={ProvinceQuery} />
             <Route exact path="/post/postInstructions" component={PostInstructions} />
             <Route exact path="/post/managePostGroup" component={ManagePostGroup} />
+            <Route exact path="/post/efficientDataMaintenance" component={EfficientDataMaintenance} />
           </Switch>
         </Layout>
       </Layout>
