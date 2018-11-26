@@ -97,9 +97,7 @@ class Efficent extends React.Component {
       align: 'center',
       width: 200,
       render: () => (
-        <span>
-          <Input />
-        </span>
+        <Input />
       ),
     }];
 
