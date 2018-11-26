@@ -14,6 +14,7 @@ import GroupPosStandardList from '../../post/containers/group-post-standard-list
 import ProvincePosStandard from '../../post/containers/province-post-standard';
 import LocalJobs from '../../post/containers/local-jobs';
 import ProvinceQuery from '../../post/containers/prov-post-query';
+import OrgProfMap from '../../post/containers/org-prof-map';
 
 const { SubMenu } = Menu;
 
@@ -88,6 +89,7 @@ const MainLayout = (state) => {
             <Route exact path="/post/localJobs" component={LocalJobs} />
             <Route exact path="/post/provincePostStandard" component={ProvincePosStandard} />
             <Route exact path="/post/provPostQuery" component={ProvinceQuery} />
+            <Route exact path="/post/orgProfMap" component={OrgProfMap} />
           </Switch>
         </Layout>
       </Layout>

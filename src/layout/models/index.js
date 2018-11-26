@@ -59,6 +59,13 @@ export default {
         pid: 2,
         iconUrl: 'user',
       },
+      {
+        id: 209,
+        menuName: '组织和专业映射',
+        url: '/post/orgProfMap',
+        pid: 2,
+        iconUrl: 'user',
+      },
     ],
   },
   reducers: {
