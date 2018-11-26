@@ -61,13 +61,12 @@ export default {
       },
       {
         id: 207,
-<<<<<<< HEAD
         menuName: '岗位说明书维护',
         url: '/post/postInstructions',
-=======
+      },
+      {
         menuName: '管理人员职位管理(集团)',
         url: '/post/managePostGroup',
->>>>>>> e6e41e743a007b1af53bec47ce3600dfe1e20d0e
         pid: 2,
         iconUrl: 'user',
       },

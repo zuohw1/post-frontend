@@ -14,12 +14,9 @@ import GroupPosStandardList from '../../post/containers/group-post-standard-list
 import ProvincePosStandard from '../../post/containers/province-post-standard';
 import LocalJobs from '../../post/containers/local-jobs';
 import ProvinceQuery from '../../post/containers/prov-post-query';
-<<<<<<< HEAD
 import PostInstructions from '../../post/containers/post-instructions';
-=======
 import ManagePostGroup from '../../post/containers/manage-post-group';
 
->>>>>>> e6e41e743a007b1af53bec47ce3600dfe1e20d0e
 
 const { SubMenu } = Menu;
 
@@ -94,11 +91,8 @@ const MainLayout = (state) => {
             <Route exact path="/post/localJobs" component={LocalJobs} />
             <Route exact path="/post/provincePostStandard" component={ProvincePosStandard} />
             <Route exact path="/post/provPostQuery" component={ProvinceQuery} />
-<<<<<<< HEAD
             <Route exact path="/post/postInstructions" component={PostInstructions} />
-=======
             <Route exact path="/post/managePostGroup" component={ManagePostGroup} />
->>>>>>> e6e41e743a007b1af53bec47ce3600dfe1e20d0e
           </Switch>
         </Layout>
       </Layout>
