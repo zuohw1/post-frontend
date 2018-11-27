@@ -3,11 +3,13 @@ import { Modal } from 'antd';
 import PropTypes from 'prop-types';
 import PostListTable from './post-duty-list';
 import UpdPost from './upd-post';
+import StopPost from './stp-post';
 
 class PosDuty extends React.Component {
   state = {
     posListVisiable: false,
     updPosListVisiable: false,
+    stpPosListVisiable: false,
   };
 
   showModal = () => {
@@ -20,6 +22,11 @@ class PosDuty extends React.Component {
       this.setState({
         updPosListVisiable: true,
       });
+    } else if (posName === '终止') {
+      console.log('clinck stoppos');
+      this.setState({
+        stpPosListVisiable: true,
+      });
     }
   };
 
@@ -27,6 +34,7 @@ class PosDuty extends React.Component {
     this.setState({
       posListVisiable: false,
       updPosListVisiable: false,
+      stpPosListVisiable: false,
     });
   };
 
@@ -34,12 +42,13 @@ class PosDuty extends React.Component {
     this.setState({
       posListVisiable: false,
       updPosListVisiable: false,
+      stpPosListVisiable: false,
     });
   };
 
   render() {
     const { posName } = this.props;
-    const { posListVisiable, updPosListVisiable } = this.state;
+    const { posListVisiable, updPosListVisiable, stpPosListVisiable } = this.state;
     return (
       <div>
         <a href=" javascript:;" onClick={this.showModal.bind(this)}> {posName}</a>
@@ -57,6 +66,7 @@ class PosDuty extends React.Component {
           </div>
         </Modal>
 
+
         <Modal
           title="基准岗位维护"
           visible={updPosListVisiable}
@@ -66,13 +76,21 @@ class PosDuty extends React.Component {
           onCancel={this.handleCancel}
         >
           <UpdPost />
-          {/* <div style={{ height: 400 }}>
-            <Row>
-              <Col span={10}>关键职责库</Col>
-              <Col span={14}>岗位职责列表</Col>
-            </Row>
-          </div> */}
         </Modal>
+
+        <Modal
+          title="省基准岗位维护-终止"
+          visible={stpPosListVisiable}
+          width={1000}
+          footer={null}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+        >
+          <div style={{ height: 400 }}>
+            <StopPost begindate="2016-11-10" />
+          </div>
+        </Modal>
+
       </div>
     );
   }
