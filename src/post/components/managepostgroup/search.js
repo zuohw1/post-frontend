@@ -47,23 +47,27 @@ export default (props) => {
     for (let i = 0; i < queryCols.length; i += 1) {
       if (queryCols[i].itemType === 'String') {
         children.push(
-          <Col span={5} key={i} style={{ display: i < count ? 'block' : 'none' }}>
-            <FormItem label={queryCols[i].itemName}>
+          <Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>
+            <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
               {getFieldDecorator(queryCols[i].itemKey, {
                 rules: [{
                   required: queryCols[i].required,
                   message: '不能为空!',
                 }],
               })(
-                <Input placeholder="请输入" />,
+                <Input placeholder="请输入" style={{ marginLeft: 5 }} />,
               )}
             </FormItem>
           </Col>,
         );
       } else if (queryCols[i].itemType === 'Select') {
         children.push(
-          <Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>
-            <FormItem label={queryCols[i].itemName}>
+          <Col
+            span={7}
+            key={i}
+            style={{ display: i < count ? 'block' : 'none' }}
+          >
+            <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
               {getFieldDecorator(queryCols[i].itemKey)(
                 <Select placeholder="请选择" allowClear>
                   {
@@ -76,7 +80,7 @@ export default (props) => {
         );
       } else if (queryCols[i].itemType === 'RespSelect') {
         children.push(
-          <Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>
+          <Col span={6} key={i} style={{ display: 'block' }}>
             <FormItem label={queryCols[i].itemName}>
               {getFieldDecorator(queryCols[i].itemKey)(
                 <Select placeholder="请选择" allowClear>
@@ -90,8 +94,8 @@ export default (props) => {
         );
       } else if (queryCols[i].itemType === 'Date') {
         children.push(
-          <Col span={5} key={i} style={{ display: i < count ? 'block' : 'none' }}>
-            <FormItem label={queryCols[i].itemName}>
+          <Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>
+            <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
               {getFieldDecorator(queryCols[i].itemKey, {
                 rules: [{
                   required: queryCols[i].required,
@@ -106,7 +110,7 @@ export default (props) => {
       }
     }
     children.push(
-      <Col span={4} key={count + 6} style={{ marginTop: 5 }}>
+      <Col span={4} key={count + 6} style={{ marginTop: 5, marginLeft: 12 }}>
         <Button htmlType="submit">查询</Button>
       </Col>,
     );
@@ -117,6 +121,8 @@ export default (props) => {
     <Form
       className="ant-advanced-search-form"
       onSubmit={handleSearch}
+      style={{ padding: 10 }}
+      layout="inline"
     >
       <Row gutter={24}>{getFields()}</Row>
     </Form>);
