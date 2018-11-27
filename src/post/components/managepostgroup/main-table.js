@@ -6,10 +6,9 @@ import {
 } from 'antd';
 import Modall from './alertmessage/index';
 
-/* table size统一设置为small 固定表头，
-   scroll={{ y: document.body.scrollHeight - 460 }}
-   460为其他控件宽度之和
-*/
+const { Option } = Select;
+const respList = [];
+
 export default ({
   tableData,
   actions,
@@ -42,19 +41,32 @@ export default ({
 
   const { current, size, total } = tableData;
 
+  const respRange = [{ id: '0', title: '集团本部部门正职' }, { id: '1', title: '集团本部部门副职' }, { id: '2', title: '分公司副职' }, { id: '3', title: '其他' }];
+  if (respList.length === 0) {
+    for (let i = 0; i < respRange.length; i += 1) { // 首次可能请求后还没拿到数据，放此位置会执行多次，只当获取到数据后会进行处理；
+      const respV = {
+        id: respRange[i].id,
+        title: respRange[i].title,
+      };
+      respList.push(respV);
+    }
+  }
+  const apply = (item) => {
+    return (<Option value={item.id} key={item.id}> {item.title} </Option>);
+  };
   /* 列表字段 */
   const tableCols = [{
     title: '序号',
     dataIndex: 'key',
     key: 'key',
     align: 'center',
-    width: 80,
+    width: 50,
   }, {
     title: '部门',
     dataIndex: 'BOO',
     key: 'BOO',
     align: 'center',
-    width: 400,
+    width: 250,
   }, {
     title: '员工编号',
     dataIndex: 'DOC_CODE',
@@ -72,15 +84,19 @@ export default ({
     dataIndex: 'ATTRIBUTE9',
     key: 'ATTRIBUTE9',
     align: 'center',
-    width: 400,
+    width: 200,
   }, {
     title: '关键职责',
     dataIndex: 'DOC_VERIFIER',
     key: 'DOC_VERIFIER',
     align: 'center',
-    width: 400,
+    width: 300,
     render: () => (
-      <Select placeholder="请选择" allowClear style={{ width: 300 }} />
+      <Select placeholder="请选择" allowClear style={{ width: 250 }}>
+        {
+          respList.map(apply)
+        }
+      </Select>
     ),
   }, {
     title: '操作',
