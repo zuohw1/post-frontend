@@ -63,8 +63,11 @@ export default {
         id: 207,
         menuName: '岗位说明书维护',
         url: '/post/postInstructions',
+        pid: 2,
+        iconUrl: 'user',
       },
       {
+        id: 208,
         menuName: '管理人员职位管理(集团)',
         url: '/post/managePostGroup',
         pid: 2,

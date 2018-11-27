@@ -87,6 +87,12 @@ class TableInstructions extends Component {
       width: 150,
     }];
 
+    const rowSelection = {
+      onChange: (selectedRowKeys, selectedRows) => {
+        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+      },
+    };
+
     function getFields() {
       const children = [];
       for (let i = 0; i < tableCols.length; i += 1) {
@@ -114,10 +120,7 @@ class TableInstructions extends Component {
     }
 
     return (
-      <div style={{ marginTop: 10 }}>
-        <Button htmlType="button" type="primary" style={{ marginLeft: '10px' }} onClick={handleExportProvPos}>
-          导出省岗位
-        </Button>
+      <div>
         <Table
           columns={getFields()}
           loading={loading}
@@ -126,7 +129,7 @@ class TableInstructions extends Component {
           size="small"
           scroll={{ y: document.body.scrollHeight - 460 }}
           bordered
-          style={{ marginTop: '10px' }}
+          rowSelection={rowSelection}
         />
         <Pagination
           showQuickJumper

@@ -5,6 +5,46 @@
 }
 
 :global{
+  .row-selected{
+    background-color: #ffe8e6;
+  }
+  .InstructionsModel{
+    .ant-modal-content{
+      .ant-modal-body{
+        height: 472px;
+        .trans_modelTop{
+            display: flex;
+            .trans_modelTop_2{
+              margin-right: 39px;
+              span{
+                display: inline-block;
+              }
+              input{
+                display: inline-block;
+                width: 240px;
+              }
+            }
+        }
+        div{
+          .ant-table-wrapper{
+            height: 376px;
+              overflow-y: auto;
+            .ant-spin-nested-loading{
+              .ant-spin-container{
+                .ant-table-scroll-position-left{
+                  .ant-table-content{
+                    .ant-table-placeholder{
+                      height: 339px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
   .PostInstructions{
   	.w_h();
   	overflow-y: auto;
@@ -104,7 +144,7 @@
 	    background-color: #fafafa;
 	    border-radius: 4px;
 	    border: 1px solid #d9d9d9;
-	    margin-top: 2px;
+	    margin-top: 3px;
   	}
   }
 }
