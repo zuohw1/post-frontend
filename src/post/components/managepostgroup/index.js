@@ -14,7 +14,7 @@ const ManagePostGroup = (state) => {
           职位管理
         </Breadcrumb.Item>
         <Breadcrumb.Item>
-          <strong>管理人员职位管理(集团)</strong>
+          <strong>管理人员职位管理（集团）</strong>
         </Breadcrumb.Item>
       </Breadcrumb>
       <Content
