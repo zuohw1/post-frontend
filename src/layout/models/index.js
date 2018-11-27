@@ -39,7 +39,8 @@ export default {
         url: '/post/groupPosStandardList',
         pid: 2,
         iconUrl: 'user',
-      }, {
+      },
+      {
         id: 205,
         menuName: '省基准岗位维护',
         url: '/post/provincePostStandard',
@@ -60,13 +61,30 @@ export default {
         iconUrl: 'user',
       },
       {
+        id: 209,
+        menuName: '组织和专业映射',
+        url: '/post/orgProfMap',
+        pid: 2,
+        iconUrl: 'user',
+      },
+      {
         id: 207,
         menuName: '岗位说明书维护',
         url: '/post/postInstructions',
+        pid: 2,
+        iconUrl: 'user',
       },
       {
+        id: 208,
         menuName: '管理人员职位管理(集团)',
         url: '/post/managePostGroup',
+        pid: 2,
+        iconUrl: 'user',
+      },
+      {
+        id: 210,
+        menuName: '效率业务数据维护',
+        url: '/post/efficientDataMaintenance',
         pid: 2,
         iconUrl: 'user',
       },
