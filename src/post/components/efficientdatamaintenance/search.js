@@ -2,10 +2,11 @@ import React from 'react';
 import {
   Form, Row, Col, Input, Button, Select, DatePicker,
 } from 'antd';
+import SyncTreeSelect from '../../../components/sync-tree-select';
 
 const FormItem = Form.Item;
 const { Option } = Select;
-
+const { RangePicker } = DatePicker;
 export default (props) => {
   const {
     form,
@@ -19,9 +20,9 @@ export default (props) => {
     e.preventDefault();
     form.validateFields((err, values) => {
       if (!err) {
-        const recordNum = 10;
-        const currentPageNum = 1;
-        const select = { ...values, recordNum, currentPageNum };
+        const pageSize = 10;
+        const pageNumber = 1;
+        const select = { ...values, pageSize, pageNumber };
         listTable(select);
       }
     });
@@ -31,19 +32,28 @@ export default (props) => {
     return (<Option value={item.id} key={item.id}> {item.title} </Option>);
   };
 
-  /* 查询条件字段 */
-  const queryCols = [
-    {
-      itemName: '部门', itemKey: 'sequence', itemType: 'RespSelect', required: false, list: [{ id: '0', title: '中国联通总部' }, { id: '1', title: '北京市昌平区分公司' }, { id: '2', title: '北京市第八分区' }],
-    },
-    {
-      itemName: '关键职责', itemKey: 'status', itemType: 'Select', required: false, list: [{ id: '0', title: '集团本部门正职' }, { id: '1', title: '集团本部门副职' }, { id: '2', title: '其他' }],
-    },
-  ];
+  const refUrl = 'org/allData?id=';
+
+  const treeSelectChange = (value, label, extra) => {
+    form.setFieldsValue({
+      orgid: `${extra.triggerNode.props.id}`,
+    });
+  };
+  /* 查询字段 */
+  const queryCols = [{
+    itemName: '组织', itemKey: 'test_def1', itemType: 'Select', required: false, list: [{ id: '0', title: '中国联合网络集团通信有限公司' }, { id: '1', title: '省分公司' }],
+  },
+  {
+    itemName: '期间', itemKey: 'ATTRIBUTE8', itemType: 'Date', required: false,
+  },
+  {
+    itemName: '效率指标', itemKey: 'test_def3', itemType: 'String', required: false,
+  }];
 
   function getFields() {
-    const count = expand ? queryCols.length : 4;
+    const count = expand ? queryCols.length : 3;
     const children = [];
+
     for (let i = 0; i < queryCols.length; i += 1) {
       if (queryCols[i].itemType === 'String') {
         children.push(
@@ -55,21 +65,17 @@ export default (props) => {
                   message: '不能为空!',
                 }],
               })(
-                <Input placeholder="请输入" style={{ marginLeft: 5 }} />,
+                <Input placeholder="请输入" style={{ width: 220, marginLeft: 5, marginRight: 20 }} />,
               )}
             </FormItem>
           </Col>,
         );
       } else if (queryCols[i].itemType === 'Select') {
         children.push(
-          <Col
-            span={7}
-            key={i}
-            style={{ display: i < count ? 'block' : 'none' }}
-          >
+          <Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>
             <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
               {getFieldDecorator(queryCols[i].itemKey)(
-                <Select placeholder="请选择" allowClear>
+                <Select style={{ width: 220, marginLeft: 5, marginRight: 20 }} placeholder="请选择" allowClear>
                   {
                     queryCols[i].list.map(apply)
                   }
@@ -78,23 +84,24 @@ export default (props) => {
             </FormItem>
           </Col>,
         );
-      } else if (queryCols[i].itemType === 'RespSelect') {
+      } else if (queryCols[i].itemType === 'OrgSelect') {
         children.push(
           <Col span={6} key={i} style={{ display: 'block' }}>
-            <FormItem label={queryCols[i].itemName}>
+            <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
               {getFieldDecorator(queryCols[i].itemKey)(
-                <Select placeholder="请选择" allowClear>
-                  {
-                    queryCols[i].list.map(apply)
-                  }
-                </Select>,
+                <SyncTreeSelect
+                  treeId={37838}
+                  treeSelectChange={treeSelectChange}
+                  refUrl={refUrl}
+                  checkbox
+                />,
               )}
             </FormItem>
           </Col>,
         );
       } else if (queryCols[i].itemType === 'Date') {
         children.push(
-          <Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>
+          <Col span={7} key={i} style={{ display: i < count ? 'block' : 'none' }}>
             <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
               {getFieldDecorator(queryCols[i].itemKey, {
                 rules: [{
@@ -102,7 +109,7 @@ export default (props) => {
                   message: '不能为空!',
                 }],
               })(
-                <DatePicker />,
+                <RangePicker />,
               )}
             </FormItem>
           </Col>,
@@ -110,10 +117,11 @@ export default (props) => {
       }
     }
     children.push(
-      <Col span={4} key={count + 6} style={{ marginTop: 5, marginLeft: 12 }}>
+      <Col span={5} key={count + 5} style={{ textAlign: 'center', marginTop: 5 }}>
         <Button htmlType="submit">查询</Button>
       </Col>,
     );
+
     return children;
   }
 
@@ -125,5 +133,7 @@ export default (props) => {
       layout="inline"
     >
       <Row gutter={24}>{getFields()}</Row>
-    </Form>);
+    </Form>
+
+  );
 };

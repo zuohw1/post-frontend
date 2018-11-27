@@ -6,7 +6,7 @@ import '../../../assets/styles/module.less';
 
 const { Content } = Layout;
 
-const ManagePostGroup = (state) => {
+const EfficientDataMaintenance = (state) => {
   return (
     <React.Fragment>
       <Breadcrumb style={{ margin: '10px 0' }}>
@@ -14,7 +14,7 @@ const ManagePostGroup = (state) => {
           职位管理
         </Breadcrumb.Item>
         <Breadcrumb.Item>
-          <strong>管理人员职位管理（集团）</strong>
+          <strong>业务数据列表</strong>
         </Breadcrumb.Item>
       </Breadcrumb>
       <Content
@@ -30,4 +30,4 @@ const ManagePostGroup = (state) => {
   );
 };
 
-export default ManagePostGroup;
+export default EfficientDataMaintenance;
