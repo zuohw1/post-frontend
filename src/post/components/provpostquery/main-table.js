@@ -23,13 +23,25 @@ class Table1 extends Component {
 
 
     const onChange = (currentPageNum, recordNum,) => {
-      const searchF = { ...search, recordNum ,currentPageNum };
-      listTable(searchF);
+      // const searchF = { ...search, recordNum ,currentPageNum };
+      // listTable(searchF);
+      form.validateFields((err,values) => {
+        if (!err) {
+          const select ={ ...values,recordNum,currentPageNum };
+          listTable(select);
+        }
+        });
     };
 
     const onChangePageSize = (current, size) => {
-      const searchF = { ...search, recordNum: size, currentPageNum: current };
-      listTable(searchF);
+      // const searchF = { ...search, recordNum: size, currentPageNum: current };
+      // listTable(searchF);
+      form.validateFields((err,values) => {
+        if (!err) {
+          const select= { ...values,size,current };
+          listTable(select);
+        }
+      });
     };
     const handleExportProvPos = () => {
       form.validateFields((err, values) => {
