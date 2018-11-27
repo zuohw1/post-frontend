@@ -62,11 +62,7 @@ export default (props) => {
         );
       } else if (queryCols[i].itemType === 'Select') {
         children.push(
-          <Col
-            span={7}
-            key={i}
-            style={{ display: i < count ? 'block' : 'none' }}
-          >
+          <Col span={6} key={i} style={{ display: 'block' }}>
             <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
               {getFieldDecorator(queryCols[i].itemKey)(
                 <Select placeholder="请选择" allowClear>
@@ -81,7 +77,7 @@ export default (props) => {
       } else if (queryCols[i].itemType === 'RespSelect') {
         children.push(
           <Col span={6} key={i} style={{ display: 'block' }}>
-            <FormItem label={queryCols[i].itemName}>
+            <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
               {getFieldDecorator(queryCols[i].itemKey)(
                 <Select placeholder="请选择" allowClear>
                   {
