@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Layout, Tree } from 'antd';
-import './less/org-prof-map.less';
 
 const { Content } = Layout;
 const { TreeNode } = Tree;

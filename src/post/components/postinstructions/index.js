@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React from 'react';
 import { Layout, Breadcrumb, Collapse, TreeSelect, Select, Input, Button, DatePicker, Modal, Drawer, Form, } from 'antd';
-import '../../../assets/styles/post-instructions.less';
+import '../asset/styles/post-instructions.less';
 import TableInstructions from './main-table';
 import TableSearchchoose from './search-choose-table';
 import DrawerForm from './drawer-form';
