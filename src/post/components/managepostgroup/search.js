@@ -1,10 +1,11 @@
 import React from 'react';
 import {
-  Form, Row, Col, Input, Button, Select, DatePicker,
+  Form, Row, Col, Input, Button, Select, DatePicker, TreeSelect, Tree,
 } from 'antd';
 
 const FormItem = Form.Item;
 const { Option } = Select;
+const { TreeNode } = Tree;
 
 export default (props) => {
   const {
@@ -12,9 +13,28 @@ export default (props) => {
     actions,
     expand,
   } = props;
+
+  const renderTreeNodes = () => {
+    return (
+      <TreeNode value="parent 1" title="中国联合网络通信集团有限公司" key="0-1">
+        <TreeNode value="parent 1-0" title="中国联通总部管理部门" key="0-1-1">
+          <TreeNode value="leaf1" title="中国联通总部-综合部" key="random" />
+          <TreeNode value="leaf2" title="中国联通总部-办公厅" key="random1" />
+          <TreeNode value="leaf2" title="中国联通总部-财务部" key="random1" />
+        </TreeNode>
+      </TreeNode>
+    );
+  };
   const { getFieldDecorator } = form;
   const { listTable } = actions;
 
+  const refUrl = 'org/allData?id=';
+
+  const treeSelectChange = (value, label, extra) => {
+    form.setFieldsValue({
+      orgid: `${extra.triggerNode.props.id}`,
+    });
+  };
   const handleSearch = (e) => {
     e.preventDefault();
     form.validateFields((err, values) => {
@@ -34,7 +54,7 @@ export default (props) => {
   /* 查询条件字段 */
   const queryCols = [
     {
-      itemName: '部门', itemKey: 'sequence', itemType: 'RespSelect', required: false, list: [{ id: '0', title: '中国联通总部' }, { id: '1', title: '北京市昌平区分公司' }, { id: '2', title: '北京市第八分区' }],
+      itemName: '部门', itemKey: 'sequence', itemType: 'OrgSelect', required: false,
     },
     {
       itemName: '关键职责', itemKey: 'status', itemType: 'Select', required: false, list: [{ id: '0', title: '集团本部门正职' }, { id: '1', title: '集团本部门副职' }, { id: '2', title: '其他' }],
@@ -74,16 +94,20 @@ export default (props) => {
             </FormItem>
           </Col>,
         );
-      } else if (queryCols[i].itemType === 'RespSelect') {
+      } else if (queryCols[i].itemType === 'OrgSelect') {
         children.push(
           <Col span={6} key={i} style={{ display: 'block' }}>
             <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
               {getFieldDecorator(queryCols[i].itemKey)(
-                <Select placeholder="请选择" allowClear>
-                  {
-                    queryCols[i].list.map(apply)
-                  }
-                </Select>,
+                <TreeSelect
+                  treeId={37838}
+                  treeSelectChange={treeSelectChange}
+                  refUrl={refUrl}
+                  placeholder="请选择"
+                  allowClear
+                >
+                  {renderTreeNodes()}
+                </TreeSelect>,
               )}
             </FormItem>
           </Col>,
