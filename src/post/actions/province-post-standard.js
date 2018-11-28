@@ -8,3 +8,12 @@ export function setToggle(expand) {
     },
   };
 }
+/* 设置列表数据 */
+export function setTableData(tableData) {
+  return {
+    type: 'provincePostStandard/stateWillUpdate',
+    payload: {
+      tableData,
+    },
+  };
+}

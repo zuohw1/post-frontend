@@ -13,10 +13,11 @@ export default ({
   loading,
 }) => {
   const {
-    listTable,
+    listTable, setTableData,
   } = actions;
 
   const data = tableData.records;
+  // const { tableData } = this.state;
 
   const onChange = (pageNumber, pageSize) => {
     const searchF = { ...search, pageSize, pageNumber };
@@ -39,9 +40,61 @@ export default ({
   };
 
   const handleViewProvPos = () => {
+    console.log('enter into handleViewProvPos');
   };
 
   const handleImportProvPos = () => {
+  };
+
+  const handleTableData = (dataClick, posKey) => {
+    const dataNew = [];
+    const databk = { ...data };
+    const databk2 = { ...data };
+    for (let t = 0; t < data.length; t += 1) {
+      if (databk[t].key === posKey) {
+        let chidNew = databk2[t];
+        chidNew = { ...chidNew, key: `new-${databk[t].key}-${databk2[t].children.length}` };
+        chidNew = { ...chidNew, def5: ['更改职责', '终止', '删除'] };
+        chidNew = { ...chidNew, ATTRIBUTE13: '.省.市.县.' };
+        delete chidNew.children;
+        const childrenNew = arrayUtils.addItem(databk[t].children, chidNew);
+        databk[t] = { ...databk[t], children: childrenNew };
+        dataNew.push(databk[t]);
+      } else {
+        dataNew.push(databk[t]);
+      }
+    }
+    const tableDataNew = {
+      total: 0,
+      size: 0,
+      current: 1,
+      records: dataNew,
+    };
+    setTableData(tableDataNew);
+  };
+
+  const arrayUtils = {
+    /**
+     * 在指定索引位置增加新元素，未指定index时添加到最后面
+     * @param array (array)
+     * @param newItem   (object)
+     * @param index (int)
+     * @returns {*} 返回新数组
+     */
+    addItem: (array, newItem, index) => {
+      if (typeof index !== 'undefined') {
+        return [
+          ...array.slice(0, index),
+          newItem,
+          ...array.slice(index + 1),
+        ];
+      } else {
+        return [
+          ...array,
+          newItem,
+        ];
+      }
+    },
   };
 
   const { current, size, total } = tableData;
@@ -97,9 +150,18 @@ export default ({
     width: 150,
 
     render: (text, record) => (
-
       <span>
-        {record.def5.map(tag => <PosDuty posKey={record.key} posName={tag} />)}
+        {record.def5.map(
+          tag => (
+            <PosDuty
+              posKey={record.key}
+              posName={tag}
+              posRecord={record}
+              posBegindate={record.ATTRIBUTE10}
+              handleTableData={handleTableData.bind(this)}
+            />
+          ),
+        )}
       </span>
     ),
 
@@ -130,6 +192,7 @@ export default ({
       <Button htmlType="button" type="primary" style={{ marginLeft: '10px' }} onClick={handleImportProvPos}>
         导入省基准岗位
       </Button>
+
       <Table
         columns={getFields()}
         loading={loading}

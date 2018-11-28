@@ -12,8 +12,11 @@ class PosDuty extends React.Component {
     stpPosListVisiable: false,
   };
 
+
   showModal = () => {
-    const { posName } = this.props;
+    const {
+      posName, posKey, posRecord, handleTableData,
+    } = this.props;
     if (posName === '查看职责') {
       this.setState({
         posListVisiable: true,
@@ -23,10 +26,11 @@ class PosDuty extends React.Component {
         updPosListVisiable: true,
       });
     } else if (posName === '终止') {
-      console.log('clinck stoppos');
       this.setState({
         stpPosListVisiable: true,
       });
+    } else if (posName === '定制') {
+      handleTableData(posRecord, posKey);
     }
   };
 
@@ -47,12 +51,14 @@ class PosDuty extends React.Component {
   };
 
   render() {
-    const { posName } = this.props;
+    const {
+      posName, // posKey, posRecord,
+      posBegindate,
+    } = this.props;
     const { posListVisiable, updPosListVisiable, stpPosListVisiable } = this.state;
     return (
       <div>
         <a href=" javascript:;" onClick={this.showModal.bind(this)}> {posName}</a>
-
         <Modal
           title="岗位职责列表"
           visible={posListVisiable}
@@ -87,7 +93,7 @@ class PosDuty extends React.Component {
           onCancel={this.handleCancel}
         >
           <div style={{ height: 400 }}>
-            <StopPost begindate="2016-11-10" />
+            <StopPost begindate={posBegindate} />
           </div>
         </Modal>
 
@@ -98,5 +104,9 @@ class PosDuty extends React.Component {
 
 PosDuty.propTypes = {
   posName: PropTypes.string.isRequired,
+  posKey: PropTypes.string.isRequired,
+  posRecord: PropTypes.array.isRequired,
+  posBegindate: PropTypes.array.isRequired,
+  handleTableData: PropTypes.func.isRequired,
 };
 export default PosDuty;
