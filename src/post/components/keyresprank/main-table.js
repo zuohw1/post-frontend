@@ -53,7 +53,7 @@ export default ({
           ...values, pageSize, pageNumber,
         };
 
-        let expUrl = `${config.api}/api/PosElementStructure/exportRespsInfo?pageNum=${select.pageNumber}&pageSize=${select.pageSize}`;
+        let expUrl = `${config.api}/api/PosElementStructure/exportRespsInfo?1=1`;
         if (select.levelType && select.levelType !== '') {
           expUrl += `&levelType=${select.levelType}`;
         }
