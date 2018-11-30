@@ -1,3 +1,4 @@
+import { routerRedux } from 'dva/router';
 
 export default {
   namespace: 'provincePostStandard',
@@ -143,7 +144,7 @@ export default {
     search: {
     },
   },
-  reducers: { //
+  reducers: {
     stateWillUpdate(state, { payload }) {
       return {
         ...state,
@@ -152,6 +153,9 @@ export default {
     },
   },
   effects: {
+    * redirect({ payload: { pathname, state } }, { put }) {
+      yield put(routerRedux.push({ pathname, state }));
+    },
   },
   subscriptions: {
   },

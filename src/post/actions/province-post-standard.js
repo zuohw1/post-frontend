@@ -37,3 +37,13 @@ export function setEditingParentKey(editingParentKey) {
     },
   };
 }
+
+/* 跳转页面 */
+export function redirectDetail(pathname, state) {
+  return {
+    type: 'provincePostStandard/redirect',
+    payload: {
+      pathname, state,
+    },
+  };
+}

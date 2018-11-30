@@ -106,6 +106,7 @@ export default ({
     setTableData,
     setEditingKey,
     // setEditingParentKey,
+    redirectDetail,
   } = actions;
   const data = tableData.records;
 
@@ -130,6 +131,7 @@ export default ({
   };
 
   const handleViewProvPos = () => {
+    redirectDetail('/post/provPostQuery', { name: 'main-table' });
   };
 
   const handleImportProvPos = () => {
