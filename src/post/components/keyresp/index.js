@@ -3,7 +3,7 @@ import {
   Layout, Breadcrumb, Tree, Row, Col, Button, Input,
 } from 'antd';
 import '../../../assets/styles/module.less';
-import '../asset/styles/index.less';
+import '../assets/styles/index.less';
 import EditableTable from './editable-table';
 
 const { Content } = Layout;

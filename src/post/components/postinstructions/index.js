@@ -1,15 +1,16 @@
 /* eslint-disable */
 import React from 'react';
 import { Layout, Breadcrumb, Collapse, TreeSelect, Select, Input, Button, DatePicker, Modal, Drawer, Form, } from 'antd';
-import '../asset/styles/post-instructions.less';
+import '../assets/styles/post-instructions.less';
 import TableInstructions from './main-table';
-import TableSearchchoose from './search-choose-table';
+import TableSearchchoose from '../../../components/search-table';
 import DrawerForm from './drawer-form';
+import Search from './search';
 
 const { Content } = Layout;
 const Panel = Collapse.Panel;
 const Option = Select.Option;
-const DrawerForm2 = Form.create()(DrawerForm);
+const WrappedDrawerForm = Form.create()(DrawerForm);
 const noBorderBottom={
     borderBottom:'0',
 };
@@ -20,6 +21,16 @@ const noBorderBottomRight={
 const noBorderRight={
     borderRight:'0',
 };
+const chooseColumns = [{
+	title: '关键职责名称',
+	dataIndex: 'KeyResponsibilities',
+	key: 'KeyResponsibilities',
+	align: 'left',
+}];
+const rowSelection = {
+	type: 'radio',
+};
+const refUrl = 'orgHeaderBatch/list';
 const treeData = [{
   title: 'Node1',
   value: '0-0',
@@ -73,7 +84,7 @@ const handleChangeResponse = (value) => {
 }
 const PostInstructions = (state) => {
 	console.log(state);
-	const { actions } = state;
+	const { actions, refSelectData } = state;
   	const { getInstructions, closeInstructions, getInsDrawer, closeInsDrawer, } = actions;
 	const onInstructionsView = () => {
 		console.log(666);
@@ -115,72 +126,29 @@ const PostInstructions = (state) => {
 			      width={760}
 			      visible={state.InstructionsModal}
 			      centered
-			      className="InstructionsModel"
+			      className="instructions-model"
 			    >
-			    	<div className="trans_modelTop">
-			    		<span className="trans_modelTop_1">专业：<Select style={{ width: 200, marginRight: '60px' }} onChange={handleChangeResponse}>{ResponseChildren}</Select></span>
-						<span className="trans_modelTop_2"><span>名称：</span><Input /></span>
-						<span className="trans_modelTop_3"><Button type="primary" icon="search">查询</Button></span>
+			    	<div className="instructions-model-top">
+			    		<span className="instructions-model-top-one">专业：<Select style={{ width: 200, marginRight: '60px' }} onChange={handleChangeResponse}>{ResponseChildren}</Select></span>
+						<span className="instructions-model-top-two"><span>名称：</span><Input /></span>
+						<span className="instructions-model-top-three"><Button type="primary" icon="search">查询</Button></span>
 			    	</div>
-			    	<TableSearchchoose {...state} />
+			    	<TableSearchchoose
+			    		columns={chooseColumns}
+				        refUrl={refUrl}
+				        rowSelection={rowSelection}
+				        refSelectData={refSelectData}
+				        className="table-search-choose"
+			    	/>
 			    </Modal>
-			    <Drawer title="岗位说明书" width={720} placement="right" onClose={closeDrawer} maskClosable={false} visible={state.visibleDrawer} style={{ height: 'calc(100% - 55px)',overflow: 'auto',paddingBottom: 53, }} >
-		    		<DrawerForm2 />
+			    <Drawer title="岗位说明书" width={880} placement="right" onClose={closeDrawer} maskClosable={false} visible={state.visibleDrawer} style={{ height: 'calc(100% - 55px)',overflow: 'auto',paddingBottom: 53, }} >
+		    		<WrappedDrawerForm {...state} />
 			    </Drawer>
-	      		<div className="PostInstructions">
-		    		<Collapse defaultActiveKey={['1']} onChange={callback}>
-					    <Panel header="岗位说明书查询" key="1">
-					      	<div className="instructionsSearch">
-								<div className="instructionsSearch_1">
-									<span className="SearchTitle">部门</span>
-									<span className="SearchContent">
-										<TreeSelect
-									        style={{ width: '100%' }}
-									        dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-									        treeData={treeData}
-									        treeDefaultExpandAll
-									        onChange={onChange}
-									    />
-							    	</span>
-									<span className="SearchTitle">岗位序列</span>
-									<span className="SearchContent" style={noBorderRight}>
-										<Select defaultValue="请选择" style={{ width: '100%' }} onChange={handleChangeSequence}>
-									      	{sequenceChildren}
-									    </Select>
-									</span>
-								</div>
-								<div className="instructionsSearch_1">
-									<span className="SearchTitle">职级</span>
-									<span className="SearchContent">
-										<Select defaultValue="请选择" style={{ width: '100%' }} onChange={handleChangeRank}>
-									      	{rankChildren}
-									    </Select>
-									</span>
-									<span className="SearchTitle">关键职责</span>
-									<span className="SearchContent SearchContent_4" style={noBorderRight}>
-										<Input className="SearchContent_4_1" />
-										<Button type="primary" className="SearchContent_4_2" onClick={onInstructionsView} >选择</Button>
-										<Button className="SearchContent_4_3">置空</Button>
-									</span>
-								</div>
-								<div className="instructionsSearch_1">
-									<span className="SearchTitle">查询日期</span>
-									<span className="SearchContent SearchContent_5"><DatePicker onChange={changeDate} /></span>
-									<span className="SearchTitle">岗位名称</span>
-									<span className="SearchContent SearchContent_6" style={noBorderRight}><Input /></span>
-								</div>
-								<div className="instructionsSearch_1">
-									<span className="SearchSpan">
-										<Button type="primary">查询</Button>
-										<Button onClick={showDrawer}>新增</Button>
-										<Button type="danger">删除</Button>
-										<Button type="dashed">导入</Button>
-									</span>
-								</div>
-							</div>
-					    </Panel>
-					</Collapse>
-					<div className="instructionsList">岗位说明书列表</div>
+	      		<div className="post-instructions">
+		    		<Search {...state} />
+		    		<Button htmlType="button" type="primary" style={{ marginTop: '10px', marginBottom: '10px' }} onClick={showDrawer}>新增</Button>
+		    		<Button htmlType="button" type="primary" style={{ marginLeft: '10px', marginTop: '10px', marginBottom: '10px' }}>删除</Button>
+		    		<Button htmlType="button" type="primary" style={{ marginLeft: '10px', marginTop: '10px', marginBottom: '10px' }}>导入</Button>
 					<TableInstructions {...state} />
 	    		</div>
 	      	</Content>

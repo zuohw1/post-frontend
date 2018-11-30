@@ -3,7 +3,7 @@ import {
   Table, Input, Popconfirm, Form, Row, Col, Button,
 } from 'antd';
 import PropTypes from 'prop-types';
-import Styles from '../../asset/styles/upd-post-list.less';
+import Styles from '../../assets/styles/upd-post-list.less';
 
 // 基准岗位维护-列表
 

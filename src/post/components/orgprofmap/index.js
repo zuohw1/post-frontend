@@ -5,7 +5,7 @@ import {
 import OrgTree from './org-tree';
 import ProfLib from './prof-lib';
 import ProfList from './prof-list';
-import '../asset/styles/org-prof-map.less';
+import '../assets/styles/org-prof-map.less';
 
 const { Content } = Layout;
 
