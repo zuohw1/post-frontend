@@ -17,3 +17,23 @@ export function setTableData(tableData) {
     },
   };
 }
+
+/* 设置列表可编辑字段 */
+export function setEditingKey(editingKey) {
+  return {
+    type: 'provincePostStandard/stateWillUpdate',
+    payload: {
+      editingKey,
+    },
+  };
+}
+
+/* 设置列表可编辑字段 */
+export function setEditingParentKey(editingParentKey) {
+  return {
+    type: 'provincePostStandard/stateWillUpdate',
+    payload: {
+      editingParentKey,
+    },
+  };
+}
