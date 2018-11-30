@@ -223,7 +223,9 @@ export default (state) => {
         children.push(
           <Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>
             <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
-              {getFieldDecorator(queryCols[i].itemKey)(
+              {getFieldDecorator('levelCode', {
+                initialValue: 's,d,x',
+              })(
                 <CheckboxGroup options={queryCols[i].list} onChange={handleonchangeckbx} />,
               )}
             </FormItem>
