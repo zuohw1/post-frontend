@@ -10,7 +10,7 @@ class UpdPost extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      checkTreeNodeName: '',
+      // checkTreeNodeName: '',
       isAddFlag: false,
       listDataSource: [{
         key: '0',
@@ -51,7 +51,7 @@ class UpdPost extends React.Component {
           subposname: nodeName,
         };
         this.setState({
-          checkTreeNodeName: nodeName,
+          // checkTreeNodeName: nodeName,
           isAddFlag: true,
           listDataSource: [...listDataSource, newData],
           listCount: listCount + 1,
@@ -67,20 +67,21 @@ class UpdPost extends React.Component {
             subposname: pvalue,
           };
           newDatas.push(newData);
-          this.setState({
-            checkTreeNodeName: pvalue,
-            isAddFlag: true,
-            listDataSource: listDataSource.concat(newDatas),
-            listCount: listCount + 2,
-          });
         }
+        this.setState({
+          // checkTreeNodeName: pvalue,
+          isAddFlag: true,
+          listDataSource: listDataSource.concat(newDatas),
+          listCount: listCount + 2,
+        });
       }
     }
   }
 
   render() {
     const {
-      checkTreeNodeName, isAddFlag, listDataSource, listCount, groupPostCount,
+      // checkTreeNodeName,
+      isAddFlag, listDataSource, listCount, groupPostCount,
     } = this.state;
     return (
       <div>
@@ -91,7 +92,7 @@ class UpdPost extends React.Component {
             </Col>
             <Col span={14}>
               <UpdPostList
-                addPosToList={checkTreeNodeName}
+                // addPosToList={checkTreeNodeName}
                 isAddFlag={isAddFlag}
                 listDataSource={listDataSource}
                 listCount={listCount}

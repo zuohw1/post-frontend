@@ -9,7 +9,7 @@ export default {
       current: 1,
       records: [
         {
-          key: '1',
+          key: 'a1',
           DOC_CODE: '（集团）实体渠道管理岗',
           ATTRIBUTE8: '市场序列.渠道管理',
           ATTRIBUTE13: '.集团.省.市.县.',
@@ -46,13 +46,13 @@ export default {
             def5: ['更改职责', '终止', '删除'],
           }],
         }, {
-          key: '2',
+          key: 'a2',
           DOC_CODE: '实体渠道运营岗',
           ATTRIBUTE8: '市场序列.渠道管理',
           ATTRIBUTE13: '.集团.省.市.县.',
           ATTRIBUTE11: '是',
           DOC_STATUS: '本科',
-          ATTRIBUTE10: '2013-01-01',
+          ATTRIBUTE10: '2013-01-03',
           def5: ['查看职责', '定制'],
           children: [{
             key: 21,
@@ -83,13 +83,13 @@ export default {
             def5: ['更改职责', '终止', '删除'],
           }],
         }, {
-          key: '3',
+          key: 'a3',
           DOC_CODE: '（集团）实体渠道管理岗',
           ATTRIBUTE8: '市场序列.渠道管理',
           ATTRIBUTE13: '.集团.省.市.县.',
           ATTRIBUTE11: '是',
           DOC_STATUS: '本科',
-          ATTRIBUTE10: '2013-01-01',
+          ATTRIBUTE10: '2013-02-05',
           def5: ['查看职责', '定制'],
           children: [{
             key: 31,

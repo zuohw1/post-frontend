@@ -29,19 +29,16 @@ export default {
   /* 岗位序列 */
   getPostRangeRef() {
     const subUrl = 'api/posJposV/Poslist?levelCode=s&currentPageNum=1&recordNum=5';
-    console.log('thisUrl123', subUrl);
     return request.get(subUrl);
   },
   /* 子序列 */
   getRespRangeRef() {
     const subUrl = 'api/posJposV/Poslist?levelCode=s&currentPageNum=2&recordNum=4';
-    console.log('thisUrl123', subUrl);
     return request.get(subUrl);
   },
   /* 学历要求 */
   getMeatRangeRef() {
     const subUrl = 'api/posJposV/Poslist?levelCode=s&currentPageNum=7&recordNum=8';
-    console.log('thisUrl123', subUrl);
     return request.get(subUrl);
   },
 };

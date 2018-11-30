@@ -6,12 +6,40 @@ import request from '../utils/request';
 
 /**
  * 表格参照
+ * const refCodes = [{ code: 'DOC_CODE', refcode: 'docCode' },
+ * { code: 'DOC_VERIFIER', refcode: 'docVerifier' }];
+ * const refColumns = [{
+ *   title: '序号',
+    dataIndex: 'key',
+    key: 'key',
+    align: 'center',
+  }, {
+    title: '文件名称和文号',
+    dataIndex: 'docCode',
+    key: 'docCode',
+    align: 'center',
+  }, {
+    title: '文件拟稿人',
+    dataIndex: 'docVerifier',
+    key: 'docVerifier',
+    align: 'center',
+  }];
+
+ const refUrl = 'orgHeaderBatch/list';
+ const onConfirm = () => {
+    form.setFieldsValue({
+      org_id: `${refSelectData.orgId}`,
+      orgName: `${refSelectData.orgName}`,
+    });
+    updateOrgRefModelShow(false);
+  };
  * <SearchTable
  * columns={refColumns}//表格显示字段
  * refUrl={refUrl}//请求url
  * rowSelection={rowSelection}//行属性
  * refCodes={refCodes}//字段对应
  * refSelectData={refSelectData}//参照选中数据
+ * onConfirm={onConfirm}
  * const rowSelection = {
     type:'radio',//radio、checkbox
   }
@@ -97,7 +125,7 @@ class SearchTable extends React.PureComponent {
 
   render() {
     const {
-      columns, rowSelection, placeholder, refCodes, refSelectData,
+      columns, rowSelection, placeholder, refCodes, refSelectData, onConfirm,
     } = this.props;
     const {
       refData, tableLoading, selectedRowKeys, onSelect,
@@ -122,13 +150,18 @@ class SearchTable extends React.PureComponent {
             loading={tableLoading}
             onRow={(record) => {
               return {
+                /* 单击行事件 */
                 onClick: () => {
                   this.setState({ selectedRowKeys: [record.key] });
                   refCodes.map((item) => {
                     /* eslint-disable no-param-reassign,no-return-assign */
                     return refSelectData[item.code] = record[item.refcode];
                   });
-                }, // 点击行
+                },
+                /* 双击行事件，执行确定动作，回写选中数据，关闭modal框 */
+                onDoubleClick: () => {
+                  onConfirm();
+                },
               };
             }}
           />

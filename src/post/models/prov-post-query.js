@@ -114,15 +114,5 @@ export default {
     },
   },
   subscriptions: {
-    setup({ dispatch, history }) {
-      return history.listen(({ pathname }) => {
-        if (pathname === '/post/provPostQuery') {
-          dispatch({
-            type: 'fetch',
-            payload: { search: { currentPageNum: 1, recordNum: 10, levelCode: 's' } },
-          });
-        }
-      });
-    },
   },
 };
