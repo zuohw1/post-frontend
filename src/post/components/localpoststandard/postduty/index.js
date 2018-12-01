@@ -1,37 +1,39 @@
 import React from 'react';
 import { Modal } from 'antd';
 import PropTypes from 'prop-types';
-import PostTableList from './post-duty-list';
-import StopPostList from './stp-post';
+import PostListTable from './post-duty-list';
+import StopPost from './stp-post';
 import UpdPost from './upd-post';
 
-class Posduty extends React.Component {
- state={
-   posListVisiable: false,
-   updPosListVisiable: false,
-   stpPosListVisiable: false,
- };
+class PosDuty extends React.Component {
+  state={
+    posListVisiable: false,
+    updPosListVisiable: false,
+    stpPosListVisiable: false,
+  };
 
- showModal=() => {
-   const {
-     posName, posKey, posRecord, handleTableData,
-   } = this.props;
-   if (posName === '查看职责') {
-     this.setState({
-       posListVisiable: true,
-     });
-   } else if (posName === '更改职责') {
-     this.setState({
-       updPosListVisiable: true,
-     });
-   } else if (posName === '终止') {
-     this.setState({
-       stpPosListVisiable: true,
-     });
-   } else if (posName === '定制') {
-     handleTableData(posRecord, posKey);
-   }
- };
+  showModal=() => {
+    const {
+      posName, posKey, posRecord, handleTableData, handleDelete,
+    } = this.props;
+    if (posName === '查看职责') {
+      this.setState({
+        posListVisiable: true,
+      });
+    } else if (posName === '更改职责') {
+      this.setState({
+        updPosListVisiable: true,
+      });
+    } else if (posName === '终止') {
+      this.setState({
+        stpPosListVisiable: true,
+      });
+    } else if (posName === '定制') {
+      handleTableData(posRecord, posKey);
+    } else if (posName === '删除') {
+      handleDelete(posKey);
+    }
+  };
 
   handleOk =() => {
     this.setState({
@@ -67,7 +69,7 @@ class Posduty extends React.Component {
           onCancel={this.handleCancel}
         >
           <div style={{ height: 400 }}>
-            <PostTableList />
+            <PostListTable />
           </div>
         </Modal>
         <Modal
@@ -89,7 +91,7 @@ class Posduty extends React.Component {
           onCancel={this.handleCancel}
         >
           <div style={{ height: 400 }}>
-            <StopPostList begindate={posBegindate} />
+            <StopPost begindate={posBegindate} />
           </div>
         </Modal>
       </div>
@@ -97,11 +99,13 @@ class Posduty extends React.Component {
   }
 }
 
-Posduty.propTypes = {
+PosDuty.propTypes = {
   posName: PropTypes.string.isRequired,
   posKey: PropTypes.string.isRequired,
   posRecord: PropTypes.array.isRequired,
+  posBegindate: PropTypes.array.isRequired,
   handleTableData: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
 };
 
-export default Posduty;
+export default PosDuty;
