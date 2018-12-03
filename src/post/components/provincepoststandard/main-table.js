@@ -8,6 +8,7 @@ import {
   Select,
   DatePicker,
   InputNumber,
+  notification,
 } from 'antd';
 import moment from 'moment';
 import PosDuty from './postduty/index';
@@ -76,7 +77,7 @@ class EditableCell extends React.Component {
                   {getFieldDecorator(dataIndex, {
                     rules: [{
                       required: true,
-                      message: `请输入${title}!`,
+                      message: `请维护【${title}】!`,
                     }],
                     initialValue:
                       inputType === 'date' ? moment(record[dataIndex], dateFormat) : (inputType === 'checkbox' ? record[`${dataIndex}_VAL`] : record[dataIndex]),
@@ -99,14 +100,14 @@ export default ({
   search,
   loading,
   editingKey,
-  // editingParentKey,
+  editingExpands,
 }) => {
   const {
     listTable,
     setTableData,
     setEditingKey,
-    // setEditingParentKey,
     redirectDetail,
+    setEditingExpands,
   } = actions;
   const data = tableData.records;
 
@@ -127,6 +128,9 @@ export default ({
   };
 
   const handleSave = () => {
+    // const notftype = 'warning';
+    // const notfcontent = '岗位名称重复，请修改后再保存！';
+    // openNotificationWithIcon(notftype, notfcontent);
 
   };
 
@@ -137,11 +141,27 @@ export default ({
   const handleImportProvPos = () => {
   };
 
+  const openNotificationWithIcon = (type, content) => {
+    notification[type]({
+      message: '温馨提示',
+      description: content,
+    });
+  };
+
   const handleTableData = (dataClick, posKey) => {
-    const eEditingKey = [];
+    const dataExpandsBk = [...editingExpands];
+    if (dataExpandsBk === undefined || dataExpandsBk.indexOf(posKey) < 0) {
+      const notftype = 'warning';
+      const notfcontent = '请先展开省基准岗位列表！';
+      openNotificationWithIcon(notftype, notfcontent);
+      return;
+    }
+
+    const eEditingKey = [];// 可编辑子记录
     const dataNew = [];
-    const databk = { ...data };
-    const databk2 = { ...data };
+    const databk = [...data];
+    const databk2 = [...data];
+
     for (let t = 0; t < data.length; t += 1) {
       if (databk[t].key === posKey) {
         databk2[t].children.map(cchild => eEditingKey.push(cchild.key.toString()));// 原子记录
@@ -168,7 +188,60 @@ export default ({
       records: dataNew,
     };
     setTableData(tableDataNew);
-    // setEditingParentKey(posKey);// 更新可编辑父key
+    setEditingKey(eEditingKey);
+  };
+
+
+  const handleDelete = (posKey) => {
+    // 需要知道能否删除？ 若该省基准岗位下有本地网基准岗位，则不能删除，给出提示；
+    let delFlag = false;
+    if (posKey !== '11') { // TODO  请求后台 获取是否可删除标识，
+      delFlag = true;
+    }
+    if (!delFlag) {
+      const notftype = 'warning';
+      const notfcontent = '该省基准岗位下面有本地网基准岗位存在，请先删除本地网岗位再删除该岗位！！！';
+      openNotificationWithIcon(notftype, notfcontent);
+    } else {
+      const dataNew = [];
+      let dataDelChildren = [];
+      const dataDel = [...data];
+      for (let t = 0; t < data.length; t += 1) {
+        dataDelChildren = dataDel[t].children.filter((item) => {
+          return item.key !== posKey;
+        });
+        dataDel[t] = { ...dataDel[t], children: dataDelChildren };
+        dataNew.push(dataDel[t]);
+      }
+      const tableDataNew = {
+        total: 0,
+        size: 0,
+        current: 1,
+        records: dataNew,
+      };
+      setTableData(tableDataNew);
+    }
+  };
+
+  const handleExpand = (expanded, record) => {
+    // 原系统中只要展开过的子记录都会进行校验及修改保存处理；
+    const dataExpandsBk = [...editingExpands];
+    let dataExpandsNew = [];
+    if (expanded) { // 点开
+      dataExpandsNew = [...dataExpandsBk, record.key];
+      setEditingExpands(dataExpandsNew);
+    } else {
+      dataExpandsNew = dataExpandsBk.filter(item => item !== record.key);
+      setEditingExpands(dataExpandsNew);
+    }
+    const eEditingKey = [];// 可编辑子记录
+    const databk = { ...data };
+    const databk2 = { ...data };
+    for (let t = 0; t < data.length; t += 1) {
+      if (databk[t].key === record.key) {
+        databk2[t].children.map(cchild => eEditingKey.push(cchild.key.toString()));// 原子记录
+      }
+    }
     setEditingKey(eEditingKey);
   };
 
@@ -283,6 +356,7 @@ export default ({
                 posRecord={record}
                 posBegindate={record.ATTRIBUTE10}
                 handleTableData={handleTableData.bind(this)}
+                handleDelete={handleDelete.bind(this)}
               />
             </div>
           ),
@@ -351,6 +425,8 @@ export default ({
         scroll={{ y: document.body.scrollHeight - 460 }}
         bordered
         style={{ marginTop: '10px' }}
+        onExpand={handleExpand}
+        // onExpandedRowsChange={() => alert('展开的行变化')}
       />
       <Pagination
         showQuickJumper

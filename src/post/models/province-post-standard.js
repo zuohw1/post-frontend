@@ -136,8 +136,8 @@ export default {
     },
     /* 可编辑字段 */
     editingKey: [],
-    /* 点击可编辑父字段 */
-    editingParentKey: '',
+    /* 已展开主记录字段 */
+    editingExpands: [],
     /* 查询是否展开 */
     expand: false,
     /* 查询条件数据 */

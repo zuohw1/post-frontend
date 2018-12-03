@@ -15,7 +15,7 @@ class PosDuty extends React.Component {
 
   showModal = () => {
     const {
-      posName, posKey, posRecord, handleTableData,
+      posName, posKey, posRecord, handleTableData, handleDelete,
     } = this.props;
     if (posName === '查看职责') {
       this.setState({
@@ -31,6 +31,8 @@ class PosDuty extends React.Component {
       });
     } else if (posName === '定制') {
       handleTableData(posRecord, posKey);
+    } else if (posName === '删除') {
+      handleDelete(posKey);
     }
   };
 
@@ -108,5 +110,6 @@ PosDuty.propTypes = {
   posRecord: PropTypes.array.isRequired,
   posBegindate: PropTypes.array.isRequired,
   handleTableData: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
 };
 export default PosDuty;

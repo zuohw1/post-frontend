@@ -28,12 +28,12 @@ export function setEditingKey(editingKey) {
   };
 }
 
-/* 设置列表可编辑字段 */
-export function setEditingParentKey(editingParentKey) {
+/* 设置已展开主记录key字段 */
+export function setEditingExpands(editingExpands) {
   return {
     type: 'provincePostStandard/stateWillUpdate',
     payload: {
-      editingParentKey,
+      editingExpands,
     },
   };
 }
