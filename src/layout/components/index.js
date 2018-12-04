@@ -20,6 +20,7 @@ import ManagePostGroup from '../../post/containers/manage-post-group';
 import ManagePostProvince from '../../post/containers/manage-post-province';
 import ManagePostCity from '../../post/containers/manage-post-city';
 import EfficientDataMaintenance from '../../post/containers/efficient-data-maintenance';
+import LocalPostStandard from '../../post/containers/local-post-standard';
 
 const { SubMenu } = Menu;
 
@@ -100,6 +101,7 @@ const MainLayout = (state) => {
             <Route exact path="/post/managePostProvince" component={ManagePostProvince} />
             <Route exact path="/post/managePostCity" component={ManagePostCity} />
             <Route exact path="/post/efficientDataMaintenance" component={EfficientDataMaintenance} />
+            <Route exact path="/post/localPostStandard" component={LocalPostStandard} />
           </Switch>
         </Layout>
       </Layout>

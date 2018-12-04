@@ -103,6 +103,13 @@ export default {
         pid: 2,
         iconUrl: 'user',
       },
+      {
+        id: 214,
+        menuName: '本地网基准岗位维护',
+        url: '/post/localPostStandard',
+        pid: 2,
+        iconUrl: 'user',
+      },
     ],
   },
   reducers: {
