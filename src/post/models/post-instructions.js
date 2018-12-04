@@ -26,6 +26,7 @@ export default {
     InstructionsModal: false,
     dutyNameModal: false,
     visibleDrawer: false,
+    visibleCheckPost: false,
     checkedOne: false,
     disInputOne: true,
     checkedTwo: false,
@@ -134,6 +135,7 @@ export default {
       ],
       pages: 0,
     },
+    comments: [{id:"1",content:"接入网专业.接入网设备维护"},{id:"2",content:"采购管理.报账管理"}],
   },
   reducers: {
     stateWillUpdate(state, { payload }) {
@@ -146,71 +148,89 @@ export default {
   effects: {
     *getInstructions({ payload }, { put }) {
       console.log(payload);
-      yield put({// 数据更新会带动页面重新渲染
-        type: 'stateWillUpdate', // reducers中的方法名
-        payload: { // 网络返回的要保留的数据
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
           InstructionsModal: true,
         },
       });
     },
     *closeInstructions({ payload }, { put }) {
       console.log(payload);
-      yield put({// 数据更新会带动页面重新渲染
-        type: 'stateWillUpdate', // reducers中的方法名
-        payload: { // 网络返回的要保留的数据
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
           InstructionsModal: false,
         },
       });
     },
     *getDutyName({ payload }, { put }) {
       console.log(payload);
-      yield put({// 数据更新会带动页面重新渲染
-        type: 'stateWillUpdate', // reducers中的方法名
-        payload: { // 网络返回的要保留的数据
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
           dutyNameModal: true,
         },
       });
     },
     *closeDutyName({ payload }, { put }) {
       console.log(payload);
-      yield put({// 数据更新会带动页面重新渲染
-        type: 'stateWillUpdate', // reducers中的方法名
-        payload: { // 网络返回的要保留的数据
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
           dutyNameModal: false,
         },
       });
     },
     *getInsDrawer({ payload }, { put }) {
       console.log(payload);
-      yield put({// 数据更新会带动页面重新渲染
-        type: 'stateWillUpdate', // reducers中的方法名
-        payload: { // 网络返回的要保留的数据
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
           visibleDrawer: true,
         },
       });
     },
     *closeInsDrawer({ payload }, { put }) {
       console.log(payload);
-      yield put({// 数据更新会带动页面重新渲染
-        type: 'stateWillUpdate', // reducers中的方法名
-        payload: { // 网络返回的要保留的数据
+      yield put({
+        type: 'stateWillUpdate', 
+        payload: {
           visibleDrawer: false,
+        },
+      });
+    },
+    *getCheckPost({ payload }, { put }) {
+      console.log(payload);
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          visibleCheckPost: true,
+        },
+      });
+    },
+    *closeCheckPost({ payload }, { put }) {
+      console.log(payload);
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          visibleCheckPost: false,
         },
       });
     },
     *userNameEmpty({ payload }, { put }) {
       console.log(payload);
-      yield put({// 数据更新会带动页面重新渲染
-        type: 'stateWillUpdate', // reducers中的方法名
-        payload: { // 网络返回的要保留的数据
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
           userName: '',
         },
       });
     },
     *changeUserName({ payload: { e } }, { put }) {
-      yield put({// 数据更新会带动页面重新渲染
-        type: 'stateWillUpdate', // reducers中的方法名
-        payload: { // 网络返回的要保留的数据
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
           userName: e,
         },
       });

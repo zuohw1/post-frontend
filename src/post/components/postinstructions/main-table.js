@@ -1,45 +1,35 @@
-/* eslint-disable indent,comma-spacing,no-redeclare,space-infix-ops,quote-props,no-sequences,react/self-closing-comp,spaced-comment,no-unused-vars,max-len,quotes,react/no-this-in-sfc,react/jsx-tag-spacing,comma-dangle,no-multiple-empty-lines,react/jsx-closing-tag-location,react/jsx-indent,import/no-useless-path-segments */
+/* eslint-disable */
 import React, { Component } from 'react';
-import {
-  Table,
-  Pagination,
-  Button,
-  Divider,
-  Modal,
-} from 'antd';
+import { Table, Pagination, Button, Divider, Modal, Form, Drawer, } from 'antd';
+import CheckPostInstructions from './check-post-instructions';
 
 const { confirm } = Modal;
+const WrappedCheckPostInstructions = Form.create()(CheckPostInstructions);
 
 class TableInstructions extends Component {
   render() {
     const {
-      tableData, actions, search, loading,
+      tableData, actions, search, loading, visibleCheckPost,
     } = this.props;
-    const { listTable } = actions;
-
+    const { listTable, getCheckPost, closeCheckPost, } = actions;
     const data = tableData.records;
-
-
     const onChange = (pageNumber, pageSize) => {
       const searchF = { ...search, pageSize, pageNumber };
       listTable(searchF);
     };
-
     const onChangePageSize = (current, size) => {
       const searchF = { ...search, pageSize: size, pageNumber: current };
       listTable(searchF);
     };
     const handleExportProvPos = () => {
     };
-
-    const onClickView = (_, row) => {
-      console.log(6666);
+    const onClickView = (e) => {
+      e.preventDefault();
+      getCheckPost();
     };
-
     const onClickEdit = (_, row) => {
       console.log(8888);
     };
-
     const onClickDelete = (row) => {
       confirm({
         title: '确定要导出本条记录为doc文件吗?',
@@ -86,13 +76,11 @@ class TableInstructions extends Component {
       align: 'center',
       width: 150,
     }];
-
     const rowSelection = {
       onChange: (selectedRowKeys, selectedRows) => {
         console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
       },
     };
-
     function getFields() {
       const children = [];
       for (let i = 0; i < tableCols.length; i += 1) {
@@ -107,7 +95,7 @@ class TableInstructions extends Component {
           width: 240,
           render: (text, records) => (
             <span>
-              <a href=" javascript:;" onClick={() => onClickView(text, records)}>查看</a>
+              <a href=" javascript:;" onClick={onClickView}>查看</a>
               <Divider type="vertical" />
               <a href=" javascript:;" onClick={() => onClickEdit(text, records)}>修改</a>
               <Divider type="vertical" />
@@ -118,9 +106,11 @@ class TableInstructions extends Component {
       );
       return children;
     }
-
     return (
       <div>
+        <Drawer title="岗位说明书" width={880} placement="right" onClose={closeCheckPost} maskClosable={false} visible={visibleCheckPost} style={{ height: 'calc(100% - 55px)',overflow: 'auto',paddingBottom: 53, }} >
+          <WrappedCheckPostInstructions {...this.props} />
+        </Drawer>
         <Table
           columns={getFields()}
           loading={loading}

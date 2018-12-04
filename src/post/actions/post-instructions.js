@@ -40,6 +40,20 @@ export function closeInsDrawer() {
     },
   };
 }
+export function getCheckPost() {
+  return {
+    type: 'postInstructions/getCheckPost',
+    payload: {
+    },
+  };
+}
+export function closeCheckPost() {
+  return {
+    type: 'postInstructions/closeCheckPost',
+    payload: {
+    },
+  };
+}
 export function setToggle(expand) {
   return {
     type: 'postInstructions/stateWillUpdate',
