@@ -1,6 +1,7 @@
 /* eslint-disable */
-import { Form, Button, Col, Row, Input, Select, DatePicker, Radio, Icon, Checkbox } from 'antd';
+import { Form, Button, Col, Row, Input, Select, DatePicker, Radio, Icon, Checkbox, Modal } from 'antd';
 import SyncTreeSelect from '../../../components/sync-tree-select';
+import SearchTable from '../../../components/search-table';
 
 const { Option } = Select;
 const FormItem = Form.Item;
@@ -23,9 +24,13 @@ export default (props) => {
     disInputThree,
     checkedFour,
     disInputFour,
+    dutyNameModal,
+    dutyNameRefSelectData,
+    InstructionsModal,
+    refSelectData,
   } = props;
   console.log(props);
-  const { getInstructions, closeInsDrawer, userNameEmpty, changeUserName, isShowPost, onchangeDisInputOne, onchangeDisInputTwo, onchangeDisInputThree, onchangeDisInputFour, } = actions;
+  const { getInstructions, closeInsDrawer, userNameEmpty, changeUserName, isShowPost, onchangeDisInputOne, onchangeDisInputTwo, onchangeDisInputThree, onchangeDisInputFour, closeDutyName, getDutyName, closeInstructions, } = actions;
   const SerialNumberChildren = [];
   const ProfessionChildren = [];
   const GradeChildren = [];
@@ -39,6 +44,40 @@ export default (props) => {
   for (let i = 0; i < data3.length; i += 1) {
     GradeChildren.push(<Option key={data3[i]}>{ data3[i] }</Option>);
   }
+  const ResponseChildren = [];
+  for (let i = 0; i < data3.length; i += 1) {
+    ResponseChildren.push(<Option key={data3[i]}>{ data3[i] }</Option>);
+  }
+  const dutyNameColumns = [{
+    title: '岗位名称',
+    dataIndex: 'KeyResponsibilities',
+    key: 'KeyResponsibilities',
+    align: 'left',
+  },{
+    title: '岗位序列',
+    dataIndex: 'KeyResponsibilitie',
+    key: 'KeyResponsibilitie',
+    align: 'left',
+  },{
+    title: '基准岗位层级',
+    dataIndex: 'KeyResponsibiliti',
+    key: 'KeyResponsibiliti',
+    align: 'left',
+  }];
+  const dutyNameRowSelection = {
+    type: 'radio',
+  };
+  const dutyNameUrl = 'orgHeaderBatch/list';
+  const chooseColumns = [{
+    title: '关键职责名称',
+    dataIndex: 'KeyResponsibilities',
+    key: 'KeyResponsibilities',
+    align: 'left',
+  }];
+  const rowSelection = {
+    type: 'radio',
+  };
+  const refUrl = 'orgHeaderBatch/list';
   const queryCols = [
     {
       itemName: '岗位名称',
@@ -128,6 +167,28 @@ export default (props) => {
     console.log(e);
     changeUserName(e);
   }
+  const dutyNameSubmit = (e) => {
+    e.preventDefault();
+    closeDutyName();
+  };
+  const dutyNameCancel = (e) => {
+    e.preventDefault();
+    closeDutyName();
+  };
+  const InstructionsSubmit = (e) => {
+    e.preventDefault();
+    closeInstructions();
+  };
+  const InstructionsCancel = (e) => {
+    e.preventDefault();
+    closeInstructions();
+  };
+  const handleChangeResponse = (value) => {
+    console.log(`selected ${value}`);
+  }
+  const onInstructionsView = () => {
+    getInstructions();
+  };
   const remove = (k) => {
     const { form } = props;
     const keys = form.getFieldValue('keys');
@@ -164,10 +225,9 @@ export default (props) => {
               {getFieldDecorator(queryCols[i].itemKey, {
                 rules: [{
                   required: queryCols[i].required,
-                  message: '不能为空!',
                 }],
               })(
-                <Input placeholder="请输入" prefix={<Icon type="check-square" style={{ color: 'rgba(0,0,0,.25)' }} />} suffix={suffix} setFieldsValue={userName} onChange={onChangeUserName} />,
+                <Input placeholder="请输入" prefix={<Icon type="check-square" style={{ color: 'rgba(0,0,0,.25)' }} onClick={getDutyName}/>} suffix={suffix} setFieldsValue={userName} onChange={onChangeUserName} />,
               )}
             </FormItem>
           </Col>,
@@ -261,7 +321,7 @@ export default (props) => {
             message: "Please input passenger's name or delete this field.",
           }],
         })(
-          <span><Select placeholder="请选择" allowClear  style={{ position: 'absolute', width: '118px', left: '-26%', marginTop: '4px' }}>{SerialNumberChildren}</Select><Input placeholder="" style={{ width: '66.6%', marginRight: 8, position: 'relative' }} suffix={<Icon type="check-square" style={{ color: 'rgba(0,0,0,.25)' }} />} /></span>
+          <span><Select placeholder="请选择" allowClear  style={{ position: 'absolute', width: '118px', left: '-26%', marginTop: '4px' }}>{SerialNumberChildren}</Select><Input placeholder="" style={{ width: '66.6%', marginRight: 8, position: 'relative' }} suffix={<Icon type="check-square" style={{ color: 'rgba(0,0,0,.25)' }}  onClick={onInstructionsView} />} /></span>
         )}
         {keys.length > 1 ? (
           <Icon
@@ -276,6 +336,54 @@ export default (props) => {
   });
   return (
       <div>
+        <Modal
+          title="岗位名称"
+          onOk={dutyNameSubmit}
+          onCancel={dutyNameCancel}
+          maskClosable={false}
+          destroyOnClose
+          width={760}
+          visible={dutyNameModal}
+          centered
+          className="instructions-model"
+        >
+          <div className="instructions-model-top">
+            <span className="instructions-model-top-one">岗位序列：<Select style={{ width: 169, marginRight: '60px' }} >{SerialNumberChildren}</Select></span>
+          <span className="instructions-model-top-two"><span>岗位名称：</span><Input style={{ width: 169 }}/></span>
+          <span className="instructions-model-top-three"><Button type="primary" icon="search">查询</Button></span>
+          </div>
+          <SearchTable
+            columns={dutyNameColumns}
+            refUrl={dutyNameUrl}
+            rowSelection={dutyNameRowSelection}
+            refSelectData={dutyNameRefSelectData}
+            className="table-search-choose"
+          />
+        </Modal>
+        <Modal
+          title="选择框"
+          onOk={InstructionsSubmit}
+          onCancel={InstructionsCancel}
+          maskClosable={false}
+          destroyOnClose
+          width={760}
+          visible={InstructionsModal}
+          centered
+          className="instructions-model"
+        >
+          <div className="instructions-model-top">
+            <span className="instructions-model-top-one">专业：<Select style={{ width: 200, marginRight: '60px' }} onChange={handleChangeResponse}>{ResponseChildren}</Select></span>
+          <span className="instructions-model-top-two"><span>名称：</span><Input /></span>
+          <span className="instructions-model-top-three"><Button type="primary" icon="search">查询</Button></span>
+          </div>
+          <SearchTable
+            columns={chooseColumns}
+            refUrl={refUrl}
+            rowSelection={rowSelection}
+            refSelectData={refSelectData}
+            className="table-search-choose"
+          />
+        </Modal>
         <Form className="ant-advanced-search-form-second">
           <Row gutter={24}>{getFields()}</Row>
         </Form>
@@ -386,7 +494,6 @@ export default (props) => {
               </div>
             </FormItem>
         	</Form>
-        	
         </div>
         <div
           style={{

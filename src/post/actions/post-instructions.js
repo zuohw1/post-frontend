@@ -12,6 +12,20 @@ export function closeInstructions() {
     },
   };
 }
+export function getDutyName() {
+  return {
+    type: 'postInstructions/getDutyName',
+    payload: {
+    },
+  };
+}
+export function closeDutyName() {
+  return {
+    type: 'postInstructions/closeDutyName',
+    payload: {
+    },
+  };
+}
 export function getInsDrawer() {
   return {
     type: 'postInstructions/getInsDrawer',

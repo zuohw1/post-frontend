@@ -42,7 +42,7 @@ class TableInstructions extends Component {
 
     const onClickDelete = (row) => {
       confirm({
-        title: '确定要删除本条记录吗?',
+        title: '确定要导出本条记录为doc文件吗?',
         onOk() {
         },
       });
@@ -111,7 +111,7 @@ class TableInstructions extends Component {
               <Divider type="vertical" />
               <a href=" javascript:;" onClick={() => onClickEdit(text, records)}>修改</a>
               <Divider type="vertical" />
-              <a href=" javascript:;" onClick={() => onClickDelete(records)}>删除</a>
+              <a href=" javascript:;" onClick={() => onClickDelete(records)}>导出</a>
             </span>
           ),
         },

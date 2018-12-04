@@ -21,8 +21,10 @@ export default {
   state: {
     userName: '',
     refSelectData: {},
+    dutyNameRefSelectData: {},
     isShowPostSeat: 'hide-post-seat post-seat',
     InstructionsModal: false,
+    dutyNameModal: false,
     visibleDrawer: false,
     checkedOne: false,
     disInputOne: true,
@@ -157,6 +159,24 @@ export default {
         type: 'stateWillUpdate', // reducers中的方法名
         payload: { // 网络返回的要保留的数据
           InstructionsModal: false,
+        },
+      });
+    },
+    *getDutyName({ payload }, { put }) {
+      console.log(payload);
+      yield put({// 数据更新会带动页面重新渲染
+        type: 'stateWillUpdate', // reducers中的方法名
+        payload: { // 网络返回的要保留的数据
+          dutyNameModal: true,
+        },
+      });
+    },
+    *closeDutyName({ payload }, { put }) {
+      console.log(payload);
+      yield put({// 数据更新会带动页面重新渲染
+        type: 'stateWillUpdate', // reducers中的方法名
+        payload: { // 网络返回的要保留的数据
+          dutyNameModal: false,
         },
       });
     },
