@@ -27,6 +27,7 @@ export default {
     dutyNameModal: false,
     visibleDrawer: false,
     visibleCheckPost: false,
+    visibleModifyPost: false,
     checkedOne: false,
     disInputOne: true,
     checkedTwo: false,
@@ -215,6 +216,24 @@ export default {
         type: 'stateWillUpdate',
         payload: {
           visibleCheckPost: false,
+        },
+      });
+    },
+    *getModifyPost({ payload }, { put }) {
+      console.log(payload);
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          visibleModifyPost: true,
+        },
+      });
+    },
+    *closeModifyPost({ payload }, { put }) {
+      console.log(payload);
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          visibleModifyPost: false,
         },
       });
     },

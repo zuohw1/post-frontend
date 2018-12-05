@@ -54,6 +54,20 @@ export function closeCheckPost() {
     },
   };
 }
+export function getModifyPost() {
+  return {
+    type: 'postInstructions/getModifyPost',
+    payload: {
+    },
+  };
+}
+export function closeModifyPost() {
+  return {
+    type: 'postInstructions/closeModifyPost',
+    payload: {
+    },
+  };
+}
 export function setToggle(expand) {
   return {
     type: 'postInstructions/stateWillUpdate',

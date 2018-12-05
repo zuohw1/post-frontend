@@ -2,16 +2,18 @@
 import React, { Component } from 'react';
 import { Table, Pagination, Button, Divider, Modal, Form, Drawer, } from 'antd';
 import CheckPostInstructions from './check-post-instructions';
+import ModifyPostInstructions from './modify-post-instructions';
 
 const { confirm } = Modal;
 const WrappedCheckPostInstructions = Form.create()(CheckPostInstructions);
+const WrappedModifyPostInstructions = Form.create()(ModifyPostInstructions);
 
 class TableInstructions extends Component {
   render() {
     const {
-      tableData, actions, search, loading, visibleCheckPost,
+      tableData, actions, search, loading, visibleCheckPost, visibleModifyPost,
     } = this.props;
-    const { listTable, getCheckPost, closeCheckPost, } = actions;
+    const { listTable, getCheckPost, closeCheckPost, getModifyPost, closeModifyPost } = actions;
     const data = tableData.records;
     const onChange = (pageNumber, pageSize) => {
       const searchF = { ...search, pageSize, pageNumber };
@@ -27,8 +29,9 @@ class TableInstructions extends Component {
       e.preventDefault();
       getCheckPost();
     };
-    const onClickEdit = (_, row) => {
-      console.log(8888);
+    const onClickModify = (e) => {
+      e.preventDefault();
+      getModifyPost();
     };
     const onClickDelete = (row) => {
       confirm({
@@ -97,7 +100,7 @@ class TableInstructions extends Component {
             <span>
               <a href=" javascript:;" onClick={onClickView}>查看</a>
               <Divider type="vertical" />
-              <a href=" javascript:;" onClick={() => onClickEdit(text, records)}>修改</a>
+              <a href=" javascript:;" onClick={onClickModify}>修改</a>
               <Divider type="vertical" />
               <a href=" javascript:;" onClick={() => onClickDelete(records)}>导出</a>
             </span>
@@ -110,6 +113,9 @@ class TableInstructions extends Component {
       <div>
         <Drawer title="岗位说明书" width={880} placement="right" onClose={closeCheckPost} maskClosable={false} visible={visibleCheckPost} style={{ height: 'calc(100% - 55px)',overflow: 'auto',paddingBottom: 53, }} >
           <WrappedCheckPostInstructions {...this.props} />
+        </Drawer>
+        <Drawer title="岗位说明书" width={880} placement="right" onClose={closeModifyPost} maskClosable={false} visible={visibleModifyPost} style={{ height: 'calc(100% - 55px)',overflow: 'auto',paddingBottom: 53, }} >
+          <WrappedModifyPostInstructions {...this.props} />
         </Drawer>
         <Table
           columns={getFields()}
