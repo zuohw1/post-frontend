@@ -12,6 +12,20 @@ export function closeInstructions() {
     },
   };
 }
+export function getDutyName() {
+  return {
+    type: 'postInstructions/getDutyName',
+    payload: {
+    },
+  };
+}
+export function closeDutyName() {
+  return {
+    type: 'postInstructions/closeDutyName',
+    payload: {
+    },
+  };
+}
 export function getInsDrawer() {
   return {
     type: 'postInstructions/getInsDrawer',
@@ -22,6 +36,34 @@ export function getInsDrawer() {
 export function closeInsDrawer() {
   return {
     type: 'postInstructions/closeInsDrawer',
+    payload: {
+    },
+  };
+}
+export function getCheckPost() {
+  return {
+    type: 'postInstructions/getCheckPost',
+    payload: {
+    },
+  };
+}
+export function closeCheckPost() {
+  return {
+    type: 'postInstructions/closeCheckPost',
+    payload: {
+    },
+  };
+}
+export function getModifyPost() {
+  return {
+    type: 'postInstructions/getModifyPost',
+    payload: {
+    },
+  };
+}
+export function closeModifyPost() {
+  return {
+    type: 'postInstructions/closeModifyPost',
     payload: {
     },
   };
