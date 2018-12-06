@@ -1,8 +1,9 @@
 const fs = require('fs');
-const argv = process.argv;
-const customizedArgv = process.argv.slice(2);
+
+const { argv } = process;
+const customizedArgv = argv.slice(2);
 const argvMap = {};
-customizedArgv.forEach(item => {
+customizedArgv.forEach((item) => {
   const key = item.slice(0, item.indexOf('='));
   const value = item.slice(item.indexOf('=') + 1);
   Object.assign(argvMap, {
@@ -28,4 +29,4 @@ const config = {
 export default config;
 `;
 fs.writeFileSync('./src/env.config.js', injectString);
-process.stdout.write('注入成功');
+process.stdout.write('注入成功\n');
