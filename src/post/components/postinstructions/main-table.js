@@ -11,17 +11,18 @@ const WrappedModifyPostInstructions = Form.create()(ModifyPostInstructions);
 class TableInstructions extends Component {
   render() {
     const {
-      tableData, actions, search, loading, visibleCheckPost, visibleModifyPost,
+      records, current, size, total, actions, search, loading, visibleCheckPost, visibleModifyPost, loginName, respId, rangeId, recordNum, executeOnce,
     } = this.props;
-    const { listTable, getCheckPost, closeCheckPost, getModifyPost, closeModifyPost } = actions;
-    const data = tableData.records;
+    const { listTable, getCheckPost, closeCheckPost, getModifyPost, closeModifyPost, isExecuteOnce } = actions;
+    if (executeOnce === true) {
+      listTable(loginName, respId, rangeId, current, recordNum);
+      isExecuteOnce();
+    }
     const onChange = (pageNumber, pageSize) => {
       const searchF = { ...search, pageSize, pageNumber };
-      listTable(searchF);
     };
     const onChangePageSize = (current, size) => {
       const searchF = { ...search, pageSize: size, pageNumber: current };
-      listTable(searchF);
     };
     const handleExportProvPos = () => {
     };
@@ -40,42 +41,42 @@ class TableInstructions extends Component {
         },
       });
     };
-    const { current, size, total } = tableData;
     /* 列表字段 */
     const tableCols = [{
       title: '岗位名称',
-      dataIndex: 'DOC_CODE',
-      key: 'DOC_CODE',
+      dataIndex: 'POS_NAME',
+      key: 'POS_NAME',
       align: 'center',
-      width: 150,
+      width: 240,
     }, {
       title: '所属部门',
-      dataIndex: 'ATTRIBUTE8',
-      key: 'ATTRIBUTE8',
+      dataIndex: 'NAME',
+      key: 'NAME',
       align: 'center',
-      width: 150,
+      width: 200,
     }, {
       title: '岗位序列',
-      dataIndex: 'ATTRIBUTE13',
-      key: 'ATTRIBUTE13',
+      dataIndex: 'ELEMENT_NAME',
+      key: 'ELEMENT_NAME',
       align: 'center',
       width: 150,
     }, {
       title: '职级带宽',
-      dataIndex: 'ATTRIBUTE11',
-      key: 'ATTRIBUTE11',
       align: 'center',
-      width: 150,
+      width: 110,
+      render: (text, record) => (
+        <span>{record.POS_LEVEL_LOW} -- {record.POS_LEVEL_HIGH}</span> 
+      )
     }, {
       title: '开始日期',
-      dataIndex: 'DOC_STATUS',
-      key: 'DOC_STATUS',
+      dataIndex: 'ACTIVE_START_DATE',
+      key: 'ACTIVE_START_DATE',
       align: 'center',
-      width: 150,
+      width: 240,
     }, {
       title: '结束日期',
-      dataIndex: 'ATTRIBUTE10',
-      key: 'ATTRIBUTE10',
+      dataIndex: 'ACTIVE_END_DATE',
+      key: 'ACTIVE_END_DATE',
       align: 'center',
       width: 150,
     }];
@@ -84,6 +85,7 @@ class TableInstructions extends Component {
         console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
       },
     };
+    //ize: Math.ceil(result.count/result.dutyList.length),
     function getFields() {
       const children = [];
       for (let i = 0; i < tableCols.length; i += 1) {
@@ -120,7 +122,7 @@ class TableInstructions extends Component {
         <Table
           columns={getFields()}
           loading={loading}
-          dataSource={data}
+          dataSource={records}
           pagination={false}
           size="small"
           scroll={{ y: document.body.scrollHeight - 460 }}

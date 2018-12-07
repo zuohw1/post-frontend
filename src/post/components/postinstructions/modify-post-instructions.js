@@ -58,19 +58,15 @@ export default (props) => {
     getInstructions();
   };
   const changeDisInputOne = (checkedOne) => {
-    console.log(8888);
     onchangeDisInputOne(props.checkedOne);
   }
   const changeDisInputTwo = (checkedTwo) => {
-    console.log(8888);
     onchangeDisInputTwo(props.checkedTwo);
   }
   const changeDisInputThree = (checkedThree) => {
-    console.log(8888);
     onchangeDisInputThree(props.checkedThree);
   }
   const changeDisInputFour = (checkedFour) => {
-    console.log(8888);
     onchangeDisInputFour(props.checkedFour);
   }
   const remove = (k) => {
@@ -85,7 +81,6 @@ export default (props) => {
   }
   const add = () => {
     var oCruxDuty = document.getElementsByClassName("crux-duty-top");
-    console.log(oCruxDuty);
     for(var i = 0; i < oCruxDuty[0].classList.length; i ++ ){
       if(oCruxDuty[0].classList[i] === "crux-duty-top-hide"){
         oCruxDuty[0].classList.remove("crux-duty-top-hide") ;
