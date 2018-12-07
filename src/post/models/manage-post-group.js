@@ -1,49 +1,44 @@
+import ManagePostGroup from '../services/manage-post-group';
+
+/* 格式化table数据 */
+const formatTableData = (tableData, currentPageNum, recordNum) => {
+  const num = currentPageNum * recordNum - recordNum;
+  const table = tableData.data.map((item, index) => {
+    const ite = { ...item, key: index + 1 + num };
+    return ite;
+  });
+  const formatTable = {
+    ...tableData,
+    records: table,
+    total: tableData.total,
+    size: recordNum,
+    current: currentPageNum,
+  };
+  return formatTable;
+};
+
 
 export default {
   namespace: 'managePostGroup',
   state: {
+    /* 关键职责范围 */
+    respRange: {},
     /* 列表数据 */
     tableData: {
       total: 0,
       size: 0,
       current: 1,
-      records: [
-        {
-          key: '1',
-          BOO: '中国联通总部-办公厅（党组办公室、董事会办公室）',
-          DOC_CODE: '0713845',
-          ATTRIBUTE8: '张喜民',
-          ATTRIBUTE9: '总经理、党组办公室、董事会办公室主任',
-          DOC_VERIFIER: '集团本部部门正职',
-          ATTRIBUTE12: ['全部记录'],
-        },
-        {
-          key: '2',
-          BOO: '中国联通总部-办公厅（党组办公室、董事会办公室）',
-          DOC_CODE: '0000019',
-          ATTRIBUTE8: '王霞',
-          ATTRIBUTE9: '副总经理',
-          DOC_VERIFIER: '集团本部部门正职',
-          ATTRIBUTE12: ['全部记录'],
-
-        },
-        {
-          key: '3',
-          BOO: '中国联通总部-办公厅（党组办公室、董事会办公室）',
-          DOC_CODE: '0598559',
-          ATTRIBUTE8: '谢华',
-          ATTRIBUTE9: '副总经理',
-          DOC_VERIFIER: '集团本部部门正职',
-          ATTRIBUTE12: ['全部记录'],
-        },
-      ],
+      records: [],
       pages: 0,
     },
     /* 查询是否展开 */
     expand: false,
+    /* 卡片是否显示 */
+    modal: false,
+    /* 卡片记录 */
+    record: {},
     /* 查询条件数据 */
-    search: {
-    },
+    search: {},
   },
   reducers: {
     stateWillUpdate(state, { payload }) {
@@ -54,6 +49,51 @@ export default {
     },
   },
   effects: {
+    * getKeyResp({ payload: { search } }, { call, put }) {
+      console.log('search', search);
+      const respData = yield call(ManagePostGroup.getKeyResp);
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          respRange: respData,
+        },
+      });
+    },
+    /* 列表查询 */
+    * fetch({ payload: { search } }, { call, put }) {
+      const tableData = yield call(ManagePostGroup.list, search);
+      let formatTable = [];
+      setTimeout(
+        formatTable = formatTableData(tableData, search.currentPageNum, search.recordNum),
+        1000,
+      );
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          tableData: formatTable,
+          record: {},
+        },
+      });
+    },
+    /* 获取列表选中记录 */
+    * getRecord({ payload: { record, modal } }, { call, put }) {
+      if (record.assignMentId && record.assignMentId !== '') {
+        const data = yield call(ManagePostGroup.getAttachData, record);
+        const attachData = data.map((item) => {
+          const ite = { ...item };
+          return ite;
+        });
+        yield put({
+          type: 'stateWillUpdate',
+          payload: { record: { ...record, attachData }, modal },
+        });
+      } else {
+        yield put({
+          type: 'stateWillUpdate',
+          payload: { record: { ...record }, modal },
+        });
+      }
+    },
   },
   subscriptions: {
   },
