@@ -21,7 +21,6 @@ const apply = (item) => {
 };
 
 const handleonchangeckbx = () => {
-
 };
 
 class EditableCell extends React.Component {
