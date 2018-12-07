@@ -96,6 +96,27 @@ export default {
         },
       });
     },
+    /* 获取列表选中记录 */
+    * getRecord({ payload: { record, modal } }, { call, put }) {
+      console.log('record===', record);
+      if (record.posId && record.posId !== '') {
+        const take = yield call(ProvPostQueryServices.getNewsRangeRef, record.posId);
+        const keep = take.kstrList;
+        const attachData = keep.map((item, index) => {
+          const ite = { ...item, key: index + 1 };
+          return ite;
+        });
+        yield put({
+          type: 'stateWillUpdate',
+          payload: { record: { ...record, attachData }, modal },
+        });
+      } else {
+        yield put({
+          type: 'stateWillUpdate',
+          payload: { record: { ...record }, modal },
+        });
+      }
+    },
     /* 列表查询 */
     * fetch({ payload: { search } }, { call, put }) {
       const tableData = yield call(ProvPostQueryServices.list, search);
@@ -114,5 +135,15 @@ export default {
     },
   },
   subscriptions: {
+    setup({ dispatch, history }) {
+      return history.listen(({ pathname }) => {
+        if (pathname === '/post/provPostQuery') {
+          dispatch({
+            type: 'fetch',
+            payload: { search: { currentPageNum: 1, recordNum: 10, levelCode: 's' } },
+          });
+        }
+      });
+    },
   },
 };

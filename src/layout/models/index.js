@@ -85,14 +85,14 @@ export default {
       {
         id: 211,
         menuName: '管理人员职位管理（省）',
-        url: '/post/managePostGroup',
+        url: '/post/managePostProvince',
         pid: 2,
         iconUrl: 'user',
       },
       {
         id: 212,
         menuName: '管理人员职位管理（市）',
-        url: '/post/managePostGroup',
+        url: '/post/managePostCity',
         pid: 2,
         iconUrl: 'user',
       },

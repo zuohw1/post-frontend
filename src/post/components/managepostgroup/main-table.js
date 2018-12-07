@@ -1,10 +1,11 @@
 import React from 'react';
 import {
   Table,
+  Modal,
   Pagination,
   Select,
 } from 'antd';
-import Modall from './alertmessage/index';
+import Model from './card';
 
 const { Option } = Select;
 const respList = [];
@@ -12,13 +13,25 @@ const respList = [];
 export default ({
   tableData,
   actions,
+  respRange,
+  record,
+  modal,
   form,
   loading,
 }) => {
   const {
+    getRecord,
     listTable,
   } = actions;
 
+  const onClickView = (_, row) => {
+    getRecord(row, true, false);
+  };
+
+  const onCancel = (e) => {
+    e.preventDefault();
+    getRecord({}, false, true);
+  };
   const data = tableData.records;
 
   const onChange = (currentPageNum, recordNum) => {
@@ -41,12 +54,11 @@ export default ({
 
   const { current, size, total } = tableData;
 
-  const respRange = [{ id: '0', title: '集团本部部门正职' }, { id: '1', title: '集团本部部门副职' }, { id: '2', title: '分公司副职' }, { id: '3', title: '其他' }];
   if (respList.length === 0) {
-    for (let i = 0; i < respRange.length; i += 1) { // 首次可能请求后还没拿到数据，放此位置会执行多次，只当获取到数据后会进行处理；
+    for (let i = 0; i < respRange.length; i += 1) {
       const respV = {
-        id: respRange[i].id,
-        title: respRange[i].title,
+        id: respRange[i].kid,
+        title: respRange[i].kname,
       };
       respList.push(respV);
     }
@@ -63,36 +75,41 @@ export default ({
     width: 50,
   }, {
     title: '部门',
-    dataIndex: 'BOO',
-    key: 'BOO',
+    dataIndex: 'name',
+    key: 'name',
     align: 'center',
     width: 250,
   }, {
     title: '员工编号',
-    dataIndex: 'DOC_CODE',
-    key: 'DOC_CODE',
+    dataIndex: 'employeeNumber',
+    key: 'employeeNumber',
     align: 'center',
     width: 100,
   }, {
     title: '员工姓名',
-    dataIndex: 'ATTRIBUTE8',
-    key: 'ATTRIBUTE8',
+    dataIndex: 'fullName',
+    key: 'fullName',
     align: 'center',
     width: 100,
   }, {
     title: '员工职务',
-    dataIndex: 'ATTRIBUTE9',
-    key: 'ATTRIBUTE9',
+    dataIndex: 'jobName',
+    key: 'jobName',
     align: 'center',
     width: 200,
   }, {
     title: '关键职责',
-    dataIndex: 'DOC_VERIFIER',
-    key: 'DOC_VERIFIER',
+    dataIndex: 'kname',
+    key: 'kname',
     align: 'center',
     width: 300,
     render: () => (
-      <Select placeholder="请选择" allowClear style={{ width: 250 }}>
+      <Select
+        placeholder="请选择"
+        defaultValue={respList.map((item) => { return (item.id); })}
+        allowClear
+        style={{ width: 250 }}
+      >
         {
           respList.map(apply)
         }
@@ -100,13 +117,13 @@ export default ({
     ),
   }, {
     title: '操作',
-    dataIndex: 'ATTRIBUTE12',
-    key: 'ATTRIBUTE12',
+    dataIndex: 'action',
+    key: 'action',
     align: 'center',
     width: 100,
-    render: (text, record) => (
+    render: (text, records) => (
       <span>
-        { record.ATTRIBUTE12.map(tag => <Modall posKey={record.key} posName={tag} />)}
+        <a href=" javascript:;" onClick={() => onClickView(text, records)}>全部记录</a>
       </span>
     ),
   },
@@ -119,9 +136,21 @@ export default ({
     }
     return children;
   }
-
   return (
     <div style={{ marginTop: '10px' }}>
+      <Modal
+        title="全部记录"
+        visible={modal}
+        onCancel={onCancel}
+        maskClosable={false}
+        destroyOnClose
+        width={1000}
+        footer={null}
+      >
+        <Model
+          record={record}
+        />
+      </Modal>
       <Table
         columns={getFields()}
         loading={loading}
