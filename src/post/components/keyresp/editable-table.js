@@ -1,10 +1,12 @@
 import React from 'react';
 import {
-  Table, Input, Button, Form, Popconfirm, Col, Row,
+  Table, Input, Button, Form, Popconfirm, Col, Row, InputNumber, DatePicker, Select,
 } from 'antd';
+import CheckboxGroup from '../../../../node_modules/antd/es/checkbox/Group';
 
 const FormItem = Form.Item;
 const EditableContext = React.createContext();
+const { Option } = Select;
 
 const EditableRow = ({ form, index, ...props }) => (
   <EditableContext.Provider value={form}>
@@ -14,99 +16,80 @@ const EditableRow = ({ form, index, ...props }) => (
 
 const EditableFormRow = Form.create()(EditableRow);
 
+const apply = (item) => {
+  return (<Option value={item.id} key={item.id}> {item.title} </Option>);
+};
+
+const handleonchangeckbx = () => {
+
+};
+
 class EditableCell extends React.Component {
-  state = {
-    editing: false,
-  }
-
-  componentDidMount() {
-    const { editable } = this.props;
-    if (editable) {
-      document.addEventListener('click', this.handleClickOutside, true);
+  getInput = (p) => {
+    if (p.props.inputType === 'number') {
+      return <InputNumber />;
+    } else if (p.props.inputType === 'date') {
+      return (
+        <DatePicker />
+      );
+    } else if (p.props.inputType === 'select') {
+      return (
+        <Select style={{ width: 70 }} placeholder="请选择" allowClear>
+          {
+            p.props.list.map(apply)
+          }
+        </Select>);
+    } else if (p.props.inputType === 'checkbox') {
+      return (
+        <CheckboxGroup options={p.props.list} onChange={handleonchangeckbx} />
+      );
     }
-  }
+    return <Input />;
+  };
 
-  componentWillUnmount() {
-    const { editable } = this.props;
-    if (editable) {
-      document.removeEventListener('click', this.handleClickOutside, true);
-    }
-  }
-
-  toggleEdit = () => {
-    const { editing } = !this.state;
-    this.setState({ editing }, () => {
-      if (editing) {
-        this.input.focus();
-      }
-    });
-  }
-
-  handleClickOutside = (e) => {
-    const { editing } = this.state;
-    if (editing && this.cell !== e.target && !this.cell.contains(e.target)) {
-      this.save();
-    }
-  }
-
-  save = () => {
-    const { record, handleSave } = this.props;
-    this.form.validateFields((error, values) => {
-      if (error) {
-        return;
-      }
-      this.toggleEdit();
-      handleSave({ ...record, ...values });
-    });
-  }
-
+  // save = () => {
+  //   const { record, handleSave } = this.props;
+  //   this.form.validateFields((error, values) => {
+  //     if (error) {
+  //       return;
+  //     }
+  //     this.toggleEdit();
+  //     handleSave({ ...record, ...values });
+  //   });
+  // }
   render() {
-    const { editing } = this.state;
     const {
-      editable,
+      editing,
       dataIndex,
       title,
+      inputType,
       record,
-      index,
-      handleSave,
       ...restProps
     } = this.props;
     return (
-      <td ref={(node) => { (this.cell = node); }} {...restProps}>
-        {editable ? (
-          <EditableContext.Consumer>
-            {(form) => {
-              this.form = form;
-              return (
-                editing ? (
-                  <FormItem style={{ margin: 0 }}>
-                    {form.getFieldDecorator(dataIndex, {
-                      rules: [{
-                        required: true,
-                        message: `${title} is required.`,
-                      }],
-                      initialValue: record[dataIndex],
-                    })(
-                      <Input
-                        ref={(node) => { (this.input = node); }}
-                        onPressEnter={this.save}
-                      />,
-                    )}
-                  </FormItem>
-                ) : (
-                  <div
-                    className="editable-cell-value-wrap"
-                    style={{ paddingRight: 24 }}
-                    onClick={this.toggleEdit}
-                  >
-                    {restProps.children}
-                  </div>
-                )
-              );
-            }}
-          </EditableContext.Consumer>
-        ) : restProps.children}
-      </td>
+      <EditableContext.Consumer>
+        {(form) => {
+          const { getFieldDecorator } = form;
+          return (
+            <td {...restProps}>
+              {editing ? (
+                <FormItem style={{ margin: 0 }}>
+                  {getFieldDecorator(dataIndex, {
+                    rules: [{
+                      required: true,
+                      message: `请维护【${title}】!`,
+                    }],
+                    initialValue:
+                      inputType === 'checkbox' ? record[`${dataIndex}_VAL`] : record[dataIndex],
+                  })(
+                    this.getInput(this),
+                  )}
+                </FormItem>
+              ) : restProps.children}
+            </td>
+          );
+        }}
+      </EditableContext.Consumer>
     );
   }
 }
@@ -138,7 +121,6 @@ export default ({
 
 }) => {
   const {
-    setClickRespIdCode,
     // setListDataSource,
     // setListCount,
     setListDataSourceAll,
@@ -154,12 +136,6 @@ export default ({
     setListCountZz,
     setListCountZzz,
   } = actions;
-
-
-  const tt = false;
-  if (tt) {
-    setClickRespIdCode('11', '11');
-  }
 
   // 右侧列表title名称动态显示
   const vt = (clickRespType !== 'undefined') ? (clickRespType / 10) : 0;
@@ -183,7 +159,6 @@ export default ({
               : countAll)))));
 
   const handleDelete = (key) => {
-    console.log('handleDelete()---', key, clickRespType);
     if (vt === 0) {
       setListDataSourceAll(dataSource.filter(item => item.key !== key));
       setListCountAll(count - 1);
@@ -436,16 +411,79 @@ export default ({
 
 
   const handleAdd = () => {
-    console.log('handleAdd()待处理');
-    // console.log('clickRespType', clickRespType);
-    // const newData = {
-    //   key: count,
-    //   name: `Edward King ${count}`,
-    //   age: 32,
-    // };
-    // setListCount(count + 1);
-    // setListDataSource([...dataSource, newData]);
-    // console.log('handleAdd', newData);
+    // console.log('handleAdd()--clickRespType：', clickRespType, vt, count, countAll);
+    let newData = {};
+    if (vt === 0) {
+      newData = {
+        key: countAll,
+        postName: '',
+        postCode: '',
+      };
+      setListCountAll(countAll + 1);
+      setListDataSourceAll([...dataSource, newData]);
+    } else if (vt === 1) {
+      newData = {
+        key: countGwxl,
+        zxlName: '',
+        ssPostName: '',
+        zxlCode: '',
+      };
+      setListCountGwxl(countGwxl + 1);
+      setListDataSourceGwxl([...dataSource, newData]);
+    } else if (vt === 2) {
+      newData = {
+        key: countZxl,
+        zyName: '',
+        ssZxlName: '',
+        zyCode: '',
+      };
+      setListCountZxl(countZxl + 1);
+      setListDataSourceZxl([...dataSource, newData]);
+    } else if (vt === 3) {
+      newData = {
+        key: countZy,
+        gjzzName: '',
+        ssZyName: '',
+        gjzzCode: '',
+        eduEqr: '',
+        workExp: '',
+        orgLevel: '',
+        isCore: '',
+        standardZj: '',
+        groupZj: '',
+        provZj: '',
+        dsZj: '',
+        qxZj: '',
+      };
+      setListCountZy(countZy + 1);
+      setListDataSourceZy([...dataSource, newData]);
+    } else if (vt === 4) {
+      newData = {
+        key: countZz,
+        zzzName: '',
+        ssGjzzName: '',
+        zzzCode: '',
+      };
+      setListCountZz(countZz + 1);
+      setListDataSourceZz([...dataSource, newData]);
+    } else if (vt === 5) {
+      newData = {
+        key: countZzz,
+        zzzName: '',
+        ssGjzzName: '',
+        zzzCode: '',
+      };
+      setListCountZzz(countZzz + 1);
+      setListDataSourceZzz([...dataSource, newData]);
+    } else {
+      newData = {
+        key: countAll,
+        postName: '',
+        postCode: '',
+      };
+      setListCountAll(countAll + 1);
+      setListDataSourceAll([...dataSource, newData]);
+    }
   };
 
   const handleSave = (row) => {
@@ -457,6 +495,11 @@ export default ({
       ...row,
     });
     // setListDataSource(newData);
+  };
+
+  const isEditing = (record) => {
+    console.log(record);
+    return true;
   };
 
   const components = {
@@ -474,9 +517,11 @@ export default ({
       ...col,
       onCell: record => ({
         record,
-        editable: col.editable,
+        inputType: col.itemType === 'Date' ? 'date' : (col.itemType === 'Select' ? 'select' : (col.itemType === 'Checkbox' ? 'checkbox' : 'text')),
         dataIndex: col.dataIndex,
         title: col.title,
+        editing: col.editable === true ? isEditing(record) : false,
+        list: (col.itemType === 'Select' || col.itemType === 'Checkbox') ? col.list : [],
         handleSave: this.handleSave,
       }),
     };
