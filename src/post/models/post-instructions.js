@@ -1,24 +1,20 @@
 /* eslint-disable */
-import KeyRespQueryService from '../services/key-resp-query';
-
-/* 格式化table的数据 */
-const formatTableData = (tableData) => {
-  const num = tableData.currentPageNum * tableData.recordNum - tableData.recordNum;
-  const table = tableData.list.map((item, index) => {
-    return { ...item, key: index + 1 + num };
-  });
-  return {
-    ...tableData,
-    records: table,
-    total: tableData.count,
-    size: tableData.recordNum,
-    current: tableData.currentPageNum,
-  };
-};
+import PostInstructionsService from '../services/post-instructions';
 
 export default {
   namespace: 'postInstructions',
   state: {
+    loginName: 'hq-ehr',//登录名
+    respId: '200000410',//登录id
+    rangeId: '12473',//用户id
+    recordNum: '10',//请求时每页中显示多少条
+    records: [],//当前列表中的数据
+    total: 0,//总条数
+    size: 10,//总页数
+    current: 1,//当前为第几页
+    treeSelectData: [],//部门树选择的数据
+    duty: [],//
+    executeOnce: true,
     userName: '',
     refSelectData: {},
     dutyNameRefSelectData: {},
@@ -36,107 +32,8 @@ export default {
     disInputThree: true,
     checkedFour: false,
     disInputFour: true,
-    curxLabel: '<div className="crux-duty-top"><div className="crux-duty-one">序号</div><div className="crux-duty-two">关键职责</div><div className="crux-duty-three">操作</div></div>',
-    tableData: {
-      total: 2,
-      size: 1,
-      current: 1,
-      records: [
-        {
-          DOC_CODE: '工程建设',
-          ATTRIBUTE8: '阿克苏地区分公司',
-          ATTRIBUTE13: '技术序列',
-          ATTRIBUTE11: '5 -- 7',
-          DOC_STATUS: '2016-9-1',
-          ATTRIBUTE10: '2018-1-1',
-          JHTRIBUTE10: '查看 修改 导出',
-          KeyResponsibilities: '管理序列·管理·集团管理人员·集团本部部门正职',
-        },{
-          DOC_CODE: '工程建设',
-          ATTRIBUTE8: '阿克苏地区分公司',
-          ATTRIBUTE13: '技术序列',
-          ATTRIBUTE11: '5 -- 7',
-          DOC_STATUS: '2016-9-1',
-          ATTRIBUTE10: '2018-1-1',
-          JHTRIBUTE10: '查看 修改 导出',
-          KeyResponsibilities: '管理序列·管理·集团管理人员·集团本部部门正职',
-        },{
-          DOC_CODE: '工程建设',
-          ATTRIBUTE8: '阿克苏地区分公司',
-          ATTRIBUTE13: '技术序列',
-          ATTRIBUTE11: '5 -- 7',
-          DOC_STATUS: '2016-9-1',
-          ATTRIBUTE10: '2018-1-1',
-          JHTRIBUTE10: '查看 修改 导出',
-          KeyResponsibilities: '管理序列·管理·集团管理人员·集团本部部门正职',
-        },{
-          DOC_CODE: '工程建设',
-          ATTRIBUTE8: '阿克苏地区分公司',
-          ATTRIBUTE13: '技术序列',
-          ATTRIBUTE11: '5 -- 7',
-          DOC_STATUS: '2016-9-1',
-          ATTRIBUTE10: '2018-1-1',
-          JHTRIBUTE10: '查看 修改 导出',
-          KeyResponsibilities: '管理序列·管理·集团管理人员·集团本部部门正职',
-        },{
-          DOC_CODE: '工程建设',
-          ATTRIBUTE8: '阿克苏地区分公司',
-          ATTRIBUTE13: '技术序列',
-          ATTRIBUTE11: '5 -- 7',
-          DOC_STATUS: '2016-9-1',
-          ATTRIBUTE10: '2018-1-1',
-          JHTRIBUTE10: '查看 修改 导出',
-          KeyResponsibilities: '管理序列·管理·集团管理人员·集团本部部门正职',
-        },{
-          DOC_CODE: '工程建设',
-          ATTRIBUTE8: '阿克苏地区分公司',
-          ATTRIBUTE13: '技术序列',
-          ATTRIBUTE11: '5 -- 7',
-          DOC_STATUS: '2016-9-1',
-          ATTRIBUTE10: '2018-1-1',
-          JHTRIBUTE10: '查看 修改 导出',
-          KeyResponsibilities: '管理序列·管理·集团管理人员·集团本部部门正职',
-        },{
-          DOC_CODE: '工程建设',
-          ATTRIBUTE8: '阿克苏地区分公司',
-          ATTRIBUTE13: '技术序列',
-          ATTRIBUTE11: '5 -- 7',
-          DOC_STATUS: '2016-9-1',
-          ATTRIBUTE10: '2018-1-1',
-          JHTRIBUTE10: '查看 修改 导出',
-          KeyResponsibilities: '管理序列·管理·集团管理人员·集团本部部门正职',
-        },{
-          DOC_CODE: '工程建设',
-          ATTRIBUTE8: '阿克苏地区分公司',
-          ATTRIBUTE13: '技术序列',
-          ATTRIBUTE11: '5 -- 7',
-          DOC_STATUS: '2016-9-1',
-          ATTRIBUTE10: '2018-1-1',
-          JHTRIBUTE10: '查看 修改 导出',
-          KeyResponsibilities: '管理序列·管理·集团管理人员·集团本部部门正职',
-        },{
-          DOC_CODE: '工程建设',
-          ATTRIBUTE8: '阿克苏地区分公司',
-          ATTRIBUTE13: '技术序列',
-          ATTRIBUTE11: '5 -- 7',
-          DOC_STATUS: '2016-9-1',
-          ATTRIBUTE10: '2018-1-1',
-          JHTRIBUTE10: '查看 修改 导出',
-          KeyResponsibilities: '管理序列·管理·集团管理人员·集团本部部门正职',
-        },{
-          DOC_CODE: '工程建设',
-          ATTRIBUTE8: '阿克苏地区分公司',
-          ATTRIBUTE13: '技术序列',
-          ATTRIBUTE11: '5 -- 7',
-          DOC_STATUS: '2016-9-1',
-          ATTRIBUTE10: '2018-1-1',
-          JHTRIBUTE10: '查看 修改 导出',
-          KeyResponsibilities: '管理序列·管理·集团管理人员·集团本部部门正职',
-        },
-      ],
-      pages: 0,
-    },
     comments: [{id:"1",content:"接入网专业.接入网设备维护"},{id:"2",content:"采购管理.报账管理"}],
+    divisionValue: undefined,
   },
   reducers: {
     stateWillUpdate(state, { payload }) {
@@ -147,6 +44,19 @@ export default {
     },
   },
   effects: {
+    *listTable({ payload: { loginName, respId, rangeId, currentPageNum, recordNum } }, { call, put }) {
+      const result = yield call(PostInstructionsService.list, loginName, respId, rangeId, currentPageNum, recordNum);
+      console.log(result);
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          records: result.dutyList,
+          total: result.count,
+          treeSelectData: result.tree,
+          duty: result.duty,
+        },
+      });
+    },
     *getInstructions({ payload }, { put }) {
       console.log(payload);
       yield put({
@@ -254,17 +164,6 @@ export default {
         },
       });
     },
-    *fetch({ payload: { search } }, { call, put }) {
-      const tableData = yield call(KeyRespQueryService.list, search);
-      const formatTable = formatTableData(tableData);
-      yield put({
-        type: 'stateWillUpdate',
-        payload: {
-          tableData: formatTable,
-          record: {},
-        },
-      });
-    },
     *isShowPost({ payload: { show } }, { put }) {
       console.log(show);
       if(show == 'hide-post-seat post-seat'){
@@ -362,6 +261,23 @@ export default {
           },
         });
       }
+    },
+    *isExecuteOnce({ payload }, { put }) {
+      console.log(payload);
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          executeOnce: false,
+        },
+      });
+    },
+    *changeDivisionValue({ payload: { value } }, { put }) {
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          divisionValue: value,
+        },
+      });
     },
   },
   subscriptions: {

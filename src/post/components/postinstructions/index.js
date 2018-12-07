@@ -83,11 +83,9 @@ const handleChangeResponse = (value) => {
   console.log(`selected ${value}`);
 }
 const PostInstructions = (state) => {
-	console.log(state);
 	const { actions, refSelectData } = state;
   	const { getInstructions, closeInstructions, getInsDrawer, closeInsDrawer, } = actions;
 	const onInstructionsView = () => {
-		console.log(666);
 	  	getInstructions();
 	};
 	const InstructionsSubmit = (e) => {
@@ -146,9 +144,11 @@ const PostInstructions = (state) => {
 			    </Drawer>
 	      		<div className="post-instructions">
 		    		<Search {...state} />
-		    		<Button htmlType="button" type="primary" style={{ marginTop: '10px', marginBottom: '10px' }} onClick={showDrawer}>新增</Button>
-		    		<Button htmlType="button" type="primary" style={{ marginLeft: '10px', marginTop: '10px', marginBottom: '10px' }}>删除</Button>
-		    		<Button htmlType="button" type="primary" style={{ marginLeft: '10px', marginTop: '10px', marginBottom: '10px' }}>导入</Button>
+		    		<div>
+		    			<Button htmlType="button" type="primary" style={{ marginTop: '10px', marginBottom: '10px' }} onClick={showDrawer}>新增</Button>
+		    			<Button htmlType="button" type="primary" style={{ marginLeft: '10px', marginTop: '10px', marginBottom: '10px' }}>删除</Button>
+		    			<Button htmlType="button" type="primary" style={{ marginLeft: '10px', marginTop: '10px', marginBottom: '10px' }}>导入</Button>
+		    		</div>
 					<TableInstructions {...state} />
 	    		</div>
 	      	</Content>

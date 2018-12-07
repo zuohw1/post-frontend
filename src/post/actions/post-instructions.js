@@ -1,3 +1,11 @@
+export function listTable(loginName, respId, rangeId, currentPageNum, recordNum) {
+  return {
+    type: 'postInstructions/listTable',
+    payload: {
+      loginName, respId, rangeId, currentPageNum, recordNum,
+    },
+  };
+}
 export function getInstructions() {
   return {
     type: 'postInstructions/getInstructions',
@@ -91,14 +99,6 @@ export function changeUserName(e) {
     },
   };
 }
-export function listTable(search) {
-  return {
-    type: 'postInstructions/fetch',
-    payload: {
-      search,
-    },
-  };
-}
 export function isShowPost(show) {
   return {
     type: 'postInstructions/isShowPost',
@@ -136,6 +136,21 @@ export function onchangeDisInputFour(checkedFour) {
     type: 'postInstructions/onchangeDisInputFour',
     payload: {
       checkedFour,
+    },
+  };
+}
+export function isExecuteOnce() {
+  return {
+    type: 'postInstructions/isExecuteOnce',
+    payload: {
+    },
+  };
+}
+export function changeDivisionValue(value) {
+  return {
+    type: 'postInstructions/changeDivisionValue',
+    payload: {
+      value,
     },
   };
 }
