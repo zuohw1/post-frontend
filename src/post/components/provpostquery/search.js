@@ -60,7 +60,6 @@ export default (state) => {
     getRespRangeRef();
     vadd = true;
   }
-  console.log('subSeq', subSeq);
   if (subList.length === 0) {
     for (let i = 0; i < subSeq.length; i += 1) {
       const respV = {
@@ -76,7 +75,6 @@ export default (state) => {
     getMeatRangeRef();
     vass = true;
   }
-  console.log('menSeq', menSeq);
   if (micList.length === 0) {
     for (let i = 0; i < menSeq.length; i += 1) {
       const pageV = {

@@ -44,3 +44,13 @@ export function getMeatRangeRef() {
     },
   };
 }
+
+/* 获取列表选中数据 */
+export function getRecord(record, modal) {
+  return {
+    type: 'provPostQuery/getRecord',
+    payload: {
+      record, modal,
+    },
+  };
+}

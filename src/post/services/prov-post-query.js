@@ -2,7 +2,7 @@ import request from '../../utils/request';
 
 export default {
   list(search) {
-    let url = `api/posJposV/Poslist?levelCode=${search.levelCode}&currentPageNum=${search.currentPageNum}&recordNum=${search.recordNum}`;
+    let url = `api/posJposV/Poslist?levelCode=s&currentPageNum=${search.currentPageNum}&recordNum=${search.recordNum}`;
     if (search.posCateId && search.posCateId !== '') {
       url += `&posCateId=${search.posCateId}`;
     }
@@ -28,17 +28,18 @@ export default {
   },
   /* 岗位序列 */
   getPostRangeRef() {
-    const subUrl = 'api/posJposV/Poslist?levelCode=s&currentPageNum=1&recordNum=5';
-    return request.get(subUrl);
+    return request.get('api/posJposV/Poslist?levelCode=s&currentPageNum=1&recordNum=5');
   },
   /* 子序列 */
   getRespRangeRef() {
-    const subUrl = 'api/posJposV/Poslist?levelCode=s&currentPageNum=2&recordNum=4';
-    return request.get(subUrl);
+    return request.get('api/posJposV/Poslist?levelCode=s&currentPageNum=2&recordNum=4');
   },
   /* 学历要求 */
   getMeatRangeRef() {
-    const subUrl = 'api/posJposV/Poslist?levelCode=s&currentPageNum=7&recordNum=8';
-    return request.get(subUrl);
+    return request.get('api/posJposV/Poslist?levelCode=s&currentPageNum=7&recordNum=8');
+  },
+  /* 详细信息 */
+  getNewsRangeRef(posid) {
+    return request.get(`api/posJposV/checkProvincePostView?posid=${posid}`);
   },
 };
