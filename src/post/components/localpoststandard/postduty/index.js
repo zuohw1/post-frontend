@@ -3,6 +3,7 @@ import { Modal } from 'antd';
 import PropTypes from 'prop-types';
 import PostTableList from './post-duty-list';
 import StopPostList from './stp-post';
+import UpdPost from './upd-post';
 
 class Posduty extends React.Component {
  state={
@@ -76,8 +77,9 @@ class Posduty extends React.Component {
           footer={null}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
-        />
-
+        >
+          <UpdPost />
+        </Modal>
         <Modal
           title="省基准岗位维护-终止"
           visible={stpPosListVisiable}

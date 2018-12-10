@@ -90,8 +90,8 @@ class StopPostList extends Component {
         <Form className="ant-advanced-search-form">
           <Row gutter={24}>{getFields()}</Row>
           <Row gutter={24}>
-            <Button htmlType="button" type="primary" style={{ marginLeft: 0 }} onClick={handleSaveStopPost}>保存</Button>
-            <Button htmlType="button" type="primary" style={{ marginLeft: '10px' }} onClick={handleCancelStopPost}>取消</Button>
+            <Button htmlType="button" type="primary" style={{ margin: 10, marginLeft: 20 }} onClick={handleSaveStopPost}>保存</Button>
+            <Button htmlType="button" type="primary" style={{ margin: 10 }} onClick={handleCancelStopPost}>取消</Button>
           </Row>
         </Form>
       </div>
