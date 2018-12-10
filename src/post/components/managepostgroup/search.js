@@ -25,15 +25,15 @@ export default (props) => {
 
   const treeSelectChange = (value, label, extra) => {
     form.setFieldsValue({
-      orgid: `${extra.triggerNode.props.id}`,
+      orgid: parseInt(`${extra.triggerNode.props.id}`, 10),
     });
   };
   const handleSearch = () => {
     form.validateFields((err, values) => {
       if (!err) {
-        const recordNum = 10;
-        const currentPageNum = 1;
-        const select = { ...values, recordNum, currentPageNum };
+        const pageSzie = 10;
+        const pageNum = 1;
+        const select = { ...values, pageSzie, pageNum };
         listTable(select);
       }
     });
@@ -61,10 +61,10 @@ export default (props) => {
   /* 查询条件字段 */
   const queryCols = [
     {
-      itemName: '部门', itemKey: 'sequence', itemType: 'OrgSelect', required: false,
+      itemName: '部门', itemKey: 'orgid', itemType: 'OrgSelect', required: false,
     },
     {
-      itemName: '关键职责', itemKey: 'status', itemType: 'Select', required: false, list: [],
+      itemName: '关键职责', itemKey: 'kid', itemType: 'Select', required: false, list: [],
     },
   ];
 

@@ -37,6 +37,8 @@ export default {
     modal: false,
     /* 卡片记录 */
     record: {},
+    /* 修改关键职责数据 */
+    upDataTree: {},
     /* 查询条件数据 */
     search: {},
   },
@@ -64,7 +66,7 @@ export default {
       const tableData = yield call(ManagePostGroup.list, search);
       let formatTable = [];
       setTimeout(
-        formatTable = formatTableData(tableData, search.currentPageNum, search.recordNum),
+        formatTable = formatTableData(tableData, search.pageNum, search.pageSzie),
         1000,
       );
       yield put({

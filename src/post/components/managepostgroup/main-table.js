@@ -34,10 +34,10 @@ export default ({
   };
   const data = tableData.records;
 
-  const onChange = (currentPageNum, recordNum) => {
+  const onChange = (pageNum, pageSzie) => {
     form.validateFields((err, values) => {
       if (!err) {
-        const select = { ...values, recordNum, currentPageNum };
+        const select = { ...values, pageSzie, pageNum };
         listTable(select);
       }
     });
@@ -46,7 +46,7 @@ export default ({
   const onChangePageSize = (current, size) => {
     form.validateFields((err, values) => {
       if (!err) {
-        const select = { ...values, recordNum: size, currentPageNum: current };
+        const select = { ...values, pageSzie: size, pageNum: current };
         listTable(select);
       }
     });
@@ -99,15 +99,15 @@ export default ({
     width: 200,
   }, {
     title: '关键职责',
-    dataIndex: 'kname',
-    key: 'kname',
+    dataIndex: 'keyResp',
+    key: 'keyResp',
     align: 'center',
     width: 300,
-    render: () => (
+    render: (text, records) => (
       <Select
         placeholder="请选择"
-        defaultValue={respList.map((item) => { return (item.id); })}
         allowClear
+        defaultValue={records.kname}
         style={{ width: 250 }}
       >
         {

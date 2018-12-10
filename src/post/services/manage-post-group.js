@@ -2,11 +2,8 @@ import request from '../../utils/request';
 
 export default {
   list(search) {
-    let url = `api/postionmanage/getPositionJT?orgId=42125&kid=${search.status}&level=1&pageSzie=${search.recordNum}&pageNum=${search.currentPageNum}`;
-    if (search.sequence && search.sequence !== '') {
-      url += `&sequence=${search.sequence}`;
-    }
-    return request.post(url, search.data);
+    const url = `api/postionmanage/getPositionJT?orgId=${search.orgid}&kid=${search.kid}&level=1&pageSzie=${search.pageSzie}&pageNum=${search.pageNum}`;
+    return request.post(url, '');
   },
   getKeyResp() {
     return request.post('api/postionmanage/getKeyResp?mId=129', '');
