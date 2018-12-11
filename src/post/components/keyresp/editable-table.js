@@ -1,8 +1,10 @@
 import React from 'react';
 import {
-  Table, Input, Button, Form, Popconfirm, Col, Row, InputNumber, DatePicker, Select,
+  Table, Button, Form, Popconfirm, Col, Row, Select, Input, InputNumber, DatePicker, // Icon,
 } from 'antd';
 import CheckboxGroup from '../../../../node_modules/antd/es/checkbox/Group';
+// import RespParentSelect from './resp-parent-select';
+// import EditableCell from './editable-cell';
 
 const FormItem = Form.Item;
 const EditableContext = React.createContext();
@@ -22,76 +24,10 @@ const apply = (item) => {
 
 const handleonchangeckbx = () => {
 };
+// const emitEmpty = () => {
+//   console.log('222222222222');
+// };
 
-class EditableCell extends React.Component {
-  getInput = (p) => {
-    if (p.props.inputType === 'number') {
-      return <InputNumber />;
-    } else if (p.props.inputType === 'date') {
-      return (
-        <DatePicker />
-      );
-    } else if (p.props.inputType === 'select') {
-      return (
-        <Select style={{ width: 70 }} placeholder="请选择" allowClear>
-          {
-            p.props.list.map(apply)
-          }
-        </Select>);
-    } else if (p.props.inputType === 'checkbox') {
-      return (
-        <CheckboxGroup options={p.props.list} onChange={handleonchangeckbx} />
-      );
-    }
-    return <Input />;
-  };
-
-  // save = () => {
-  //   const { record, handleSave } = this.props;
-  //   this.form.validateFields((error, values) => {
-  //     if (error) {
-  //       return;
-  //     }
-  //     this.toggleEdit();
-  //     handleSave({ ...record, ...values });
-  //   });
-  // }
-  render() {
-    const {
-      editing,
-      dataIndex,
-      title,
-      inputType,
-      record,
-      ...restProps
-    } = this.props;
-    return (
-      <EditableContext.Consumer>
-        {(form) => {
-          const { getFieldDecorator } = form;
-          return (
-            <td {...restProps}>
-              {editing ? (
-                <FormItem style={{ margin: 0 }}>
-                  {getFieldDecorator(dataIndex, {
-                    rules: [{
-                      required: true,
-                      message: `请维护【${title}】!`,
-                    }],
-                    initialValue:
-                      inputType === 'checkbox' ? record[`${dataIndex}_VAL`] : record[dataIndex],
-                  })(
-                    this.getInput(this),
-                  )}
-                </FormItem>
-              ) : restProps.children}
-            </td>
-          );
-        }}
-      </EditableContext.Consumer>
-    );
-  }
-}
 
 /* table size统一设置为small 固定表头，
    scroll={{ y: document.body.scrollHeight - 460 }}
@@ -117,7 +53,7 @@ export default ({
   countZz,
   dataSourceZzz,
   countZzz,
-
+  posSelectVisiable,
 }) => {
   const {
     // setListDataSource,
@@ -134,11 +70,14 @@ export default ({
     setListCountZy,
     setListCountZz,
     setListCountZzz,
+    // setPosSelectVisiable,
   } = actions;
 
   // 右侧列表title名称动态显示
   const vt = (clickRespType !== 'undefined') ? (clickRespType / 10) : 0;
   const showTitle = listTitles[vt];
+
+  console.log('111posSelectVisiable', posSelectVisiable);
 
   // 右侧列表根据树节点点击的职责层级确定显示的数据
   const dataSource = (vt === 0) ? dataSourceAll : (
@@ -182,17 +121,24 @@ export default ({
     }
   };
 
+  // const handleRespParentSelect = () => {
+  //   console.log('33333333handleRespParentSelect()');
+  //   setPosSelectVisiable(true);
+  // };
+
   const columnsMap = {
     columns0: [{
       title: '岗位序列',
       dataIndex: 'postName',
       width: '30%',
       editable: true,
+      itemType: 'Text',
     }, {
       title: '编码',
       dataIndex: 'postCode',
       width: '30%',
       editable: true,
+      itemType: 'Text',
     }, {
       title: '操作',
       dataIndex: 'operation',
@@ -212,16 +158,19 @@ export default ({
       dataIndex: 'zxlName',
       width: '25%',
       editable: true,
+      itemType: 'Text',
     }, {
       title: '所属岗位序列',
       dataIndex: 'ssPostName',
-      width: '25%',
+      width: '35%',
       editable: true,
+      itemType: 'ssText',
     }, {
       title: '编码',
       dataIndex: 'zxlCode',
       width: '25%',
       editable: true,
+      itemType: 'Text',
     }, {
       title: '操作',
       dataIndex: 'operation',
@@ -293,38 +242,67 @@ export default ({
     }, {
       title: '组织层级',
       dataIndex: 'orgLevel',
-      width: '7%',
+      width: '100',
       editable: true,
+      itemType: 'Checkbox',
+      list: [{ label: '集团', value: 'J' }, { label: '省', value: 'S' }, { label: '市', value: 'D' }, { label: '县', value: 'X' }],
     }, {
       title: '是否核心',
       dataIndex: 'isCore',
-      width: '7%',
+      width: '100',
       editable: true,
+      itemType: 'Select',
+      list: [{ id: '0', title: '是' }, { id: '1', title: '否' }],
     }, {
       title: '标准职级',
       dataIndex: 'standardZj',
       width: '7%',
       editable: true,
+      itemType: 'Select',
+      list: [{ id: '1', title: '1' }, { id: '2', title: '2' }, { id: '3', title: '3' }, { id: '4', title: '4' }, { id: '5', title: '5' }, { id: '6', title: '6' },
+        { id: '7', title: '7' }, { id: '8', title: '8' }, { id: '9', title: '9' }, { id: '10', title: '10' }, { id: '11', title: '12' }, { id: '13', title: '13' },
+        { id: '14', title: '14' }, { id: '15', title: '15' }, { id: '16', title: '16' }, { id: '17', title: '17' }, { id: '18', title: '18' },
+        { id: '19', title: '19' }, { id: '20', title: '20' }, { id: '21', title: '21' }, { id: '22', title: '22' }],
     }, {
       title: '集团职级',
       dataIndex: 'groupZj',
       width: '7%',
       editable: true,
+      itemType: 'Select',
+      list: [{ id: '1', title: '1' }, { id: '2', title: '2' }, { id: '3', title: '3' }, { id: '4', title: '4' }, { id: '5', title: '5' }, { id: '6', title: '6' },
+        { id: '7', title: '7' }, { id: '8', title: '8' }, { id: '9', title: '9' }, { id: '10', title: '10' }, { id: '11', title: '12' }, { id: '13', title: '13' },
+        { id: '14', title: '14' }, { id: '15', title: '15' }, { id: '16', title: '16' }, { id: '17', title: '17' }, { id: '18', title: '18' },
+        { id: '19', title: '19' }, { id: '20', title: '20' }, { id: '21', title: '21' }, { id: '22', title: '22' }],
     }, {
       title: '省职级',
       dataIndex: 'provZj',
       width: '7%',
       editable: true,
+      itemType: 'Select',
+      list: [{ id: '1', title: '1' }, { id: '2', title: '2' }, { id: '3', title: '3' }, { id: '4', title: '4' }, { id: '5', title: '5' }, { id: '6', title: '6' },
+        { id: '7', title: '7' }, { id: '8', title: '8' }, { id: '9', title: '9' }, { id: '10', title: '10' }, { id: '11', title: '12' }, { id: '13', title: '13' },
+        { id: '14', title: '14' }, { id: '15', title: '15' }, { id: '16', title: '16' }, { id: '17', title: '17' }, { id: '18', title: '18' },
+        { id: '19', title: '19' }, { id: '20', title: '20' }, { id: '21', title: '21' }, { id: '22', title: '22' }],
     }, {
       title: '地市职级',
       dataIndex: 'dsZj',
       width: '7%',
       editable: true,
+      itemType: 'Select',
+      list: [{ id: '1', title: '1' }, { id: '2', title: '2' }, { id: '3', title: '3' }, { id: '4', title: '4' }, { id: '5', title: '5' }, { id: '6', title: '6' },
+        { id: '7', title: '7' }, { id: '8', title: '8' }, { id: '9', title: '9' }, { id: '10', title: '10' }, { id: '11', title: '12' }, { id: '13', title: '13' },
+        { id: '14', title: '14' }, { id: '15', title: '15' }, { id: '16', title: '16' }, { id: '17', title: '17' }, { id: '18', title: '18' },
+        { id: '19', title: '19' }, { id: '20', title: '20' }, { id: '21', title: '21' }, { id: '22', title: '22' }],
     }, {
       title: '区县职级',
       dataIndex: 'qxZj',
       width: '7%',
       editable: true,
+      itemType: 'Select',
+      list: [{ id: '1', title: '1' }, { id: '2', title: '2' }, { id: '3', title: '3' }, { id: '4', title: '4' }, { id: '5', title: '5' }, { id: '6', title: '6' },
+        { id: '7', title: '7' }, { id: '8', title: '8' }, { id: '9', title: '9' }, { id: '10', title: '10' }, { id: '11', title: '12' }, { id: '13', title: '13' },
+        { id: '14', title: '14' }, { id: '15', title: '15' }, { id: '16', title: '16' }, { id: '17', title: '17' }, { id: '18', title: '18' },
+        { id: '19', title: '19' }, { id: '20', title: '20' }, { id: '21', title: '21' }, { id: '22', title: '22' }],
     }, {
       title: '操作',
       dataIndex: 'operation',
@@ -505,6 +483,8 @@ export default ({
     body: {
       row: EditableFormRow,
       cell: EditableCell,
+      // handleReSet,
+      // handleRespParentSelect,
     },
   };
 
@@ -512,11 +492,14 @@ export default ({
     if (!col.editable) {
       return col;
     }
+    // if (col.itemType === 'ssText') {
+    console.log('col.itemType', col.itemType);
+    // }
     return {
       ...col,
       onCell: record => ({
         record,
-        inputType: col.itemType === 'Date' ? 'date' : (col.itemType === 'Select' ? 'select' : (col.itemType === 'Checkbox' ? 'checkbox' : 'text')),
+        inputType: col.itemType === 'Date' ? 'date' : (col.itemType === 'Select' ? 'select' : (col.itemType === 'Checkbox' ? 'checkbox' : (col.itemType === 'ssText' ? 'ssText' : 'text'))),
         dataIndex: col.dataIndex,
         title: col.title,
         editing: col.editable === true ? isEditing(record) : false,
@@ -566,3 +549,107 @@ export default ({
     </div>
   );
 };
+
+
+class EditableCell extends React.Component {
+  handleReSet = (dataindex, key) => {
+    console.log('aaaaaaaaaaa---handleReSet---', dataindex, key);
+  };
+
+  handleRespParentSelect = () => {
+    console.log('aaaaaaaaaaaa---handleRespParentSelect---');
+  };
+
+  getInput = (p) => {
+    if (p.props.inputType === 'number') {
+      return <InputNumber />;
+    } else if (p.props.inputType === 'date') {
+      return (
+        <DatePicker />
+      );
+    } else if (p.props.inputType === 'select') {
+      return (
+        <Select style={{ width: 70 }} placeholder="请选择" allowClear>
+          {
+            p.props.list.map(apply)
+          }
+        </Select>);
+    } else if (p.props.inputType === 'checkbox') {
+      return (
+        <CheckboxGroup
+          options={p.props.list}
+          onChange={handleonchangeckbx}
+          style={{ width: 240 }}
+        />
+      );
+    } else if (p.props.inputType === 'ssText') {
+      console.log('p----------', p, p.props.record.ssPostName);
+
+      return (
+        <div>
+          <Input value={p.props.record.ssPostName} style={{ width: 160 }} />
+          &nbsp;&nbsp;
+          <Popconfirm title="是否重置?" onConfirm={() => this.handleReSet(p.props.dataIndex, p.props.record.key)}>
+            <a href="jacascript:void(0);">重置</a>
+          </Popconfirm>
+          &nbsp;&nbsp;
+          <a href="jacascript:void(0);" onClick={this.handleRespParentSelect}>请选择</a>
+        </div>
+      );
+    }
+    return <Input style={{ width: 160 }} />;
+  };
+
+
+  // save = () => {
+  //   const { record, handleSave } = this.props;
+  //   this.form.validateFields((error, values) => {
+  //     if (error) {
+  //       return;
+  //     }
+  //     this.toggleEdit();
+  //     handleSave({ ...record, ...values });
+  //   });
+  // }
+
+
+  render() {
+    const {
+      editing,
+      dataIndex,
+      title,
+      inputType,
+      record,
+      posSelectVisiable,
+      dataSourceGwxl,
+      countGwxl,
+      ...restProps
+    } = this.props;
+    console.log('666666666666666', this.props, posSelectVisiable, dataSourceGwxl, countGwxl);
+    return (
+      <EditableContext.Consumer>
+        {(form) => {
+          const { getFieldDecorator } = form;
+          return (
+            <td {...restProps}>
+              {editing ? (
+                <FormItem style={{ margin: 0 }}>
+                  {getFieldDecorator(dataIndex, {
+                    rules: [{
+                      required: true,
+                      message: `请维护【${title}】!`,
+                    }],
+                    initialValue:
+                      inputType === 'checkbox' ? record[`${dataIndex}_VAL`] : record[dataIndex],
+                  })(
+                    this.getInput(this),
+                  )}
+                </FormItem>
+              ) : restProps.children}
+            </td>
+          );
+        }}
+      </EditableContext.Consumer>
+    );
+  }
+}

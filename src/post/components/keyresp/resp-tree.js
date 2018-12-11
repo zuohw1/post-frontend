@@ -315,7 +315,6 @@ export default (state) => {
       border: 10,
       borderColor: 'blue',
       overflowY: 'scroll',
-      overflowX: 'scroll',
       paddingLeft: 5,
       paddingRight: 10,
       top: 0,

@@ -22,6 +22,8 @@ export default {
     }],
     /* 子序列列表记录条数 */
     count: 2,
+    /* 岗位序列选择弹框是否显示 */
+    posSelectVisiable: false,
 
     /* 列表数据-全部 */
     dataSourceAll: [{
