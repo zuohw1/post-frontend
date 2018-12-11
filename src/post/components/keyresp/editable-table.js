@@ -1,8 +1,10 @@
+/* eslint-disable no-debugger */
 import React from 'react';
 import {
   Table, Button, Form, Popconfirm, Col, Row, Select, Input, InputNumber, DatePicker, // Icon,
 } from 'antd';
 import CheckboxGroup from '../../../../node_modules/antd/es/checkbox/Group';
+import SText from './stext';
 // import RespParentSelect from './resp-parent-select';
 // import EditableCell from './editable-cell';
 
@@ -552,15 +554,7 @@ export default ({
 
 
 class EditableCell extends React.Component {
-  handleReSet = (dataindex, key) => {
-    console.log('aaaaaaaaaaa---handleReSet---', dataindex, key);
-  };
-
-  handleRespParentSelect = () => {
-    console.log('aaaaaaaaaaaa---handleRespParentSelect---');
-  };
-
-  getInput = (p) => {
+  getInput = (p, form) => {
     if (p.props.inputType === 'number') {
       return <InputNumber />;
     } else if (p.props.inputType === 'date') {
@@ -586,15 +580,7 @@ class EditableCell extends React.Component {
       console.log('p----------', p, p.props.record.ssPostName);
 
       return (
-        <div>
-          <Input value={p.props.record.ssPostName} style={{ width: 160 }} />
-          &nbsp;&nbsp;
-          <Popconfirm title="是否重置?" onConfirm={() => this.handleReSet(p.props.dataIndex, p.props.record.key)}>
-            <a href="jacascript:void(0);">重置</a>
-          </Popconfirm>
-          &nbsp;&nbsp;
-          <a href="jacascript:void(0);" onClick={this.handleRespParentSelect}>请选择</a>
-        </div>
+        <SText {...p.props} form={form} />
       );
     }
     return <Input style={{ width: 160 }} />;
@@ -625,6 +611,7 @@ class EditableCell extends React.Component {
       countGwxl,
       ...restProps
     } = this.props;
+    console.log('666666666666666', dataSourceGwxl);
     console.log('666666666666666', this.props, posSelectVisiable, dataSourceGwxl, countGwxl);
     return (
       <EditableContext.Consumer>
@@ -642,7 +629,7 @@ class EditableCell extends React.Component {
                     initialValue:
                       inputType === 'checkbox' ? record[`${dataIndex}_VAL`] : record[dataIndex],
                   })(
-                    this.getInput(this),
+                    this.getInput(this, form),
                   )}
                 </FormItem>
               ) : restProps.children}
