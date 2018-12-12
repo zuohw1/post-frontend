@@ -13,7 +13,7 @@ class TableInstructions extends Component {
     const {
       records, current, size, total, actions, search, loading, visibleCheckPost, visibleModifyPost, loginName, respId, rangeId, recordNum, executeOnce,
     } = this.props;
-    const { listTable, getCheckPost, closeCheckPost, getModifyPost, closeModifyPost, isExecuteOnce } = actions;
+    const { listTable, getCheckPost, closeCheckPost, getModifyPost, closeModifyPost, isExecuteOnce, checkDetail } = actions;
     if (executeOnce === true) {
       listTable(loginName, respId, rangeId, current, recordNum);
       isExecuteOnce();
@@ -26,12 +26,12 @@ class TableInstructions extends Component {
     };
     const handleExportProvPos = () => {
     };
-    const onClickView = (e) => {
-      e.preventDefault();
+    const onClickView = (_, row) => {
+      console.log(row);
       getCheckPost();
+      checkDetail("80946");//row.POSDES_ID
     };
-    const onClickModify = (e) => {
-      e.preventDefault();
+    const onClickModify = (_, row) => {
       getModifyPost();
     };
     const onClickDelete = (row) => {
@@ -100,9 +100,9 @@ class TableInstructions extends Component {
           width: 240,
           render: (text, records) => (
             <span>
-              <a href=" javascript:;" onClick={onClickView}>查看</a>
+              <a href=" javascript:;" onClick={() => onClickView(text, records)}>查看</a>
               <Divider type="vertical" />
-              <a href=" javascript:;" onClick={onClickModify}>修改</a>
+              <a href=" javascript:;" onClick={() => onClickModify(text, records)}>修改</a>
               <Divider type="vertical" />
               <a href=" javascript:;" onClick={() => onClickDelete(records)}>导出</a>
             </span>
