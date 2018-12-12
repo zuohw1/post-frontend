@@ -33,3 +33,13 @@ export function getKeyResp() {
     },
   };
 }
+/* 修改关键职责 */
+export function modifyKeyResp(id, record) {
+  return {
+    type: 'managePostGroup/modifyKeyResp',
+    payload: {
+      record,
+      id,
+    },
+  };
+}
