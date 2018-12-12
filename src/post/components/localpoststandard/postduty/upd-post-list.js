@@ -1,7 +1,7 @@
-/* eslint-disable react/destructuring-assignment,react/no-access-state-in-setstate,no-undef,no-return-assign,max-len,react/no-multi-comp */
+/* eslint-disable no-return-assign,react/no-multi-comp,react/destructuring-assignment,react/no-access-state-in-setstate,max-len */
 import React from 'react';
 import {
-  Row, Col, Button, Table, Popconfirm, Form, Input,
+  Table, Input, Popconfirm, Form, Row, Col, Button,
 } from 'antd';
 import PropTypes from 'prop-types';
 import Styles from '../../assets/styles/upd-post-list.less';
@@ -20,7 +20,7 @@ const EditableFormRow = Form.create()(EditableRow);
 class EditableCell extends React.Component {
   state = {
     editing: false,
-  }
+  };
 
   componentDidMount() {
     const { editable } = this.props;
@@ -70,8 +70,6 @@ class EditableCell extends React.Component {
       dataIndex,
       title,
       record,
-      // index,
-      // handleSave,
       ...restProps
     } = this.props;
     return (
@@ -129,24 +127,25 @@ class UpdPostList extends React.Component {
         return (
           this.state.dataSource.length >= 1
             ? (
-              <Popconfirm title="是否删除" onConfirm={() => this.handleDelete(record.key)}>
-                <a href=" javascript:void(0)"><p style={{ color: 'red' }}>×</p></a>
+              <Popconfirm title="是否删除?" onConfirm={() => this.handleDelete(record.key)}>
+                <a href="jacascript:void(0);"><p style={{ color: 'red' }}>×</p></a>
               </Popconfirm>
             ) : null
         );
       },
     }];
+
     this.state = {
       dataSource: this.props.listDataSource,
     };
   }
 
-  handleDelete =(key) => {
+  handleDelete = (key) => {
     const { handleListDelete } = this.props;
     handleListDelete(key);
   };
 
-  handleSave =(row) => {
+  handleSave = (row) => {
     const newData = [...this.state.dataSource];
     const index = newData.findIndex(item => row.key === item.key);
     const item = newData[index];
@@ -157,7 +156,7 @@ class UpdPostList extends React.Component {
     this.setState({ dataSource: newData });
   };
 
-  setRowClassName=(record, index) => {
+  setRowClassName = (record, index) => {
     const { groupPostCount } = this.props;
     return (index < groupPostCount ? Styles.csbsTypes : '');
   };
@@ -185,6 +184,7 @@ class UpdPostList extends React.Component {
         }),
       };
     });
+
     return (
       <div>
         <div>
@@ -199,29 +199,32 @@ class UpdPostList extends React.Component {
               <Button onClick={this.handleSave}>保存</Button>
             </Col>
           </Row>
+
         </div>
         <div style={{
-          height: 480, border: 10, borderColor: 'blue', overflowX: 'scroll', overflowY: 'scroll',
+          height: 480, border: 10, borderColor: 'blue', overflowY: 'scroll', overflowX: 'scroll',
         }}
         >
           <Table
             components={components}
-            columns={columns}
             rowClassName={this.setRowClassName}
-            scroll="undefined"
-            size="small"
-            pagination={false}
             bordered
             dataSource={listDataSource}
+            columns={columns}
+            size="small"
+            scroll="undefined"
+            pagination={false}
           />
         </div>
       </div>
     );
   }
 }
+
 UpdPostList.propTypes = {
   listDataSource: PropTypes.array.isRequired,
   handleListDelete: PropTypes.func.isRequired,
   groupPostCount: PropTypes.number.isRequired,
 };
+
 export default UpdPostList;

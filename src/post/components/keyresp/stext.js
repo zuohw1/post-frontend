@@ -10,12 +10,21 @@ class SText extends React.Component {
     };
   }
 
+
   handleReSet = (form) => {
     this.setState({ value: '' });
     form.setFieldsValue({
       ssPostName: '',
     });
-    console.log(form.getFieldsValue());
+    console.log('form.getFieldsValue()', form.getFieldsValue());
+  }
+
+  handleChange = (e) => {
+    const { form } = this.props;
+    this.setState({ value: e.target.value });
+    form.setFieldsValue({
+      ssPostName: e.target.value,
+    });
   }
 
   render() {
@@ -23,7 +32,7 @@ class SText extends React.Component {
     const { form } = this.props;
     return (
       <div>
-        <Input value={value} style={{ width: 160 }} />
+        <Input value={value} style={{ width: 160 }} onChange={this.handleChange.bind(this)} />
         &nbsp;&nbsp;
         <Popconfirm title="是否重置?" onConfirm={() => this.handleReSet(form)}>
           <a href="jacascript:void(0);">重置</a>

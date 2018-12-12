@@ -154,3 +154,11 @@ export function changeDivisionValue(value) {
     },
   };
 }
+export function checkDetail(posdesId) {
+  return {
+    type: 'postInstructions/checkDetail',
+    payload: {
+      posdesId,
+    },
+  };
+}
