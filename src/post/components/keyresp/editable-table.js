@@ -26,9 +26,6 @@ const apply = (item) => {
 
 const handleonchangeckbx = () => {
 };
-// const emitEmpty = () => {
-//   console.log('222222222222');
-// };
 
 
 /* table size统一设置为small 固定表头，
@@ -122,11 +119,6 @@ export default ({
       setListCountAll(count - 1);
     }
   };
-
-  // const handleRespParentSelect = () => {
-  //   console.log('33333333handleRespParentSelect()');
-  //   setPosSelectVisiable(true);
-  // };
 
   const columnsMap = {
     columns0: [{
@@ -485,8 +477,6 @@ export default ({
     body: {
       row: EditableFormRow,
       cell: EditableCell,
-      // handleReSet,
-      // handleRespParentSelect,
     },
   };
 
@@ -611,7 +601,6 @@ class EditableCell extends React.Component {
       countGwxl,
       ...restProps
     } = this.props;
-    console.log('666666666666666', dataSourceGwxl);
     console.log('666666666666666', this.props, posSelectVisiable, dataSourceGwxl, countGwxl);
     return (
       <EditableContext.Consumer>
@@ -627,7 +616,7 @@ class EditableCell extends React.Component {
                       message: `请维护【${title}】!`,
                     }],
                     initialValue:
-                      inputType === 'checkbox' ? record[`${dataIndex}_VAL`] : record[dataIndex],
+                      inputType === 'checkbox' ? record[`${dataIndex}_val`] : record[dataIndex],
                   })(
                     this.getInput(this, form),
                   )}
