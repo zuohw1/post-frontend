@@ -22,6 +22,7 @@ export default ({
   const {
     getRecord,
     listTable,
+    modifyKeyResp,
   } = actions;
 
   const onClickView = (_, row) => {
@@ -33,6 +34,10 @@ export default ({
     getRecord({}, false, true);
   };
   const data = tableData.records;
+
+  const updateKeyResp = (e, row) => {
+    modifyKeyResp(e, row);
+  };
 
   const onChange = (pageNum, pageSzie) => {
     form.validateFields((err, values) => {
@@ -107,6 +112,7 @@ export default ({
       <Select
         placeholder="请选择"
         allowClear
+        onChange={e => updateKeyResp(e, records)}
         defaultValue={records.kname}
         style={{ width: 250 }}
       >

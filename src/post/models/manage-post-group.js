@@ -35,6 +35,8 @@ export default {
     expand: false,
     /* 卡片是否显示 */
     modal: false,
+    /* 修改关键指责记录 */
+    id: {},
     /* 卡片记录 */
     record: {},
     /* 修改关键职责数据 */
@@ -95,6 +97,10 @@ export default {
           payload: { record: { ...record }, modal },
         });
       }
+    },
+    /* 修改关键职责 */
+    * modifyKeyResp({ payload: { record, id } }, { call }) {
+      yield call(ManagePostGroup.modifyKeyResp, record, id);
     },
   },
   subscriptions: {
