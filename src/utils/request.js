@@ -71,6 +71,15 @@ function genrateRequestHeader(method) {
       'X-Function-Id': functionId,
     });
   }
+  if (Configuration.debug) {
+    Object.assign(header.headers, {
+      'X-Person-Id': 2,
+      'X-Org-Id': 37838,
+      'X-Roles': '',
+      'X-Data-Permission': '[{"id":"1072821543177232385","pdType":1,"include":1,"pdMain":"0","pdValue":"37838","pdContain":"1","slaveList":[]}]',
+      'X-Business-Group-Id': 101,
+    });
+  }
   try {
     Object.assign(header.headers, {
       Authorization: Configuration.debug ? 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJjbGFpbSIsImJ1c2luZXNzR3JvdXBJZCI6IjEwMSIsImxvZ2luTmFtZSI6Imdhb3pob25nbWluZyIsImlzcyI6IlNlcnZpY2UiLCJwZXJzb25JZCI6IjIwMTg5NCIsInVzZXJOYW1lIjoi6auY5Luy5piOIiwiZXhwIjoxNTQ2NjAxMTQzLCJpYXQiOjE1NDM5MjI3NDMsIm9yZ0lkIjoiMjQzMTgiLCJlbXBsb3llZU51bWJlciI6IjAwMDI0ODMifQ.hhTTGwJhmARHRPMU0B_PXeDfeW7MEj2xRcDvHzQYGWw' : `Bearer ${Cookies.get('token')}`,
