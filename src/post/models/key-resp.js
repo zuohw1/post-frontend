@@ -2,6 +2,7 @@
 export default {
   namespace: 'keyResp',
   state: {
+    ssPostName: '',
     /* 点击的职责树节点类型(岗位序列>子序列>专业>关键职责>子职责) 10/20/30/40/50 */
     clickRespType: '',
     /* 点击的职责树节点职责id */
@@ -103,6 +104,7 @@ export default {
         eduEqr: '本科',
         workExp: '本科五年以上工作经验',
         orgLevel: '集团省市县',
+        orgLevel_val: ['J', 'S', 'D', 'X'], // 用于编辑状态下勾选默认值
         isCore: '是',
         standardZj: '7',
         groupZj: '7',
@@ -117,6 +119,7 @@ export default {
         eduEqr: '本科',
         workExp: '两年以上工作经验',
         orgLevel: '市县',
+        orgLevel_val: ['D', 'X'],
         isCore: '是',
         standardZj: '7',
         groupZj: '7',
@@ -147,8 +150,8 @@ export default {
     dataSourceZzz: [
       {
         key: '0',
-        zzzName: '合作协议范本拟定，合作协议签署',
-        ssGjzzName: '合作策略管理',
+        zzzName: '合作协议范本拟定，合作协议签署0001',
+        ssGjzzNameN: '合作策略管理',
         zzzCode: '00123',
       },
     ],
