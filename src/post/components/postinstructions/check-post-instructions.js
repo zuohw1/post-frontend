@@ -7,7 +7,7 @@ const RadioGroup = Radio.Group;
 const { TextArea } = Input;
 
 export default (props) => {
-  const { form, actions, comments, } = props;
+  const { form, actions, comments, instructions } = props;
   const { closeCheckPost, } = actions;
   const { getFieldDecorator } = form;
   return (
