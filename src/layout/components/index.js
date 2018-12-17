@@ -26,7 +26,31 @@ import AllotStaffResponsibility from '../../post/containers/allot-staff-responsi
 const { SubMenu } = Menu;
 
 const MainLayout = (state) => {
-  return (
+  const route = (
+    <Switch>
+      <Route exact path="/" component={Main} />
+      <Route exact path="/post/keyRespQuery" component={KeyRespQuery} />
+      <Route exact path="/post/keyResp" component={KeyResp} />
+      <Route exact path="/post/keyRespRank" component={KeyRespRank} />
+      <Route exact path="/post/groupPosStandardList" component={GroupPosStandardList} />
+      <Route exact path="/post/localJobs" component={LocalJobs} />
+      <Route exact path="/post/provincePostStandard" component={ProvincePosStandard} />
+      <Route exact path="/post/provPostQuery" component={ProvinceQuery} />
+      <Route exact path="/post/orgProfMap" component={OrgProfMap} />
+      <Route exact path="/post/postInstructions" component={PostInstructions} />
+      <Route exact path="/post/managePostGroup" component={ManagePostGroup} />
+      <Route exact path="/post/managePostProvince" component={ManagePostProvince} />
+      <Route exact path="/post/managePostCity" component={ManagePostCity} />
+      <Route exact path="/post/efficientDataMaintenance" component={EfficientDataMaintenance} />
+      <Route exact path="/post/localPostStandard" component={LocalPostStandard} />
+      <Route exact path="/post/allotStaffResponsibility" component={AllotStaffResponsibility} />
+    </Switch>
+  );
+  const ret = state.headless ? (
+    <Layout style={{ padding: '5px' }}>
+      {route}
+    </Layout>
+  ) : (
     <div className={app.App}>
       <div className={app.AppHeader}>
         <div className={app.headerTop}>
@@ -87,28 +111,12 @@ const MainLayout = (state) => {
           </Menu>
         </Layout.Sider>
         <Layout style={{ padding: '5px' }}>
-          <Switch>
-            <Route exact path="/" component={Main} />
-            <Route exact path="/post/keyRespQuery" component={KeyRespQuery} />
-            <Route exact path="/post/keyResp" component={KeyResp} />
-            <Route exact path="/post/keyRespRank" component={KeyRespRank} />
-            <Route exact path="/post/groupPosStandardList" component={GroupPosStandardList} />
-            <Route exact path="/post/localJobs" component={LocalJobs} />
-            <Route exact path="/post/provincePostStandard" component={ProvincePosStandard} />
-            <Route exact path="/post/provPostQuery" component={ProvinceQuery} />
-            <Route exact path="/post/orgProfMap" component={OrgProfMap} />
-            <Route exact path="/post/postInstructions" component={PostInstructions} />
-            <Route exact path="/post/managePostGroup" component={ManagePostGroup} />
-            <Route exact path="/post/managePostProvince" component={ManagePostProvince} />
-            <Route exact path="/post/managePostCity" component={ManagePostCity} />
-            <Route exact path="/post/efficientDataMaintenance" component={EfficientDataMaintenance} />
-            <Route exact path="/post/localPostStandard" component={LocalPostStandard} />
-            <Route exact path="/post/allotStaffResponsibility" component={AllotStaffResponsibility} />
-          </Switch>
+          {route}
         </Layout>
       </Layout>
     </div>
   );
+  return ret;
 };
 
 export default MainLayout;
