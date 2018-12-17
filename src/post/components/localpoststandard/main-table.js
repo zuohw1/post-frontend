@@ -132,7 +132,7 @@ export default ({
   };
 
   const handleViewLocalPos = () => {
-    redirectDetail('/post/localPostStandard', { name: 'main-table' });
+    redirectDetail('/post/localJobs', { name: 'main-table' });
   };
 
   const handleImportLocalPos = () => {
