@@ -1,19 +1,21 @@
 import React from 'react';
 import { Input, Modal, Popconfirm } from 'antd';
 import RespSelect from './resp-select';
+import Styles from '../assets/styles/key-resp-stext.less';
 
 class SText extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      // value: props.record.dataIndex,
       ssPostName: props.record.ssPostName,
       ssZxlName: props.record.ssZxlName,
       ssZyName: props.record.ssZyName,
       ssGjzzName: props.record.ssGjzzName,
       ssGjzzNameN: props.record.ssGjzzNameN,
       respSelectVisiable: false,
+      clickRespName: '', // 选中职责
+      clickRespId: '', // 选中职责id
     };
   }
 
@@ -82,25 +84,69 @@ class SText extends React.Component {
     }
   }
 
-  handleRespParentSelect = (e) => {
-    const { respType } = this.props;
-    const {
-      respSelectVisiable,
-    } = this.props;
-    console.log(e, respSelectVisiable);
-    if (respType === 10) {
-      this.setState({
-        respSelectVisiable: true,
-      });
-    }
-    // TODO
+  showRespParentSelect = () => {
     this.setState({
       respSelectVisiable: true,
     });
   }
 
+  /* 将选择的值放回 */
+  handleRespSelect = (recordSel) => {
+    const { respType } = this.props; // ,form, record
+    return {
+      onClick: () => {
+        let clickRespNameVal = '';
+        if (respType === 10) {
+          clickRespNameVal = recordSel.gwxlName;
+        } else if (respType === 20) {
+          clickRespNameVal = recordSel.zxlName;
+        } else if (respType === 30) {
+          clickRespNameVal = recordSel.zyName;
+        } else if (respType === 40) {
+          clickRespNameVal = recordSel.gjzzName;
+        } else if (respType === 50) {
+          clickRespNameVal = recordSel.gjzzName;
+        }
+        this.setState({ clickRespName: clickRespNameVal, clickRespId: recordSel.key });
+      },
+    };
+  };
 
   handleOk = () => {
+    const { respType, form, record } = this.props;
+    const { clickRespName } = this.state;
+
+    if (respType === 10) {
+      this.setState({ ssPostName: clickRespName });
+      form.setFieldsValue({
+        ssPostName: clickRespName,
+      });
+      record.ssPostName = clickRespName;
+    } else if (respType === 20) {
+      this.setState({ ssZxlName: clickRespName });
+      form.setFieldsValue({
+        ssZxlName: clickRespName,
+      });
+      record.ssZxlName = clickRespName;
+    } else if (respType === 30) {
+      this.setState({ ssZyName: clickRespName });
+      form.setFieldsValue({
+        ssZyName: clickRespName,
+      });
+      record.ssZyName = clickRespName;
+    } else if (respType === 40) {
+      this.setState({ ssGjzzName: clickRespName });
+      form.setFieldsValue({
+        ssGjzzName: clickRespName,
+      });
+      record.ssGjzzName = clickRespName;
+    } else if (respType === 50) {
+      this.setState({ ssGjzzNameN: clickRespName });
+      form.setFieldsValue({
+        ssGjzzNameN: clickRespName,
+      });
+      record.ssGjzzNameN = clickRespName;
+    }
     this.setState({
       respSelectVisiable: false,
     });
@@ -112,14 +158,19 @@ class SText extends React.Component {
     });
   };
 
+  setRespRowClassName = (record) => {
+    const { clickRespId } = this.state;
+    return record.key === clickRespId ? Styles.clickRowStyl : '';
+  }
+
   render() {
     const {
       ssPostName, ssZxlName, ssZyName, ssGjzzName, ssGjzzNameN, respSelectVisiable,
     } = this.state;
     const {
-      form, record, respType, dataIndex,
+      form, respType, dataIndex, // record,
     } = this.props;
-    console.log('record', record);
+    // console.log('record', record);
 
     let ssValue = '';
     let respSelectDivName = '';
@@ -139,7 +190,7 @@ class SText extends React.Component {
       ssValue = ssGjzzNameN;
       respSelectDivName = '关键职责';
     }
-    console.log('ssValue', ssValue); // 不能直接用 record[dataIndex] 的值，因为修改没有更新节点的state，这样重置之后不会变
+    // console.log('ssValue', ssValue); // 不能直接用 record[dataIndex] 的值，因为修改没有更新节点的state，这样重置之后不会变
 
     return (
       <div>
@@ -153,7 +204,7 @@ class SText extends React.Component {
           <a href="jacascript:void(0);">重置</a>
         </Popconfirm>
         &nbsp;&nbsp;
-        <a href="jacascript:void(0);" onClick={this.handleRespParentSelect}>请选择</a>
+        <a href="jacascript:void(0);" onClick={this.showRespParentSelect}>请选择</a>
         <Modal
           title={respSelectDivName}
           visible={respSelectVisiable}
@@ -162,7 +213,12 @@ class SText extends React.Component {
           onCancel={this.handleCancel}
         >
           <div style={{ height: 400 }}>
-            <RespSelect respType={respType} respSelectDivName={respSelectDivName} />
+            <RespSelect
+              respType={respType}
+              respSelectDivName={respSelectDivName}
+              handleRespSelect={this.handleRespSelect}
+              setRespRowClassName={this.setRespRowClassName}
+            />
           </div>
         </Modal>
       </div>

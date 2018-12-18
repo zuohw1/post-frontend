@@ -2,7 +2,6 @@
 export default {
   namespace: 'keyResp',
   state: {
-    ssPostName: '',
     /* 点击的职责树节点类型(岗位序列>子序列>专业>关键职责>子职责) 10/20/30/40/50 */
     clickRespType: '',
     /* 点击的职责树节点职责id */
@@ -11,21 +10,6 @@ export default {
     clickRespCode: '',
     /* 右侧列表title数组 */
     listTitles: ['岗位序列列表', '子序列列表', '专业列表', '关键职责列表', '子职责列表', '子职责列表'],
-    /* 子序列列表数据 */
-    dataSource: [{
-      key: '0',
-      postName: 'Edward King 0',
-      postCode: '32',
-    }, {
-      key: '1',
-      postName: 'Edward King 1',
-      postCode: '32',
-    }],
-    /* 子序列列表记录条数 */
-    count: 2,
-    /* 岗位序列选择弹框是否显示 */
-    posSelectVisiable: false,
-
     /* 列表数据-全部 */
     dataSourceAll: [{
       key: '0',
