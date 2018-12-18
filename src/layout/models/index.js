@@ -111,6 +111,13 @@ export default {
         pid: 2,
         iconUrl: 'user',
       },
+      {
+        id: 215,
+        menuName: '分配员工关键职责',
+        url: '/post/allotStaffResponsibility',
+        pid: 2,
+        iconUrl: 'user',
+      },
     ],
   },
   reducers: {

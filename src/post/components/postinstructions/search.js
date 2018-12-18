@@ -40,16 +40,6 @@ export default (props) => {
   for (let i = 0; i < duty.length; i += 1) {
     dutyChildren.push(<Option key={duty[i].elementId}>{duty[i].elementName}</Option>);
   }
-  const queryCols = [1,2,3,4,5,6];
-  const count = expand ? queryCols.length : 3;
-  let collapse = null;
-  if (queryCols.length > 3) {
-    collapse = (
-      <a style={{ marginLeft: 8, fontSize: 14 }} onClick={toggle}>
-        更多 <Icon type={expand ? 'up' : 'down'} />
-      </a>
-    );
-  }
   const onInstructionsView = () => {
     getInstructions();
   };
@@ -59,12 +49,22 @@ export default (props) => {
   const handleReset = () => {
     form.resetFields();
   };
-  const toggle = () => {
-    setToggle(!expand);
-  };
   const onChangeDivisionValue = (value, label, extra) => {
     console.log(value, label, extra);
     changeDivisionValue(value);
+  }
+  const toggle = () => {
+    setToggle(!expand);
+  };
+  const queryCols = [1,2,3,4,5,6];
+  const count = expand ? queryCols.length : 3;
+  let collapse = null;
+  if (queryCols.length > 3) {
+    collapse = (
+      <a style={{ marginLeft: 8, fontSize: 14 }} onClick={toggle}>
+        更多 <Icon type={expand ? 'up' : 'down'} />
+      </a>
+    );
   }
   return (
     <Form

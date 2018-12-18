@@ -5,8 +5,6 @@ import {
 } from 'antd';
 import CheckboxGroup from '../../../../node_modules/antd/es/checkbox/Group';
 import SText from './stext';
-// import RespParentSelect from './resp-parent-select';
-// import EditableCell from './editable-cell';
 
 const FormItem = Form.Item;
 const EditableContext = React.createContext();
@@ -76,7 +74,7 @@ export default ({
   const vt = (clickRespType !== 'undefined') ? (clickRespType / 10) : 0;
   const showTitle = listTitles[vt];
 
-  console.log('111posSelectVisiable', posSelectVisiable);
+  console.log('posSelectVisiable', posSelectVisiable);
 
   // 右侧列表根据树节点点击的职责层级确定显示的数据
   const dataSource = (vt === 0) ? dataSourceAll : (
@@ -159,6 +157,7 @@ export default ({
       width: '35%',
       editable: true,
       itemType: 'ssText',
+      respType: 10,
     }, {
       title: '编码',
       dataIndex: 'zxlCode',
@@ -187,12 +186,14 @@ export default ({
     }, {
       title: '所属子序列',
       dataIndex: 'ssZxlName',
-      width: '25%',
+      width: '35%',
       editable: true,
+      itemType: 'ssText',
+      respType: 20,
     }, {
       title: '编码',
       dataIndex: 'zyCode',
-      width: '25%',
+      width: '15%',
       editable: true,
     }, {
       title: '操作',
@@ -216,12 +217,14 @@ export default ({
     }, {
       title: '所属专业',
       dataIndex: 'ssZyName',
-      width: '7%',
+      width: '12%',
       editable: true,
+      itemType: 'ssText',
+      respType: 30,
     }, {
       title: '编码',
       dataIndex: 'gjzzCode',
-      width: '7%',
+      width: '2%',
       editable: true,
     }, {
       title: '学历要求',
@@ -314,17 +317,19 @@ export default ({
     columns4: [{
       title: '子职责',
       dataIndex: 'zzzName',
-      width: '25%',
+      width: '35%',
       editable: true,
     }, {
       title: '所属关键职责',
       dataIndex: 'ssGjzzName',
-      width: '25%',
+      width: '35%',
       editable: true,
+      itemType: 'ssText',
+      respType: 40,
     }, {
       title: '编码',
       dataIndex: 'zzzCode',
-      width: '25%',
+      width: '15%',
       editable: true,
     }, {
       title: '操作',
@@ -343,17 +348,19 @@ export default ({
     columns5: [{
       title: '子职责',
       dataIndex: 'zzzName',
-      width: '25%',
+      width: '35%',
       editable: true,
     }, {
       title: '所属关键职责',
-      dataIndex: 'ssGjzzName',
-      width: '25%',
+      dataIndex: 'ssGjzzNameN',
+      width: '35%',
       editable: true,
+      itemType: 'ssText',
+      respType: 40,
     }, {
       title: '编码',
       dataIndex: 'zzzCode',
-      width: '25%',
+      width: '15%',
       editable: true,
     }, {
       title: '操作',
@@ -382,7 +389,6 @@ export default ({
 
 
   const handleAdd = () => {
-    // console.log('handleAdd()--clickRespType：', clickRespType, vt, count, countAll);
     let newData = {};
     if (vt === 0) {
       newData = {
@@ -441,7 +447,7 @@ export default ({
       newData = {
         key: countZzz,
         zzzName: '',
-        ssGjzzName: '',
+        ssGjzzNameN: '',
         zzzCode: '',
       };
       setListCountZzz(countZzz + 1);
@@ -459,12 +465,14 @@ export default ({
 
   const handleSave = (row) => {
     const newData = [...dataSource];
-    const index = newData.findIndex(item => row.key === item.key);
-    const item = newData[index];
-    newData.splice(index, 1, {
-      ...item,
-      ...row,
-    });
+    console.log('handleSave()', row, newData);
+    // const index = newData.findIndex(item => row.key === item.key);
+    // const item = newData[index];
+    // newData.splice(index, 1, {
+    //   ...item,
+    //   ...row,
+    // });
+
     // setListDataSource(newData);
   };
 
@@ -484,9 +492,6 @@ export default ({
     if (!col.editable) {
       return col;
     }
-    // if (col.itemType === 'ssText') {
-    console.log('col.itemType', col.itemType);
-    // }
     return {
       ...col,
       onCell: record => ({
@@ -497,6 +502,7 @@ export default ({
         editing: col.editable === true ? isEditing(record) : false,
         list: (col.itemType === 'Select' || col.itemType === 'Checkbox') ? col.list : [],
         handleSave: this.handleSave,
+        respType: col.respType,
       }),
     };
   });
@@ -567,27 +573,27 @@ class EditableCell extends React.Component {
         />
       );
     } else if (p.props.inputType === 'ssText') {
-      console.log('p----------', p, p.props.record.ssPostName);
-
       return (
         <SText {...p.props} form={form} />
       );
     }
-    return <Input style={{ width: 160 }} />;
+
+    let inputWidth = 160;
+    if (p.props.dataIndex === 'zzzName') {
+      inputWidth = 260;
+    }
+    return (
+      <Input
+        style={{ width: inputWidth }}
+        onChange={this.handleInputChange.bind(this, p.props.dataIndex)}
+      />
+    );
   };
 
-
-  // save = () => {
-  //   const { record, handleSave } = this.props;
-  //   this.form.validateFields((error, values) => {
-  //     if (error) {
-  //       return;
-  //     }
-  //     this.toggleEdit();
-  //     handleSave({ ...record, ...values });
-  //   });
-  // }
-
+  handleInputChange = (dataIndex, e) => {
+    const { record } = this.props;
+    record[dataIndex] = e.target.value;
+  }
 
   render() {
     const {
@@ -596,12 +602,8 @@ class EditableCell extends React.Component {
       title,
       inputType,
       record,
-      posSelectVisiable,
-      dataSourceGwxl,
-      countGwxl,
       ...restProps
     } = this.props;
-    console.log('666666666666666', this.props, posSelectVisiable, dataSourceGwxl, countGwxl);
     return (
       <EditableContext.Consumer>
         {(form) => {
