@@ -1,10 +1,15 @@
 /* eslint-disable */
 import React from 'react';
 import { Route, Switch, Link } from 'dva/router';
-import { Layout, Button, Tree, Menu, Input, } from 'antd';
+import { Layout, Button, Tree, Menu, Input, Checkbox, Form, Icon } from 'antd';
 import '../assets/styles/allot-staff-responsibility.less';
+import AllotRelated from './allot-related';
+import AllotWhole from './allot-whole';
+import DynamicKeyDuty from './dynamic-key-duty';
 
 const { Content } = Layout;
+const FormItem = Form.Item;
+const WrappedDynamicKeyDuty = Form.create()(DynamicKeyDuty);
 const treeData = [{
   title: '0-0',
   key: '0-0',
@@ -42,8 +47,23 @@ const treeData = [{
 }];
 
 const AllotStaffResponsibility = (state) => {
-	const { actions, current, chooseIndex, relatedDisplay, wholeDisplay, checklistDisplay, currentDisplay, allDisplay, name } = state;
+	const { actions, current, chooseIndex, relatedDisplay, wholeDisplay, checklistDisplay, currentDisplay, allDisplay, name, wholeKeyword, checklistKeyword, datas } = state;
 	const { onhandleClickMajor, onhandleClickRecord, switchMajor, switchRecord } = actions;
+	let list = [];
+	datas.map( (item, index) => {
+	    list.push(
+	    	<div className="allot-staff-part-one-bottom-content">
+	    		<span className="key-duty-list-execute">
+		            <Input style={{ width: '60%', marginRight: 8 }} value={item.dutyExecute} />
+		            <Icon className="dynamic-delete-button" type="close" onClick={(k) => remove(k)}/>
+		        </span> 
+		        <span className="key-duty-list-workload"><Input style={{ width: '60%', marginRight: 8 }} value={item.proportion} />%</span>
+	    	</div> 
+	    )
+	} )
+	const remove = (k) => {
+		console.log(k);
+	}
 	const select = (selectedKeys, info) => {
 	    console.log('selected', selectedKeys, info);
 	}
@@ -56,6 +76,15 @@ const AllotStaffResponsibility = (state) => {
 	    console.log('click ', e);
 	    onhandleClickRecord(e.key);
 	    switchRecord(e.key);
+	}
+	const changeWholeKeyword = (e) => {
+	    console.log(e);
+	}
+	const changeChecklistKeyword = (e) => {
+	    console.log(e);
+	}
+	const changeBearDuty = (e) => {
+	    console.log(`checked = ${e.target.checked}`);
 	}
 	return (
 	    <React.Fragment>
@@ -77,12 +106,24 @@ const AllotStaffResponsibility = (state) => {
 					    <Layout style={{ padding: '5px' }}>
 					    	<div style={{display: relatedDisplay}} className="related-major">
 					    		<p>请勾选<Input value={name} className="related-major-name"/>的关键职责</p>
+					    		<AllotRelated />
 					    	</div>
 						    <div style={{display: wholeDisplay}} className="whole-major">
 						    	<p>请勾选<Input value={name} className="whole-major-name"/>的关键职责</p>
+						    	<div className="whole-major-search">
+						    		关键词：<Input value={wholeKeyword} onChange={changeWholeKeyword}/>
+						    		<Button type="primary" icon="search" style={{marginRight: '12px'}}>查询</Button>
+						    		<Button type="primary" icon="reload">全部</Button>
+					    		</div>
+						    	<AllotWhole />
 						    </div>
 						    <div style={{display: checklistDisplay}} className="checklist-major">
 						    	<p>请勾选<Input value={name} className="checklist-major-name"/>的关键职责</p>
+						    	<div className="checklist-major-search">
+						    		关键词：<Input value={checklistKeyword} onChange={changeChecklistKeyword}/>
+						    		<Button type="primary" icon="search" style={{marginRight: '12px'}}>查询</Button>
+						    		<Button type="primary" icon="reload">全部</Button>
+					    		</div>
 						    </div>
 				        </Layout>
 					</div>
@@ -92,7 +133,19 @@ const AllotStaffResponsibility = (state) => {
 					        <Menu.Item key="allrecords">全部记录</Menu.Item>
 					    </Menu>
 					    <Layout style={{ padding: '5px' }}>
-					    	<div style={{display: currentDisplay}} className="current-record"><h3>当前记录</h3></div>
+					    	<div style={{display: currentDisplay}} className="current-record">
+					    		<p><Input value={name} className="current-record-name"/>的关键职责(工作量之和：0%) <Button icon="save">保存</Button></p>
+					    		<Checkbox onChange={changeBearDuty}>不承担任何工作职责</Checkbox>
+					    		<div className="key-duty-list">
+						        	<div className="key-duty-list-top">
+										<span className="key-duty-list-execute">关键职责(主要执行)</span> 
+										<span className="key-duty-list-workload">工作量</span>
+									</div>
+									<div className="key-duty-list-bottom">
+										{list}
+									</div>
+						        </div>
+					    	</div>
 						    <div style={{display: allDisplay}} className="all-record"><h3>全部记录</h3></div>
 				        </Layout>
 					</div>

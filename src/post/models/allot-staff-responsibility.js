@@ -11,7 +11,10 @@ export default {
     checklistDisplay: 'none',
     currentDisplay: 'block',
     allDisplay: 'none',
-    name: null,
+    name: '',
+    wholeKeyword: '',
+    checklistKeyword: '',
+    datas: [{dutyExecute:"公众客户销售.营业厅销售经理",proportion:"100"},{dutyExecute:"终端支撑.终端销售",proportion:"66"}],
   },
   reducers: {
     stateWillUpdate(state, { payload }) {
