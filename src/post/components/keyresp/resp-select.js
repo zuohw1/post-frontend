@@ -9,7 +9,7 @@ class Search extends Component {
   props;
 
   render() {
-    const { form, respType, respSelectDivName } = this.props;// tableData
+    const { form, respType } = this.props;// tableData, respSelectDivName
     const { getFieldDecorator } = form;
     // const { current, size, total } = tableData;
 
@@ -154,6 +154,7 @@ class Search extends Component {
     ];
 
     const { handleRespSelect, setRespRowClassName } = this.props;
+    // {respType}, {respSelectDivName}
     return (
       <div>
         <Form
@@ -162,7 +163,6 @@ class Search extends Component {
           style={{ padding: 10 }}
           layout="inline"
         >
-          {respType}, {respSelectDivName}
           <Row gutter={24}>{getFields()}</Row>
         </Form>
         <Table
