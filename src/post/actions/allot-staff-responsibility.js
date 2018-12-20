@@ -30,3 +30,19 @@ export function switchRecord(record) {
     },
   };
 }
+export function removeCertainDuty(datas, index) {
+  return {
+    type: 'allotStaffResponsibility/removeCertainDuty',
+    payload: {
+      datas, index,
+    },
+  };
+}
+export function isCheacked(cheacked, datas, otherDatas) {
+  return {
+    type: 'allotStaffResponsibility/isCheacked',
+    payload: {
+      cheacked, datas, otherDatas,
+    },
+  };
+}

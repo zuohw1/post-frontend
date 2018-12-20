@@ -1,7 +1,6 @@
 /* eslint-disable */
 import React, { Component } from 'react';
 import { Layout, Tree } from 'antd';
-import PropTypes from 'prop-types';
 
 const { TreeNode } = Tree;
 const wholetree = [
@@ -67,15 +66,10 @@ const wholetree = [
 
 const { Content } = Layout;
 class AllotWhole extends Component {
-  static propTypes = {
-    setArr: PropTypes.func.isRequired,
-  };
-
   onCheck = (checkedKeys, info) => {
+    console.log(checkedKeys, info);
     const arrFilter = info.checkedNodes.filter(value => value.key.indexOf('-') > -1);
     const arr = arrFilter.map(value => value.props.title);
-    const { setArr } = this.props;
-    //setArr(arr);
   };
 
   renderTreeNodes = (data) => {
@@ -93,7 +87,7 @@ class AllotWhole extends Component {
 
   render() {
     return (
-        <div>
+        <div className="whole-tree">
           <Tree showLine checkable onCheck={this.onCheck}>
             {this.renderTreeNodes(wholetree)}
           </Tree>

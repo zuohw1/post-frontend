@@ -1,10 +1,9 @@
 /* eslint-disable */
 import React, { Component } from 'react';
 import { Layout, Tree } from 'antd';
-import PropTypes from 'prop-types';
 
 const { TreeNode } = Tree;
-const libtree = [
+const relatedtree = [
   {
     title: '省管管理人员',
     key: '0',
@@ -57,15 +56,10 @@ const libtree = [
 
 const { Content } = Layout;
 class AllotRelated extends Component {
-  static propTypes = {
-    setArr: PropTypes.func.isRequired,
-  };
-
   onCheck = (checkedKeys, info) => {
+    console.log(checkedKeys, info);
     const arrFilter = info.checkedNodes.filter(value => value.key.indexOf('-') > -1);
     const arr = arrFilter.map(value => value.props.title);
-    const { setArr } = this.props;
-    //setArr(arr);
   };
 
   renderTreeNodes = (data) => {
@@ -83,9 +77,9 @@ class AllotRelated extends Component {
 
   render() {
     return (
-        <div>
+        <div className="related-tree">
           <Tree showLine checkable onCheck={this.onCheck}>
-            {this.renderTreeNodes(libtree)}
+            {this.renderTreeNodes(relatedtree)}
           </Tree>
         </div>
     )
