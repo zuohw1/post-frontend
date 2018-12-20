@@ -132,6 +132,13 @@ export default {
         pid: 2,
         iconUrl: 'user',
       },
+      {
+        id: 218,
+        menuName: '员工分组',
+        url: '/post/employeeGroup',
+        pid: 2,
+        iconUrl: 'user',
+      },
     ],
   },
   reducers: {

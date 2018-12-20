@@ -24,6 +24,7 @@ import LocalPostStandard from '../../post/containers/local-post-standard';
 import AllotStaffResponsibility from '../../post/containers/allot-staff-responsibility';
 import ProfKeyRespMap from '../../post/containers/prof-key-resp-map';
 import BusinessKeyRespMap from '../../post/containers/business-key-resp-map';
+import EmployeeGroup from '../../post/containers/employee-group';
 
 
 const { SubMenu } = Menu;
@@ -49,6 +50,7 @@ const MainLayout = (state) => {
       <Route exact path="/post/allotStaffResponsibility" component={AllotStaffResponsibility} />
       <Route exact path="/post/profkeyrespmap" component={ProfKeyRespMap} />
       <Route exact path="/post/businesskeyrespmap" component={BusinessKeyRespMap} />
+      <Route exact path="/post/employeeGroup" component={EmployeeGroup} />
     </Switch>
   );
   const ret = state.headless ? (
