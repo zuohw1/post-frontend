@@ -1,0 +1,48 @@
+:global {
+  .ant-card {
+    height: 600px;
+    .ant-card-head {
+      height: 40px;
+      .ant-card-extra {
+        padding: 0;
+      }
+    }
+  }
+  .addProfDivision {
+    > .addProfList {
+      list-style: none;
+      margin: 0;
+      border: 1px solid #e8e8e8;
+      li {
+        .ant-form-item {
+          margin-bottom: 0;
+          border-bottom: 1px solid #e8e8e8;
+          .ant-form-item-label {
+            border-right: 1px solid #e8e8e8;
+            text-align: left;
+            height: 50px;
+            line-height: 50px;
+            padding-left: 15px;
+          }
+          .ant-form-item-control {
+            height: 50px;
+            line-height: 50px;
+            padding: 0 10px;
+          }
+        }
+        &:last-child {
+          .ant-form-item {
+            border-bottom: 0;
+          }
+        }
+      }
+    }
+    > .ant-btn {
+      margin-top: 10px;
+      margin-left: 10px;
+      &:nth-of-type(1){
+        margin-left: 300px;
+      }
+    }
+  }
+}

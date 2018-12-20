@@ -22,6 +22,9 @@ import ManagePostCity from '../../post/containers/manage-post-city';
 import EfficientDataMaintenance from '../../post/containers/efficient-data-maintenance';
 import LocalPostStandard from '../../post/containers/local-post-standard';
 import AllotStaffResponsibility from '../../post/containers/allot-staff-responsibility';
+import ProfKeyRespMap from '../../post/containers/prof-key-resp-map';
+import BusinessKeyRespMap from '../../post/containers/business-key-resp-map';
+
 
 const { SubMenu } = Menu;
 
@@ -44,6 +47,8 @@ const MainLayout = (state) => {
       <Route exact path="/post/efficientDataMaintenance" component={EfficientDataMaintenance} />
       <Route exact path="/post/localPostStandard" component={LocalPostStandard} />
       <Route exact path="/post/allotStaffResponsibility" component={AllotStaffResponsibility} />
+      <Route exact path="/post/profkeyrespmap" component={ProfKeyRespMap} />
+      <Route exact path="/post/businesskeyrespmap" component={BusinessKeyRespMap} />
     </Switch>
   );
   const ret = state.headless ? (

@@ -118,6 +118,20 @@ export default {
         pid: 2,
         iconUrl: 'user',
       },
+      {
+        id: 216,
+        menuName: '专业划分和关键职责映射',
+        url: '/post/profkeyrespmap',
+        pid: 2,
+        iconUrl: 'user',
+      },
+      {
+        id: 217,
+        menuName: '业务划分和关键职责映射',
+        url: '/post/businesskeyrespmap',
+        pid: 2,
+        iconUrl: 'user',
+      },
     ],
   },
   reducers: {
