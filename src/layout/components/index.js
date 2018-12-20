@@ -22,6 +22,8 @@ import ManagePostCity from '../../post/containers/manage-post-city';
 import EfficientDataMaintenance from '../../post/containers/efficient-data-maintenance';
 import LocalPostStandard from '../../post/containers/local-post-standard';
 import AllotStaffResponsibility from '../../post/containers/allot-staff-responsibility';
+import EmployeeGroup from '../../post/containers/employee-group';
+
 
 const { SubMenu } = Menu;
 
@@ -44,6 +46,7 @@ const MainLayout = (state) => {
       <Route exact path="/post/efficientDataMaintenance" component={EfficientDataMaintenance} />
       <Route exact path="/post/localPostStandard" component={LocalPostStandard} />
       <Route exact path="/post/allotStaffResponsibility" component={AllotStaffResponsibility} />
+      <Route exact path="/post/employeeGroup" component={EmployeeGroup} />
     </Switch>
   );
   const ret = state.headless ? (
