@@ -1,7 +1,6 @@
 import React from 'react';
-import { Layout, Tree } from 'antd';
+import { Tree } from 'antd';
 
-const { Content } = Layout;
 const { TreeNode } = Tree;
 const orgtree = [
   {
@@ -68,13 +67,22 @@ export default (state) => {
   };
 
   return (
-    <Layout className="layout">
-      <nav>组织树</nav>
-      <Content>
-        <Tree onSelect={handleTreeSelect}>
-          {renderTreeNodes(orgtree)}
-        </Tree>
-      </Content>
-    </Layout>
+    <div style={{
+      height: 700,
+      border: 10,
+      borderColor: 'blue',
+      overflowY: 'scroll',
+      overflowX: 'scroll',
+      paddingLeft: 10,
+      paddingRight: 10,
+      top: 0,
+      bottom: 0,
+    }}
+    >
+      <p>组织树</p>
+      <Tree onSelect={handleTreeSelect}>
+        {renderTreeNodes(orgtree)}
+      </Tree>
+    </div>
   );
 };

@@ -1,13 +1,13 @@
 import React from 'react';
 import {
-  Layout,
   Table,
   Button,
   Popconfirm,
   Input,
+  Row,
+  Col,
 } from 'antd';
 
-const { Content } = Layout;
 
 export default ({
   actions,
@@ -82,7 +82,7 @@ export default ({
       return (
         <Input
           defaultValue={records.grouping}
-          style={{ width: 150 }}
+          style={{ width: 200 }}
         />);
     },
   }, {
@@ -177,34 +177,38 @@ export default ({
     return children;
   }
   return (
-    <Layout className="layout">
-      <nav>分组列表
-        <Button
-          htmlType="button"
-          type="primary"
-          style={{ float: 'right', marginTop: 1 }}
-          onClick={handleSave}
-        >
-          保存
-        </Button>
-        <Button
-          htmlType="button"
-          type="primary"
-          style={{ float: 'right', marginRight: 25, marginTop: 1 }}
-          onClick={handleAdd}
-        >
-          新增
-        </Button>
-      </nav>
-      <Content>
-        <Table
-          columns={getFields()}
-          dataSource={dataSource}
-          size="middle"
-          bordered
-          scroll={{ y: document.body.scrollHeight - 160 }}
-        />
-      </Content>
-    </Layout>
+    <div style={{
+      height: 700,
+      overflowY: 'scroll',
+      overflowX: 'scroll',
+      paddingLeft: 10,
+      paddingRight: 10,
+      top: 0,
+      bottom: 0,
+    }}
+    >
+      <Row gutter={5}>
+        <Col span={18}>
+          <p>分组列表</p>
+        </Col>
+        <Col span={3}>
+          <Button onClick={handleAdd} style={{ marginBottom: 16 }}>
+            新增
+          </Button>
+        </Col>
+        <Col span={3}>
+          <Button onClick={handleSave} style={{ marginBottom: 16 }}>
+            保存
+          </Button>
+        </Col>
+      </Row>
+      <Table
+        columns={getFields()}
+        dataSource={dataSource}
+        size="middle"
+        bordered
+        pagination={false}
+      />
+    </div>
   );
 };
