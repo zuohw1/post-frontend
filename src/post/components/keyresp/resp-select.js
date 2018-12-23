@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Form, Col, Row, Input, Table, Pagination, // Pagination,
+  Form, Col, Row, Input, Table, Pagination, Button, // Pagination,
 } from 'antd';
 
 const FormItem = Form.Item;
@@ -9,7 +9,7 @@ class Search extends Component {
   props;
 
   render() {
-    const { form, respType, respSelectDivName } = this.props;// tableData
+    const { form, respType } = this.props;// tableData, respSelectDivName
     const { getFieldDecorator } = form;
     // const { current, size, total } = tableData;
 
@@ -43,9 +43,27 @@ class Search extends Component {
       // listTable(searchF);
     };
 
+    const handleSearch = (e) => {
+      e.preventDefault();
+      form.validateFields((err, values) => {
+        if (!err) {
+          const pageSize = 10;
+          const pageNumber = 1;
+          const select = { ...values, pageSize, pageNumber };
+          console.log('select', select);
+          // listTable(select);
+        }
+      });
+    };
+
+    const count = (respType !== 'undefined') ? (respType / 10) : 0;
     function getFields() {
+      let vvt = count;
+      if (queryCols.length < count) {
+        vvt = queryCols.length;
+      }
       const children = [];
-      for (let i = 0; i < queryCols.length; i += 1) {
+      for (let i = 0; i < vvt; i += 1) {
         if (queryCols[i].itemType === 'String') {
           children.push(
             <Col span={8} key={i} style={{ display: 'block' }}>
@@ -63,67 +81,100 @@ class Search extends Component {
           );
         }
       }
+      children.push(
+        <Col span={6} key={vvt + 5} style={{ textAlign: 'right', marginTop: 5 }}>
+          <Button htmlType="submit">查询</Button>
+        </Col>,
+      );
       return children;
     }
 
-
     const tableCols = [{
       title: '岗位序列名称',
-      dataIndex: 'gwxlName',
       key: 'gwxlName',
+      dataIndex: 'gwxlName',
       align: 'center',
       width: 150,
     }, {
       title: '子序列名称',
-      dataIndex: 'zxlName',
       key: 'zxlName',
+      dataIndex: 'zxlName',
       align: 'center',
       width: 150,
     }, {
       title: '专业名称',
-      dataIndex: 'zyName',
       key: 'zyName',
+      dataIndex: 'zyName',
       align: 'center',
       width: 150,
     }, {
       title: '关键职责名称',
-      dataIndex: 'gjzzName',
       key: 'gjzzName',
+      dataIndex: 'gjzzName',
       align: 'center',
       width: 150,
     }];
+
+    let vvtt = count;
+    if (queryCols.length < count) {
+      vvtt = queryCols.length;
+    }
+
+    const tableColsI = [];
+    for (let i = 0; i < vvtt; i += 1) {
+      tableColsI.push(tableCols[i]);
+    }
+
     /* 列表信息 */
     const data = [{
-      gwxlName: '技术序列',
-      zxlName: '计划规划',
-      zyName: '市场研究与策略',
-      gjzzName: '市场策略研究',
+      key: '000800',
+      gwxlName: '技术序列0',
+      zxlName: '计划规划0',
+      zyName: '市场研究与策略0',
+      gjzzName: '市场策略研究0',
     }, {
+      key: '000801',
       gwxlName: '支撑序列',
       zxlName: '技术研发与管理',
       zyName: '经营分析与管理',
       gjzzName: '市场总体规划',
     }, {
+      key: '000802',
       gwxlName: '管理序列',
       zxlName: '工程设计',
       zyName: '品牌与传播',
       gjzzName: '经营计划执行',
     }, {
+      key: '000803',
       gwxlName: 'test1',
       zxlName: '采购管理',
       zyName: '经营监控',
       gjzzName: '市场信息研究',
     },
     ];
+
+    const { handleRespSelect, setRespRowClassName } = this.props;
+    // {respType}, {respSelectDivName}
     return (
       <div>
         <Form
           className="ant-advanced-search-form"
+          onSubmit={handleSearch}
+          style={{ padding: 10 }}
+          layout="inline"
         >
-          {respType}, {respSelectDivName}
           <Row gutter={24}>{getFields()}</Row>
         </Form>
-        <Table columns={tableCols} dataSource={data} pagination={false} size="middle" bordered scroll={{ y: document.body.scrollHeight - 160 }} />
+        <Table
+          columns={tableColsI}
+          dataSource={data}
+          pagination={false}
+          size="middle"
+          bordered
+          scroll={{ y: document.body.scrollHeight - 160 }}
+          onRow={handleRespSelect}
+          rowClassName={setRespRowClassName}
+        />
         <Pagination
           showQuickJumper
           // current={current}
@@ -145,6 +196,8 @@ const RespSelect = Form.create()(Search);
 export default RespSelect;
 
 RespSelect.propTypes = {
-  respType: PropTypes.string.isRequired,
+  respType: PropTypes.number.isRequired,
   respSelectDivName: PropTypes.string.isRequired,
+  handleRespSelect: PropTypes.func.isRequired,
+  setRespRowClassName: PropTypes.func.isRequired,
 };

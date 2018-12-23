@@ -1,4 +1,4 @@
-/* eslint-disable no-debugger */
+// /* eslint-disable no-debugger */
 import React from 'react';
 import {
   Table, Button, Form, Popconfirm, Col, Row, Select, Input, InputNumber, DatePicker, // Icon,
@@ -32,10 +32,8 @@ const handleonchangeckbx = () => {
 */
 export default ({
   actions,
-  // dataSource,
-  // count,
-  clickRespId,
-  clickRespCode,
+  // clickRespId,
+  // clickRespCode,
   clickRespType,
   listTitles,
   dataSourceAll,
@@ -50,11 +48,8 @@ export default ({
   countZz,
   dataSourceZzz,
   countZzz,
-  posSelectVisiable,
 }) => {
   const {
-    // setListDataSource,
-    // setListCount,
     setListDataSourceAll,
     setListDataSourceGwxl,
     setListDataSourceZxl,
@@ -67,14 +62,11 @@ export default ({
     setListCountZy,
     setListCountZz,
     setListCountZzz,
-    // setPosSelectVisiable,
   } = actions;
 
   // 右侧列表title名称动态显示
   const vt = (clickRespType !== 'undefined') ? (clickRespType / 10) : 0;
   const showTitle = listTitles[vt];
-
-  console.log('posSelectVisiable', posSelectVisiable);
 
   // 右侧列表根据树节点点击的职责层级确定显示的数据
   const dataSource = (vt === 0) ? dataSourceAll : (
@@ -138,7 +130,7 @@ export default ({
         return (
           dataSource.length >= 1
             ? (
-              <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
+              <Popconfirm title="确认要删除?" onConfirm={() => handleDelete(record.key)}>
                 <a href="jacascript:void(0);">删除</a>
               </Popconfirm>
             ) : null
@@ -171,7 +163,7 @@ export default ({
         return (
           dataSource.length >= 1
             ? (
-              <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
+              <Popconfirm title="确认要删除?" onConfirm={() => handleDelete(record.key)}>
                 <a href="jacascript:void(0);">删除</a>
               </Popconfirm>
             ) : null
@@ -202,7 +194,7 @@ export default ({
         return (
           dataSource.length >= 1
             ? (
-              <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
+              <Popconfirm title="确认要删除?" onConfirm={() => handleDelete(record.key)}>
                 <a href="jacascript:void(0);">删除</a>
               </Popconfirm>
             ) : null
@@ -307,7 +299,7 @@ export default ({
         return (
           dataSource.length >= 1
             ? (
-              <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
+              <Popconfirm title="确认要删除?" onConfirm={() => handleDelete(record.key)}>
                 <a href="jacascript:void(0);">删除</a>
               </Popconfirm>
             ) : null
@@ -338,7 +330,7 @@ export default ({
         return (
           dataSource.length >= 1
             ? (
-              <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
+              <Popconfirm title="确认要删除?" onConfirm={() => handleDelete(record.key)}>
                 <a href="jacascript:void(0);">删除</a>
               </Popconfirm>
             ) : null
@@ -356,7 +348,7 @@ export default ({
       width: '35%',
       editable: true,
       itemType: 'ssText',
-      respType: 40,
+      respType: 50,
     }, {
       title: '编码',
       dataIndex: 'zzzCode',
@@ -369,7 +361,7 @@ export default ({
         return (
           dataSource.length >= 1
             ? (
-              <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
+              <Popconfirm title="确认要删除?" onConfirm={() => handleDelete(record.key)}>
                 <a href="jacascript:void(0);">删除</a>
               </Popconfirm>
             ) : null
@@ -465,20 +457,7 @@ export default ({
 
   const handleSave = (row) => {
     const newData = [...dataSource];
-    console.log('handleSave()', row, newData);
-    // const index = newData.findIndex(item => row.key === item.key);
-    // const item = newData[index];
-    // newData.splice(index, 1, {
-    //   ...item,
-    //   ...row,
-    // });
-
-    // setListDataSource(newData);
-  };
-
-  const isEditing = (record) => {
-    console.log(record);
-    return true;
+    console.log('handleSave()', row, newData, clickRespType);
   };
 
   const components = {
@@ -499,14 +478,15 @@ export default ({
         inputType: col.itemType === 'Date' ? 'date' : (col.itemType === 'Select' ? 'select' : (col.itemType === 'Checkbox' ? 'checkbox' : (col.itemType === 'ssText' ? 'ssText' : 'text'))),
         dataIndex: col.dataIndex,
         title: col.title,
-        editing: col.editable === true ? isEditing(record) : false,
+        editing: col.editable,
         list: (col.itemType === 'Select' || col.itemType === 'Checkbox') ? col.list : [],
-        handleSave: this.handleSave,
+        // handleSave: this.handleSave,
         respType: col.respType,
       }),
     };
   });
 
+  // 职责层级：{showTitle} -- {clickRespType} -- {clickRespId},{clickRespCode}--count:{count}
   return (
     <div style={{
       height: 530,
@@ -520,7 +500,6 @@ export default ({
       bottom: 0,
     }}
     >
-      <p>职责层级：{showTitle} -- {clickRespType} -- {clickRespId},{clickRespCode}--count:{count}</p>
       <Row gutter={5}>
         <Col span={20}>
           <p>{showTitle}</p>

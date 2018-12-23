@@ -136,13 +136,3 @@ export function setListCountZzz(countZzz) {
     },
   };
 }
-
-/* 设置是否显示岗位序列弹框 */
-export function setPosSelectVisiable(posSelectVisiable) {
-  return {
-    type: 'groupPosStandardList/stateWillUpdate',
-    payload: {
-      posSelectVisiable,
-    },
-  };
-}

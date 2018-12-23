@@ -1,0 +1,41 @@
+:global .ant-card {
+  height: 600px;
+}
+:global .ant-card .ant-card-head {
+  height: 40px;
+}
+:global .ant-card .ant-card-head .ant-card-extra {
+  padding: 0;
+}
+:global .addProfDivision > .addProfList {
+  list-style: none;
+  margin: 0;
+  border: 1px solid #e8e8e8;
+}
+:global .addProfDivision > .addProfList li .ant-form-item {
+  margin-bottom: 0;
+  border-bottom: 1px solid #e8e8e8;
+}
+:global .addProfDivision > .addProfList li .ant-form-item .ant-form-item-label {
+  border-right: 1px solid #e8e8e8;
+  text-align: left;
+  height: 50px;
+  line-height: 50px;
+  padding-left: 15px;
+}
+:global .addProfDivision > .addProfList li .ant-form-item .ant-form-item-control {
+  height: 50px;
+  line-height: 50px;
+  padding: 0 10px;
+}
+:global .addProfDivision > .addProfList li:last-child .ant-form-item {
+  border-bottom: 0;
+}
+:global .addProfDivision > .ant-btn {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+:global .addProfDivision > .ant-btn:nth-of-type(1) {
+  margin-left: 300px;
+}
+/*# sourceMappingURL=business-key-resp-map.css.map */
