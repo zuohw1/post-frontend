@@ -1,16 +1,20 @@
 import React from 'react';
-import { Card, Button } from 'antd';
+import { Card, Button, List } from 'antd';
 
-const KeyRespList = (props) => {
-  console.log('list', props);
+const { Item } = List;
+
+const KeyRespList = ({ keyRespList }) => {
   return (
     <Card
-      title={
-        <Button>新增</Button>
-      }
+      title="关键职责列表"
       extra={<Button>导出</Button>}
     >
-      111
+      <List
+        size="small"
+        bordered
+        dataSource={keyRespList}
+        renderItem={item => (<Item>{item}</Item>)}
+      />
     </Card>
   );
 };

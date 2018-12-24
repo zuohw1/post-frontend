@@ -6,6 +6,7 @@ import '../../../assets/styles/module.less';
 import LeftCard from './left-card';
 import KeyRespStore from './key-resp-store';
 import KeyRespList from './key-resp-list';
+import '../assets/styles/business-key-resp-map.less';
 
 const { Content } = Layout;
 
@@ -22,7 +23,7 @@ const BusinessKeyRespMap = (state) => {
         </Breadcrumb.Item>
       </Breadcrumb>
       <Content
-        className="page-module"
+        className="divisionMap"
         style={{
           background: '#fff', padding: '15px', margin: 0, minHeight: 280,
         }}

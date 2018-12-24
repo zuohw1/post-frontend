@@ -6,37 +6,36 @@ export default {
   state: {
     addProfModal: false,
     isPrimaryShow: false,
-    optionValue:[],
+    showAlert:false,
+    checkedKeys:[],
+    keyRespList:[],
+    primaryBusinessData:[],
     leftCardTree: [
       {
-        title: '0-0',
-        key: '0-0',
+        title: 'china',
+        key: '0',
         children: [
           {
-            title: '0-0-0',
-            key: '0-0-0',
+            title: 'love',
+            key: '0-1',
           },
           {
-            title: '0-0-1',
-            key: '0-0-1',
-          },
-          {
-            title: '0-0-2',
-            key: '0-0-2',
+            title: 'profession',
+            key: '0-2',
           }],
       },
       {
-        title: '0-1',
-        key: '0-1',
+        title: '商业',
+        key: '1',
         children: [
-          {title: '0-1-0-0', key: '0-1-0-0'},
-          {title: '0-1-0-1', key: '0-1-0-1'},
-          {title: '0-1-0-2', key: '0-1-0-2'},
+          {title: '计划', key: '1-0'},
+          {title: '专业', key: '1-1'},
+          {title: '性能', key: '1-2'},
         ],
       },
       {
-        title: '0-2',
-        key: '0-2',
+        title: '业务',
+        key: '2',
       }
     ],
   },
