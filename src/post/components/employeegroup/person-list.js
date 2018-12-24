@@ -1,18 +1,16 @@
 import React from 'react';
 import {
-  Layout,
   Table,
   Icon,
 } from 'antd';
 
-const { Content } = Layout;
 
 export default ({
   loading,
 }) => {
   /* 列表字段 */
-  const change = () => {
-    alert('hha');
+  const OnDistribution = (_, row) => {
+    console.log(row);
   };
   const tableCols = [{
     title: '员工',
@@ -26,9 +24,13 @@ export default ({
     key: 'distribution',
     align: 'center',
     width: '33.3%',
-    render: () => {
+    render: (text, record) => {
       return (
-        <Icon type="check" style={{ color: '#409030' }} onClick={change} />
+        <Icon
+          type="check"
+          style={{ color: '#409030' }}
+          onClick={() => OnDistribution(text, record)}
+        />
       );
     },
   }, {
@@ -77,18 +79,25 @@ export default ({
   }
 
   return (
-    <Layout className="layout">
-      <nav>人员列表</nav>
-      <Content>
-        <Table
-          columns={getFields()}
-          dataSource={data}
-          loading={loading}
-          size="middle"
-          bordered
-          scroll={{ y: document.body.scrollHeight - 160 }}
-        />
-      </Content>
-    </Layout>
+    <div style={{
+      height: 700,
+      overflowY: 'scroll',
+      overflowX: 'scroll',
+      paddingLeft: 10,
+      paddingRight: 10,
+      top: 0,
+      bottom: 0,
+    }}
+    >
+      <p>人员列表</p>
+      <Table
+        columns={getFields()}
+        dataSource={data}
+        loading={loading}
+        size="middle"
+        bordered
+        pagination={false}
+      />
+    </div>
   );
 };

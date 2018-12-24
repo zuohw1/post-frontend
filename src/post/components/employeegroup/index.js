@@ -6,7 +6,7 @@ import OrgTree from './org-tree';
 import GroupList from './group-list';
 import PersonList from './person-list';
 import '../../../assets/styles/module.less';
-import '../assets/styles/org-prof-map.less';
+import '../assets/styles/index.less';
 
 const { Content } = Layout;
 
@@ -21,15 +21,18 @@ const EmployeeGroup = (state) => {
           <strong>员工分组</strong>
         </Breadcrumb.Item>
       </Breadcrumb>
-      <Content className="org-prof-map">
+      <Content style={{
+        background: '#fff', padding: '15px', margin: 0, minHeight: 280,
+      }}
+      >
         <Row gutter={8}>
-          <Col span={8}>
+          <Col span={7}>
             <OrgTree {...state} />
           </Col>
-          <Col span={8}>
+          <Col span={10}>
             <GroupList {...state} />
           </Col>
-          <Col span={8}>
+          <Col span={7}>
             <PersonList {...state} />
           </Col>
         </Row>
