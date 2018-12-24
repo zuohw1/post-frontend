@@ -1,11 +1,21 @@
-:global .ant-card {
+:global .divisionMap .ant-card {
   height: 600px;
 }
-:global .ant-card .ant-card-head {
+:global .divisionMap .ant-card .ant-card-head {
   height: 40px;
 }
-:global .ant-card .ant-card-head .ant-card-extra {
+:global .divisionMap .ant-card .ant-card-head .ant-card-extra {
   padding: 0;
+}
+:global .divisionMap .ant-card .ant-list {
+  max-height: 500px;
+  overflow: auto;
+}
+:global .divisionMap .ant-card .ant-list .ant-list-item:last-child {
+  border-bottom: none;
+}
+:global .addProfDivision > .ant-alert-warning {
+  margin-bottom: 5px;
 }
 :global .addProfDivision > .addProfList {
   list-style: none;

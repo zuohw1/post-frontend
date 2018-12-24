@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { Layout, Icon, Button } from 'antd';
+import {
+  Layout, Icon, Button, List,
+} from 'antd';
 import PropTypes from 'prop-types';
 
 const { Content } = Layout;
-
+const { Item } = List;
 
 export default class ProfList extends Component {
   static propTypes = {
@@ -25,11 +27,12 @@ export default class ProfList extends Component {
           </div>
         </nav>
         <Content>
-          <ul className="list">
-            {orgLibArr.map((element) => {
-              return <li>{element}</li>;
-            })}
-          </ul>
+          <List
+            size="small"
+            bordered
+            dataSource={orgLibArr}
+            renderItem={item => (<Item>{item}</Item>)}
+          />
           <Button size="small">复制至下属组织</Button>
         </Content>
       </Layout>

@@ -33,3 +33,40 @@ export function updateOptionValue(optionValue) {
     },
   };
 }
+
+export function setPrimaryBusinessData(primaryBusinessData) {
+  return {
+    type: 'businesskeyrespmap/stateWillUpdate',
+    payload: {
+      primaryBusinessData,
+    },
+  };
+}
+
+export function isAlertShow(showAlert) {
+  return {
+    type: 'businesskeyrespmap/stateWillUpdate',
+    payload: {
+      showAlert,
+    },
+  };
+}
+
+export function setKeyRespList(keyRespList) {
+  return {
+    type: 'businesskeyrespmap/stateWillUpdate',
+    payload: {
+      keyRespList,
+    },
+  };
+}
+
+
+export function setCheckedKeys(checkedKeys) {
+  return {
+    type: 'businesskeyrespmap/stateWillUpdate',
+    payload: {
+      checkedKeys,
+    },
+  };
+}
