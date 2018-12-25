@@ -33,12 +33,19 @@ export default (props) => {
     duty,
     divisionValue,
     treeSelectData,
+    keyDutyDisplay,
+    searchDateDisplay,
+    stationNameDisplay,
   } = props;
   const { getFieldDecorator } = form;
-  const { setToggle, getInstructions, changeDivisionValue } = actions;
+  const { setToggle, getInstructions, changeDivisionValue, toggleDisplay } = actions;
   const dutyChildren = [];
+  const rankChildren = [];
   for (let i = 0; i < duty.length; i += 1) {
     dutyChildren.push(<Option key={duty[i].elementId}>{duty[i].elementName}</Option>);
+  }
+  for (let i = 1; i < 23; i += 1) {
+    rankChildren.push(<Option key={i.toString()}>{i.toString()}</Option>);
   }
   const onInstructionsView = () => {
     getInstructions();
@@ -55,9 +62,9 @@ export default (props) => {
   }
   const toggle = () => {
     setToggle(!expand);
+      toggleDisplay(expand);
   };
   const queryCols = [1,2,3,4,5,6];
-  const count = expand ? queryCols.length : 3;
   let collapse = null;
   if (queryCols.length > 3) {
     collapse = (
@@ -86,25 +93,25 @@ export default (props) => {
         </Col>
         <Col span={6}>
           <FormItem label="职级" labelCol={{ span: 6 }}>
-              <Select style={{ width: 200, marginLeft: 5, marginRight: 8 }} placeholder="请选择" allowClear>{ dutyChildren }</Select>
+              <Select style={{ width: 200, marginLeft: 5, marginRight: 8 }} placeholder="请选择" allowClear>{ rankChildren }</Select>
           </FormItem>
         </Col>
-        <Col span={6}>
+        <Col span={6} style={{ display: keyDutyDisplay }}>
           <FormItem label="关键职责" labelCol={{ span: 6 }}>
               <Input placeholder="请输入" style={{ width: 196, marginLeft: 5 }} suffix={<Icon type="check-square" style={{ color: "rgba(0,0,0,.25)" }} onClick={onInstructionsView} />} />
           </FormItem>
         </Col>
-        <Col span={6}>
+        <Col span={6} style={{ display: searchDateDisplay }}>
           <FormItem label="查询日期" labelCol={{ span: 6 }}>
               <DatePicker style={{ width: 200, marginLeft: 5, marginRight: 20 }} />
           </FormItem>
         </Col>
-        <Col span={6}>
+        <Col span={6} style={{ display: stationNameDisplay }}>
           <FormItem label="岗位名称" labelCol={{ span: 6 }}>
               <Input placeholder="请输入" style={{ width: 196, marginLeft: 5 }} />
           </FormItem>
         </Col>
-        <Col span={6} key={count + 5} style={{ textAlign: 'right', marginTop: 5 }}>
+        <Col span={6} style={{ textAlign: 'right', marginTop: 5, float: 'right' }}>
           <Button htmlType="submit">查询</Button>
           <Button htmlType="button" style={{ marginLeft: 8 }} onClick={handleReset}>
             重置

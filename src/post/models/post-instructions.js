@@ -10,8 +10,13 @@ export default {
     recordNum: '10',//请求时每页中显示多少条
     records: [],//当前列表中的数据
     total: 0,//总条数
-    size: 10,//总页数
     current: 1,//当前为第几页
+    posKeyrecords: [],
+    posKeycurrent: 1,
+    posKeyrecordNum: '10',
+    posKeytotal: 0,
+    posKeyExecuteOnce: true,
+    professionList: [],
     treeSelectData: [],//部门树选择的数据
     duty: [],//
     executeOnce: true,
@@ -36,6 +41,9 @@ export default {
     divisionValue: undefined,
     instructions: {},///查看修改部门的字段
     expand: false,
+    keyDutyDisplay: 'none',
+    searchDateDisplay: 'none',
+    stationNameDisplay: 'none',
   },
   reducers: {
     stateWillUpdate(state, { payload }) {
@@ -56,6 +64,18 @@ export default {
           total: result.count,
           treeSelectData: result.tree,
           duty: result.duty,
+        },
+      });
+    },
+    *posKeyTable({ payload: { currentPageNum, recordNum } }, { call, put }) {
+      const arr = yield call(PostInstructionsService.posKey, currentPageNum, recordNum);
+      console.log(arr);
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          posKeytotal: arr.count,
+          posKeyrecords: arr.posKeyList,
+          professionList: arr.professionList,
         },
       });
     },
@@ -283,11 +303,62 @@ export default {
         },
       });
     },
+    *isposKeyExecuteOnce({ payload }, { put }) {
+      console.log(payload);
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          posKeyExecuteOnce: false,
+        },
+      });
+    },
     *changeDivisionValue({ payload: { value } }, { put }) {
       yield put({
         type: 'stateWillUpdate',
         payload: {
           divisionValue: value,
+        },
+      });
+    },
+    *toggleDisplay({ payload: { expand } }, { put }) {
+      console.log(expand);
+      if(expand == false){
+        yield put({
+          type: 'stateWillUpdate',
+          payload: {
+            keyDutyDisplay: 'block',
+            searchDateDisplay: 'block',
+            stationNameDisplay: 'block',
+          },
+        });
+      }else if(expand == true){
+        yield put({
+          type: 'stateWillUpdate',
+          payload: {
+            keyDutyDisplay: 'none',
+            searchDateDisplay: 'none',
+            stationNameDisplay: 'none',
+          },
+        });
+      }
+    },
+    *changePageNumberSize({ payload: { pageNumber, pageSize } }, { put }) {
+      console.log(pageNumber, pageSize);
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          current: pageNumber,
+          recordNum: pageSize,
+        },
+      });
+    },
+    *posKeychangePageNumberSize({ payload: { pageNumber, pageSize } }, { put }) {
+      console.log(pageNumber, pageSize);
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          posKeycurrent: pageNumber,
+          posKeyrecordNum: pageSize,
         },
       });
     },

@@ -45,9 +45,9 @@ const relatedtree = [
     key: '2',
     children: [
       { title: '其他', 
-        key: '1-1',
+        key: '2-1',
         children: [
-          { title: '其他', key: '1-1-0' }
+          { title: '其他', key: '2-1-0' }
         ], 
       }
     ],
