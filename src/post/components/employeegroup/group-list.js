@@ -38,12 +38,24 @@ export default ({
   console.log(record);
 
   // 右侧列表根据树节点点击的职责层级确定显示的数据
-  const dataSource = (vt === 0) ? dataSourceAll : (
+  let dataSource = (vt === 0) ? dataSourceAll : (
     vt === 1 ? dataSourceAll : (
       vt === 2 ? dataSourceOffice : (
         vt === 3 ? comprehensive : (
           vt === 4 ? dataSourceFinance
             : dataSourceAll))));
+
+  if (record.key) {
+    console.log(record.length);
+    dataSource = dataSource.map((item) => {
+      if (item.key === record.key) {
+        return { ...item, person: record.person };
+      } else {
+        return item;
+      }
+    });
+  }
+  console.log(dataSource);
 
   const count = (vt === 0) ? countAll : (
     vt === 1 ? countAll : (
