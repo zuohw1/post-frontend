@@ -20,7 +20,7 @@ export default ({
   countComprehensive,
   dataSourceFinance,
   countFinance,
-  record,
+  peopleAll,
 }) => {
   const {
     setListDataSourceAll,
@@ -35,7 +35,6 @@ export default ({
   } = actions;
 
   const vt = (clickOrgType !== 'undefined') ? (clickOrgType / 10) : 0;
-  console.log(record);
 
   // 右侧列表根据树节点点击的职责层级确定显示的数据
   let dataSource = (vt === 0) ? dataSourceAll : (
@@ -45,17 +44,19 @@ export default ({
           vt === 4 ? dataSourceFinance
             : dataSourceAll))));
 
-  if (record.key) {
-    console.log(record.length);
+  console.log('peopleAll===', peopleAll);
+  if (peopleAll.key) {
     dataSource = dataSource.map((item) => {
-      if (item.key === record.key) {
-        return { ...item, person: record.person };
+      console.log('item==', item);
+      if (item.key === peopleAll.key) {
+        return { ...item, person: peopleAll.person };
       } else {
         return item;
       }
     });
   }
   console.log(dataSource);
+
 
   const count = (vt === 0) ? countAll : (
     vt === 1 ? countAll : (
@@ -111,7 +112,7 @@ export default ({
     width: '30%',
     render: (text, records) => {
       return (
-        <span onClick={() => onClickView(records)}>{records.person}</span>
+        <span>{records.person}</span>
       );
     },
   }, {
@@ -226,6 +227,12 @@ export default ({
         </Col>
       </Row>
       <Table
+        onRow={(records) => {
+          return {
+            onClick: () => onClickView(records), // 点击行
+          };
+        }}
+
         columns={getFields()}
         dataSource={dataSource}
         size="middle"

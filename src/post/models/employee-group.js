@@ -11,7 +11,11 @@ export default {
     clickOrgCode: '',
     /* 列表数据 */
     record: {},
+    man: {},
     people: {},
+    peopleAll: {},
+    dataSource: {},
+    count: {},
     dataSourceAll: [{
       key: '0',
       grouping: '测试分组',
@@ -88,7 +92,7 @@ export default {
       person = peopleTwo;
       yield put({
         type: 'stateWillUpdate',
-        payload: { record: { ...people, person } },
+        payload: { peopleAll: { ...people, person } },
       });
     },
   },

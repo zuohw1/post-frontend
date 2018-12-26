@@ -11,7 +11,6 @@ export default ({
   actions,
 }) => {
   const { getPerson } = actions;
-  console.log('people first', record);
   /* 列表字段 */
   const OnDistribution = (row) => {
     getPerson(row, record);
