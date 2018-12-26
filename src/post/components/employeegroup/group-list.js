@@ -20,6 +20,7 @@ export default ({
   countComprehensive,
   dataSourceFinance,
   countFinance,
+  record,
 }) => {
   const {
     setListDataSourceAll,
@@ -30,9 +31,11 @@ export default ({
     setListCountOffice,
     setListCountComprehensive,
     setListCountFinance,
+    getRecord,
   } = actions;
 
   const vt = (clickOrgType !== 'undefined') ? (clickOrgType / 10) : 0;
+  console.log(record);
 
   // 右侧列表根据树节点点击的职责层级确定显示的数据
   const dataSource = (vt === 0) ? dataSourceAll : (
@@ -48,7 +51,6 @@ export default ({
         vt === 3 ? countComprehensive : (
           vt === 4 ? countFinance
             : countAll))));
-
 
   const handleDelete = (key) => {
     if (vt === 0) {
@@ -71,6 +73,10 @@ export default ({
       setListCountAll(count - 1);
     }
   };
+
+  const onClickView = (row) => {
+    getRecord(row);
+  };
   /* 列表字段 */
   const tableCols = [{
     title: '分组',
@@ -91,17 +97,22 @@ export default ({
     key: 'person',
     align: 'center',
     width: '30%',
+    render: (text, records) => {
+      return (
+        <span onClick={() => onClickView(records)}>{records.person}</span>
+      );
+    },
   }, {
     title: '操作',
     dataIndex: 'operation',
     key: 'operation',
     align: 'center',
     width: '20%',
-    render: (text, record) => {
+    render: (text, records) => {
       return (
         dataSource.length >= 1
           ? (
-            <Popconfirm title="确认要删除?" onConfirm={() => handleDelete(record.key)}>
+            <Popconfirm title="确认要删除?" onConfirm={() => handleDelete(records.key)}>
               <a href="jacascript:void(0);">删除</a>
             </Popconfirm>
           ) : null

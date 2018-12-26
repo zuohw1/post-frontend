@@ -6,6 +6,14 @@ export function listTable(loginName, respId, rangeId, currentPageNum, recordNum)
     },
   };
 }
+export function posKeyTable(currentPageNum, recordNum) {
+  return {
+    type: 'postInstructions/posKeyTable',
+    payload: {
+      currentPageNum, recordNum,
+    },
+  };
+}
 export function getInstructions() {
   return {
     type: 'postInstructions/getInstructions',
@@ -146,6 +154,13 @@ export function isExecuteOnce() {
     },
   };
 }
+export function isposKeyExecuteOnce() {
+  return {
+    type: 'postInstructions/isposKeyExecuteOnce',
+    payload: {
+    },
+  };
+}
 export function changeDivisionValue(value) {
   return {
     type: 'postInstructions/changeDivisionValue',
@@ -159,6 +174,30 @@ export function checkDetail(posdesId) {
     type: 'postInstructions/checkDetail',
     payload: {
       posdesId,
+    },
+  };
+}
+export function toggleDisplay(expand) {
+  return {
+    type: 'postInstructions/toggleDisplay',
+    payload: {
+      expand,
+    },
+  };
+}
+export function changePageNumberSize(pageNumber, pageSize) {
+  return {
+    type: 'postInstructions/changePageNumberSize',
+    payload: {
+      pageNumber, pageSize,
+    },
+  };
+}
+export function posKeychangePageNumberSize(pageNumber, pageSize) {
+  return {
+    type: 'postInstructions/posKeychangePageNumberSize',
+    payload: {
+      pageNumber, pageSize,
     },
   };
 }

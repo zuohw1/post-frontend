@@ -7,10 +7,14 @@ import {
 
 export default ({
   loading,
+  record,
+  actions,
 }) => {
+  const { getPerson } = actions;
+  console.log('people first', record);
   /* 列表字段 */
-  const OnDistribution = (_, row) => {
-    console.log(row);
+  const OnDistribution = (row) => {
+    getPerson(row, record);
   };
   const tableCols = [{
     title: '员工',
@@ -24,12 +28,11 @@ export default ({
     key: 'distribution',
     align: 'center',
     width: '33.3%',
-    render: (text, record) => {
+    render: () => {
       return (
         <Icon
           type="check"
           style={{ color: '#409030' }}
-          onClick={() => OnDistribution(text, record)}
         />
       );
     },
@@ -39,9 +42,12 @@ export default ({
     key: 'responsible',
     align: 'center',
     width: '33.3%',
-    render: () => {
+    render: (text, records) => {
       return (
-        <Icon type="user" />
+        <Icon
+          type="user"
+          onClick={() => OnDistribution(records)}
+        />
       );
     },
   },

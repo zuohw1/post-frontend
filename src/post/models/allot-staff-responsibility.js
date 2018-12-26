@@ -17,6 +17,17 @@ export default {
     checklistKeyword: '',
     datas: [{dutyExecute:"公众客户销售.营业厅销售经理",proportion:"100"},{dutyExecute:"终端支撑.终端销售",proportion:"66"}],
     otherDatas: [],
+    checkedBearDuty: false,
+    allRecordsData: [
+      {
+        title: '2015-12-01   - ',
+        key: '0',
+        children: 
+          [{
+            title: '其他.不承担任何工作职责 - 0%',
+            key: '0-0',
+          }]
+      }],
   },
   reducers: {
     stateWillUpdate(state, { payload }) {
@@ -96,32 +107,47 @@ export default {
         });
       }
     },
-    *removeCertainDuty({ payload: { datas, index } }, { put }) {
-      datas.splice(index,1);
-      console.log(datas);
-      yield put({
-        type: 'stateWillUpdate',
-        payload: {
-          datas: datas,
-        },
-      });
-    },
-    *isCheacked({ payload: { cheacked, datas, otherDatas } }, { put }) {
-      console.log(cheacked);
-      if(cheacked === true){
-        yield put({
-          type: 'stateWillUpdate',
-          payload: {
-            maskDisplay: 'block',
-            otherDatas: datas,
-            datas: [{dutyExecute:"其他.不承担任何工作职责",proportion:"0"}],
-          },
-        });
-      }else if(cheacked === false){
+    *removeCertainDuty({ payload: { datas, index, maskDisplay } }, { put }) {
+      console.log(maskDisplay);
+      if(maskDisplay === 'block'){
+        datas.splice(index,1);
         yield put({
           type: 'stateWillUpdate',
           payload: {
             maskDisplay: 'none',
+            checkedBearDuty: false,
+            datas: datas,
+          },
+        });
+      }else{
+        datas.splice(index,1);
+        console.log(datas);
+        yield put({
+          type: 'stateWillUpdate',
+          payload: {
+            datas: datas,
+          },
+        });
+      }
+    },
+    *isCheacked({ payload: { checkedBearDuty, datas, otherDatas } }, { put }) {
+      console.log(checkedBearDuty);
+      if(checkedBearDuty === false){
+        yield put({
+          type: 'stateWillUpdate',
+          payload: {
+            maskDisplay: 'block',
+            checkedBearDuty: true,
+            otherDatas: datas,
+            datas: [{dutyExecute:"其他.不承担任何工作职责",proportion:"0"}],
+          },
+        });
+      }else if(checkedBearDuty === true){
+        yield put({
+          type: 'stateWillUpdate',
+          payload: {
+            maskDisplay: 'none',
+            checkedBearDuty: false,
             datas: otherDatas,
           },
         });
