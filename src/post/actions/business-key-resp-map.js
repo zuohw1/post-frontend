@@ -89,11 +89,19 @@ export function setLeftExpandedKeys(leftExpandedKeys) {
 }
 
 
-export function setKeyCheckedKeys(keyCheckedKeys, keyExpandedKeys) {
+export function setKeyCheckedKeys(keyCheckedKeys) {
   return {
     type: 'businesskeyrespmap/stateWillUpdate',
     payload: {
-      keyCheckedKeys, keyExpandedKeys,
+      keyCheckedKeys,
+    },
+  };
+}
+export function setKeyExpandedKeys(keyExpandedKeys) {
+  return {
+    type: 'businesskeyrespmap/stateWillUpdate',
+    payload: {
+      keyExpandedKeys,
     },
   };
 }

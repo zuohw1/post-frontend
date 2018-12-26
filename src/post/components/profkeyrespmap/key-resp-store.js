@@ -3,7 +3,7 @@ import { Card, Tree } from 'antd';
 
 const KeyRespStore = ({ actions, keyCheckedKeys, keyExpandedKeys }) => {
   console.log(55555, keyCheckedKeys, keyExpandedKeys);
-  const { setKeyRespList } = actions;
+  const { setKeyRespList, setKeyCheckedKeys, setKeyexpandedKeys } = actions;
   const { TreeNode } = Tree;
   const libtree = [
     {
@@ -79,9 +79,13 @@ const KeyRespStore = ({ actions, keyCheckedKeys, keyExpandedKeys }) => {
     },
   ];
   const onCheck = (checkedKeys, info) => {
+    setKeyCheckedKeys(checkedKeys);
     const arrFilter = info.checkedNodes.filter(value => value.key.indexOf('-') > -1);
     const arr = arrFilter.map(value => value.props.title);
     setKeyRespList(arr);
+  };
+  const onExpand = (expandedKeys) => {
+    setKeyexpandedKeys(expandedKeys);
   };
 
   const renderTreeNodes = (data) => {
@@ -104,8 +108,9 @@ const KeyRespStore = ({ actions, keyCheckedKeys, keyExpandedKeys }) => {
         checkable
         showLine
         onCheck={onCheck}
-        defaultCheckedKeys={keyCheckedKeys}
-        defaultExpandedKeys={keyExpandedKeys}
+        onExpand={onExpand}
+        checkedKeys={keyCheckedKeys}
+        expandedKeys={keyExpandedKeys}
       >
         {renderTreeNodes(libtree)}
       </Tree>

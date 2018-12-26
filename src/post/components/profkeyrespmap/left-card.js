@@ -12,7 +12,7 @@ const LeftCard = ({
 }) => {
   const {
     isAddprofModalShow, setPrimaryBusinessData, isAlertShow, updateLeftCardTree, setSelectedKeys,
-    setListTitle, setKeyCheckedKeys,
+    setListTitle, setKeyCheckedKeys, setKeyexpandedKeys,
   } = actions;
   const addProf = () => {
     const newLeftCardTree = [...leftCardTree];
@@ -27,6 +27,11 @@ const LeftCard = ({
       return;
     }
     if (keyRespList.length !== 0) {
+      message.config({
+        duration: 2,
+        maxCount: 1,
+        top: 400,
+      });
       message.warning('请先删除关联映射');
       return;
     }
@@ -41,11 +46,13 @@ const LeftCard = ({
   const onselect = (selectedKey, e) => {
     const { selected } = e;
     console.log(selectedKey);
-    if (selectedKey.indexOf('0') > -1) {
+    if (selectedKey.indexOf('0-1') > -1) {
       console.log(111);
-      setKeyCheckedKeys(['0', '0-0', '1', '1-0', '2-0', '2-1', '2-2'], ['0', '1', '2']);
+      setKeyCheckedKeys(['0', '0-0', '1', '1-0', '2-0', '2-1', '2-2']);
+      setKeyexpandedKeys(['0', '1', '2']);
     } else {
-      setKeyCheckedKeys([], []);
+      setKeyCheckedKeys([]);
+      setKeyexpandedKeys([]);
     }
     // 设置要删除的元素
     setSelectedKeys(selectedKey);
@@ -88,6 +95,7 @@ const LeftCard = ({
     >
       <Tree
         showLine
+        defaultExpandedKeys={['a']}
         onSelect={onselect}
       >
         {renderTreeNodes(leftCardTree)}

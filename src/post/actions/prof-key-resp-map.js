@@ -89,11 +89,20 @@ export function setLeftExpandedKeys(leftExpandedKeys) {
 }
 
 
-export function setKeyCheckedKeys(keyCheckedKeys, keyExpandedKeys) {
+export function setKeyCheckedKeys(keyCheckedKeys) {
   return {
     type: 'profkeyrespmap/stateWillUpdate',
     payload: {
-      keyCheckedKeys, keyExpandedKeys,
+      keyCheckedKeys,
+    },
+  };
+}
+
+export function setKeyexpandedKeys(keyExpandedKeys) {
+  return {
+    type: 'profkeyrespmap/stateWillUpdate',
+    payload: {
+      keyExpandedKeys,
     },
   };
 }

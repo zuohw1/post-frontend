@@ -12,7 +12,7 @@ const LeftCard = ({
 }) => {
   const {
     isAddprofModalShow, setPrimaryBusinessData, isAlertShow, updateLeftCardTree, setSelectedKeys,
-    setListTitle, setKeyCheckedKeys,
+    setListTitle, setKeyCheckedKeys, setKeyExpandedKeys,
   } = actions;
   const addProf = () => {
     const newLeftCardTree = [...leftCardTree];
@@ -27,9 +27,15 @@ const LeftCard = ({
       return;
     }
     if (keyRespList.length !== 0) {
+      message.config({
+        duration: 2,
+        maxCount: 1,
+        top: 400,
+      });
       message.warning('请先删除关联映射');
       return;
     }
+    console.log(1111);
     const newLeftTree = [...leftCardTree];
     removeTreeNode(newLeftTree);
     updateLeftCardTree(newLeftTree);
@@ -40,12 +46,12 @@ const LeftCard = ({
   };
   const onselect = (selectedKey, e) => {
     const { selected } = e;
-    console.log(selectedKey);
     if (selectedKey.indexOf('0-1') > -1) {
-      console.log(111);
-      setKeyCheckedKeys(['0', '0-0', '1', '1-0', '2-0', '2-1', '2-2'], ['0', '1', '2']);
+      setKeyCheckedKeys(['0', '0-0', '1', '1-0', '2-0', '2-1', '2-2']);
+      setKeyExpandedKeys(['0', '1', '2']);
     } else {
-      setKeyCheckedKeys([], []);
+      setKeyCheckedKeys([]);
+      setKeyExpandedKeys([]);
     }
     // 设置要删除的元素
     setSelectedKeys(selectedKey);
@@ -59,7 +65,6 @@ const LeftCard = ({
       if (typeof ele.children !== 'undefined') {
         removeTreeNode(ele.children);
       }
-      console.log(1111, selectedKeys);
       if (selectedKeys.indexOf(ele.key) >= 0) {
         nodes.splice(index, 1);
       }
@@ -88,12 +93,14 @@ const LeftCard = ({
     >
       <Tree
         showLine
+        defaultExpandedKeys={['a']}
         onSelect={onselect}
       >
         {renderTreeNodes(leftCardTree)}
       </Tree>
       <Modal
         title="新增专业划分"
+        destroyOnClose
         visible={addProfModal}
         onCancel={addProfModalCancel}
         footer={null}

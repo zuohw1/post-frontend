@@ -115,9 +115,9 @@ const AddProfDivision = ({
             help=""
           >
             {getFieldDecorator('select', {
-              initialValue: 'china',
+              initialValue: '人力专业（测试）',
             })(
-              <Select placeholder="china" style={{ width: 150 }}>
+              <Select placeholder="人力专业（测试）" style={{ width: 150 }}>
                 {primaryBusinessData.map(ele => <Option key={ele} value={ele}>{ele}</Option>)}
               </Select>,
             )}

@@ -2,8 +2,7 @@ import React from 'react';
 import { Card, Tree } from 'antd';
 
 const KeyRespStore = ({ actions, keyCheckedKeys, keyExpandedKeys }) => {
-  console.log(55555, keyCheckedKeys, keyExpandedKeys);
-  const { setKeyRespList } = actions;
+  const { setKeyRespList, setKeyCheckedKeys, setKeyExpandedKeys } = actions;
   const { TreeNode } = Tree;
   const libtree = [
     {
@@ -79,11 +78,15 @@ const KeyRespStore = ({ actions, keyCheckedKeys, keyExpandedKeys }) => {
     },
   ];
   const onCheck = (checkedKeys, info) => {
+    setKeyCheckedKeys(checkedKeys);
     const arrFilter = info.checkedNodes.filter(value => value.key.indexOf('-') > -1);
     const arr = arrFilter.map(value => value.props.title);
+    // 设置关键职责列表
     setKeyRespList(arr);
   };
-
+  const onExpand = (expandedKeys) => {
+    setKeyExpandedKeys(expandedKeys);
+  };
   const renderTreeNodes = (data) => {
     return data.map((item) => {
       if (item.children) {
@@ -104,8 +107,9 @@ const KeyRespStore = ({ actions, keyCheckedKeys, keyExpandedKeys }) => {
         checkable
         showLine
         onCheck={onCheck}
-        defaultCheckedKeys={keyCheckedKeys}
-        defaultExpandedKeys={keyExpandedKeys}
+        onExpand={onExpand}
+        checkedKeys={keyCheckedKeys}
+        expandedKeys={keyExpandedKeys}
       >
         {renderTreeNodes(libtree)}
       </Tree>
