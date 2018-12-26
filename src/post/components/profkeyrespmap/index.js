@@ -1,11 +1,17 @@
 import React from 'react';
-import { Layout, Breadcrumb } from 'antd';
+import {
+  Layout, Breadcrumb, Col, Row,
+} from 'antd';
 import '../../../assets/styles/module.less';
+import LeftCard from './left-card';
+import KeyRespStore from './key-resp-store';
+import KeyRespList from './key-resp-list';
+import '../assets/styles/business-key-resp-map.less';
 
 const { Content } = Layout;
 
-const ProfKeyRespMap = (state) => {
-  console.log(state);
+
+const BusinessKeyRespMap = (state) => {
   return (
     <React.Fragment>
       <Breadcrumb style={{ margin: '10px 0' }}>
@@ -17,13 +23,25 @@ const ProfKeyRespMap = (state) => {
         </Breadcrumb.Item>
       </Breadcrumb>
       <Content
-        className="page-module"
+        className="divisionMap"
         style={{
           background: '#fff', padding: '15px', margin: 0, minHeight: 280,
         }}
-      />
+      >
+        <Row gutter={8}>
+          <Col span={8}>
+            <LeftCard {...state} />
+          </Col>
+          <Col span={8}>
+            <KeyRespStore {...state} />
+          </Col>
+          <Col span={8}>
+            <KeyRespList {...state} />
+          </Col>
+        </Row>
+      </Content>
     </React.Fragment>
   );
 };
 
-export default ProfKeyRespMap;
+export default BusinessKeyRespMap;

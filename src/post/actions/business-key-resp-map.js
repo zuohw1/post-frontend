@@ -62,11 +62,46 @@ export function setKeyRespList(keyRespList) {
 }
 
 
-export function setCheckedKeys(checkedKeys) {
+export function setSelectedKeys(selectedKeys) {
   return {
     type: 'businesskeyrespmap/stateWillUpdate',
     payload: {
-      checkedKeys,
+      selectedKeys,
+    },
+  };
+}
+
+export function setListTitle(listTitle, isTitleSelected) {
+  return {
+    type: 'businesskeyrespmap/stateWillUpdate',
+    payload: {
+      listTitle, isTitleSelected,
+    },
+  };
+}
+export function setLeftExpandedKeys(leftExpandedKeys) {
+  return {
+    type: 'businesskeyrespmap/stateWillUpdate',
+    payload: {
+      leftExpandedKeys,
+    },
+  };
+}
+
+
+export function setKeyCheckedKeys(keyCheckedKeys) {
+  return {
+    type: 'businesskeyrespmap/stateWillUpdate',
+    payload: {
+      keyCheckedKeys,
+    },
+  };
+}
+export function setKeyExpandedKeys(keyExpandedKeys) {
+  return {
+    type: 'businesskeyrespmap/stateWillUpdate',
+    payload: {
+      keyExpandedKeys,
     },
   };
 }

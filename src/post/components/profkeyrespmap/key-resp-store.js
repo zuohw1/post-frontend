@@ -2,7 +2,8 @@ import React from 'react';
 import { Card, Tree } from 'antd';
 
 const KeyRespStore = ({ actions, keyCheckedKeys, keyExpandedKeys }) => {
-  const { setKeyRespList, setKeyCheckedKeys, setKeyExpandedKeys } = actions;
+  console.log(55555, keyCheckedKeys, keyExpandedKeys);
+  const { setKeyRespList, setKeyCheckedKeys, setKeyexpandedKeys } = actions;
   const { TreeNode } = Tree;
   const libtree = [
     {
@@ -81,12 +82,12 @@ const KeyRespStore = ({ actions, keyCheckedKeys, keyExpandedKeys }) => {
     setKeyCheckedKeys(checkedKeys);
     const arrFilter = info.checkedNodes.filter(value => value.key.indexOf('-') > -1);
     const arr = arrFilter.map(value => value.props.title);
-    // 设置关键职责列表
     setKeyRespList(arr);
   };
   const onExpand = (expandedKeys) => {
-    setKeyExpandedKeys(expandedKeys);
+    setKeyexpandedKeys(expandedKeys);
   };
+
   const renderTreeNodes = (data) => {
     return data.map((item) => {
       if (item.children) {

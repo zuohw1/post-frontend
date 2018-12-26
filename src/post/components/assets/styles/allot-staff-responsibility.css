@@ -1,0 +1,218 @@
+:global .allot-staff-part {
+  width: 100%;
+  height: 100%;
+}
+:global .allot-staff-part .allot-staff-part-left {
+  width: 28%;
+  height: 100%;
+  margin-right: 1%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #d9d9d9;
+  float: left;
+}
+:global .allot-staff-part .allot-staff-part-left .allot-staff-part-left-top {
+  width: 100%;
+  height: 32px;
+  line-height: 32px;
+  color: #D8000F;
+  text-align: left;
+  text-indent: 6px;
+  border-bottom: 1px solid #d9d9d9;
+}
+:global .allot-staff-part .allot-staff-part-left .allot-staff-part-left-content {
+  width: 100%;
+  flex: 1;
+  over-flow: auto;
+}
+:global .allot-staff-part .allot-staff-part-left .allot-staff-part-left-bottom {
+  width: 100%;
+  height: 36px;
+  line-height: 36px;
+  border-top: 1px solid #d9d9d9;
+  text-align: center;
+}
+:global .allot-staff-part .allot-staff-part-left .allot-staff-part-left-bottom button {
+  margin: 0 auto;
+}
+:global .allot-staff-part .allot-staff-part-center {
+  width: 32%;
+  height: 100%;
+  margin-right: 1%;
+  border: 1px solid #d9d9d9;
+  float: left;
+  position: relative;
+}
+:global .allot-staff-part .allot-staff-part-center .ant-layout {
+  width: 100%;
+  height: auto;
+  background-color: #fff;
+}
+:global .allot-staff-part .allot-staff-part-center .ant-layout .related-major p {
+  height: 30px;
+  line-height: 30px;
+  display: inline-flex;
+}
+:global .allot-staff-part .allot-staff-part-center .ant-layout .related-major p .related-major-name {
+  width: 88px;
+  height: 24px;
+  display: inline-block;
+  border-bottom: 1px solid #d9d9d9;
+  text-align: center;
+  line-height: 24px;
+}
+:global .allot-staff-part .allot-staff-part-center .ant-layout .related-major .related-tree .ant-tree-show-line .ant-tree-treenode-switcher-open span:nth-of-type(2) {
+  display: none;
+}
+:global .allot-staff-part .allot-staff-part-center .ant-layout .related-major .related-tree .ant-tree-show-line .ant-tree-treenode-switcher-open ul.ant-tree-child-tree-open .ant-tree-treenode-switcher-open span:nth-of-type(2) {
+  display: block;
+}
+:global .allot-staff-part .allot-staff-part-center .ant-layout .related-major .related-tree .ant-tree-show-line .ant-tree-treenode-switcher-close span:nth-of-type(2) {
+  display: none;
+}
+:global .allot-staff-part .allot-staff-part-center .ant-layout .related-major .related-tree .ant-tree-show-line .ant-tree-treenode-switcher-close ul.ant-tree-child-tree-open .ant-tree-treenode-switcher-open span:nth-of-type(2) {
+  display: block;
+}
+:global .allot-staff-part .allot-staff-part-center .ant-layout .whole-major p {
+  height: 30px;
+  line-height: 30px;
+  display: inline-flex;
+}
+:global .allot-staff-part .allot-staff-part-center .ant-layout .whole-major p .whole-major-name {
+  width: 88px;
+  height: 24px;
+  display: inline-block;
+  border-bottom: 1px solid #d9d9d9;
+  text-align: center;
+  line-height: 24px;
+}
+:global .allot-staff-part .allot-staff-part-center .ant-layout .whole-major .whole-major-search {
+  height: 42px;
+  line-height: 42px;
+  border-top: solid 1px #d9d9d9;
+  border-bottom: solid 1px #d9d9d9;
+}
+:global .allot-staff-part .allot-staff-part-center .ant-layout .whole-major .whole-major-search input {
+  width: 86px;
+  margin-right: 24px;
+}
+:global .allot-staff-part .allot-staff-part-center .ant-layout .checklist-major p {
+  display: inline-flex;
+  height: 30px;
+  line-height: 30px;
+}
+:global .allot-staff-part .allot-staff-part-center .ant-layout .checklist-major p .checklist-major-name {
+  width: 88px;
+  height: 24px;
+  display: inline-block;
+  border-bottom: 1px solid #d9d9d9;
+  text-align: center;
+  line-height: 24px;
+}
+:global .allot-staff-part .allot-staff-part-center .ant-layout .checklist-major .checklist-major-search {
+  height: 42px;
+  line-height: 42px;
+  border-top: solid 1px #d9d9d9;
+  border-bottom: solid 1px #d9d9d9;
+  margin-bottom: 6px;
+}
+:global .allot-staff-part .allot-staff-part-center .ant-layout .checklist-major .checklist-major-search input {
+  width: 86px;
+  margin-right: 24px;
+}
+:global .allot-staff-part .allot-staff-part-center .allot-staff-part-center-mask {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.65);
+  height: 100%;
+  z-index: 1000;
+}
+:global .allot-staff-part .allot-staff-part-right {
+  width: 38%;
+  height: 100%;
+  border: 1px solid #d9d9d9;
+  float: left;
+}
+:global .allot-staff-part .allot-staff-part-right .ant-layout {
+  width: 100%;
+  height: auto;
+  background-color: #fff;
+}
+:global .allot-staff-part .allot-staff-part-right .ant-layout .current-record p {
+  height: 30px;
+  line-height: 30px;
+  display: inline-flex;
+}
+:global .allot-staff-part .allot-staff-part-right .ant-layout .current-record p .current-record-name {
+  width: 88px;
+  height: 24px;
+  display: inline-block;
+  border-bottom: 1px solid #d9d9d9;
+  text-align: center;
+  line-height: 24px;
+}
+:global .allot-staff-part .allot-staff-part-right .ant-layout .current-record p .ant-btn {
+  float: right;
+  margin-right: 3px;
+}
+:global .allot-staff-part .allot-staff-part-right .ant-layout .current-record .key-duty-list {
+  width: 100%;
+}
+:global .allot-staff-part .allot-staff-part-right .ant-layout .current-record .key-duty-list .key-duty-list-top {
+  width: 100%;
+}
+:global .allot-staff-part .allot-staff-part-right .ant-layout .current-record .key-duty-list .key-duty-list-top .key-duty-list-execute {
+  width: 80%;
+  height: 36px;
+  line-height: 36px;
+  font-size: 15px;
+  text-align: center;
+  display: inline-block;
+}
+:global .allot-staff-part .allot-staff-part-right .ant-layout .current-record .key-duty-list .key-duty-list-top .key-duty-list-workload {
+  width: 20%;
+  height: 36px;
+  line-height: 36px;
+  font-size: 15px;
+  text-align: center;
+  display: inline-block;
+}
+:global .allot-staff-part .allot-staff-part-right .ant-layout .current-record .key-duty-list .key-duty-list-bottom {
+  width: 100%;
+  height: auto;
+}
+:global .allot-staff-part .allot-staff-part-right .ant-layout .current-record .key-duty-list .key-duty-list-bottom .allot-staff-part-left-bottom-content {
+  width: 100%;
+  height: auto;
+  list-style: none;
+}
+:global .allot-staff-part .allot-staff-part-right .ant-layout .current-record .key-duty-list .key-duty-list-bottom .allot-staff-part-left-bottom-content .key-duty-list-execute {
+  width: 80%;
+  height: 36px;
+  line-height: 36px;
+  font-size: 15px;
+  text-align: center;
+  display: inline-block;
+}
+:global .allot-staff-part .allot-staff-part-right .ant-layout .current-record .key-duty-list .key-duty-list-bottom .allot-staff-part-left-bottom-content .key-duty-list-execute .ant-input {
+  width: 260px !important;
+  margin-right: 8px;
+  display: inline-block;
+}
+:global .allot-staff-part .allot-staff-part-right .ant-layout .current-record .key-duty-list .key-duty-list-bottom .allot-staff-part-left-bottom-content .key-duty-list-workload {
+  width: 20%;
+  height: 36px;
+  line-height: 36px;
+  font-size: 15px;
+  text-align: center;
+  display: inline-block;
+}
+:global .allot-staff-part .allot-staff-part-right .ant-layout .current-record .key-duty-list .key-duty-list-bottom .allot-staff-part-left-bottom-content .key-duty-list-workload .ant-input {
+  width: 54px;
+  margin-right: 8px;
+  display: inline-block;
+}
+/*# sourceMappingURL=allot-staff-responsibility.css.map */
