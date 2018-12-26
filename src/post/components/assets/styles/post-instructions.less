@@ -58,9 +58,11 @@
   .instructions-model{
     .ant-modal-content{
       .ant-modal-body{
-        height: 472px;
-        .instructions-model-top{
+        height: 482px;
+        div{
+          .instructions-model-top{
             display: flex;
+            margin-bottom: 3px;
             .instructions-model-top-two{
               margin-right: 39px;
               span{
@@ -71,8 +73,7 @@
                 width: 240px;
               }
             }
-        }
-        div{
+          }
           .ant-table-wrapper{
             height: 376px;
             overflow-y: auto;
@@ -80,13 +81,18 @@
               .ant-spin-container{
                 .ant-table-scroll-position-left{
                   .ant-table-content{
-                    .ant-table-placeholder{
-                      height: 339px;
+                    .ant-table-scroll{
+                      .ant-table-body{
+                        height: 339px;
+                      }
                     }
                   }
                 }
               }
             }
+          }
+          .ant-pagination{
+            smargin-top: 5px;
           }
         }
         div:nth-child(2){

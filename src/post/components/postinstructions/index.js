@@ -3,7 +3,7 @@ import React from 'react';
 import { Layout, Breadcrumb, Collapse, TreeSelect, Select, Input, Button, DatePicker, Modal, Drawer, Form, } from 'antd';
 import '../assets/styles/post-instructions.less';
 import TableInstructions from './main-table';
-import TableSearchchoose from '../../../components/search-table';
+import TableposKey from './poskey-search-table';
 import DrawerForm from './drawer-form';
 import Search from './search';
 
@@ -30,7 +30,7 @@ const chooseColumns = [{
 const rowSelection = {
 	type: 'radio',
 };
-const refUrl = 'orgHeaderBatch/list';
+const refUrl = 'posPosdes/posKey';
 const treeData = [{
   title: 'Node1',
   value: '0-0',
@@ -59,11 +59,6 @@ for (let i = 0; i < data.length; i += 1) {
 for (let i = 0; i < data2.length; i += 1) {
   rankChildren.push(<Option key={data2[i]}>{ data2[i] }</Option>);
 }
-
-const ResponseChildren = [];
-for (let i = 0; i < data2.length; i += 1) {
-  ResponseChildren.push(<Option key={data2[i]}>{ data2[i] }</Option>);
-}
 const callback = (key) => {
   console.log(key);
 };
@@ -77,9 +72,6 @@ const handleChangeSequence = (value) => {
   console.log(`selected ${value}`);
 }
 const handleChangeRank = (value) => {
-  console.log(`selected ${value}`);
-}
-const handleChangeResponse = (value) => {
   console.log(`selected ${value}`);
 }
 const PostInstructions = (state) => {
@@ -121,23 +113,12 @@ const PostInstructions = (state) => {
 			      onCancel={InstructionsCancel}
 			      maskClosable={false}
 			      destroyOnClose
-			      width={760}
+			      width={780}
 			      visible={state.InstructionsModal}
 			      centered
 			      className="instructions-model"
 			    >
-			    	<div className="instructions-model-top">
-			    		<span className="instructions-model-top-one">专业：<Select style={{ width: 200, marginRight: '60px' }} onChange={handleChangeResponse}>{ResponseChildren}</Select></span>
-						<span className="instructions-model-top-two"><span>名称：</span><Input /></span>
-						<span className="instructions-model-top-three"><Button type="primary" icon="search">查询</Button></span>
-			    	</div>
-			    	<TableSearchchoose
-			    		columns={chooseColumns}
-				        refUrl={refUrl}
-				        rowSelection={rowSelection}
-				        refSelectData={refSelectData}
-				        className="table-search-choose"
-			    	/>
+			    	<TableposKey  {...state} />
 			    </Modal>
 			    <Drawer title="岗位说明书" width={880} placement="right" onClose={closeDrawer} maskClosable={false} visible={state.visibleDrawer} style={{ height: 'calc(100% - 55px)',overflow: 'auto',paddingBottom: 53, }} >
 		    		<WrappedDrawerForm {...state} />

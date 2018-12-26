@@ -30,19 +30,19 @@ export function switchRecord(record) {
     },
   };
 }
-export function removeCertainDuty(datas, index) {
+export function removeCertainDuty(datas, index, maskDisplay) {
   return {
     type: 'allotStaffResponsibility/removeCertainDuty',
     payload: {
-      datas, index,
+      datas, index, maskDisplay,
     },
   };
 }
-export function isCheacked(cheacked, datas, otherDatas) {
+export function isCheacked(checkedBearDuty, datas, otherDatas) {
   return {
     type: 'allotStaffResponsibility/isCheacked',
     payload: {
-      cheacked, datas, otherDatas,
+      checkedBearDuty, datas, otherDatas,
     },
   };
 }

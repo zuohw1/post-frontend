@@ -43,11 +43,13 @@ const treeData = [{
   key: '0-2',
 }];
 const AllotStaffResponsibility = (state) => {
-	const { actions, current, chooseIndex, relatedDisplay, wholeDisplay, checklistDisplay, currentDisplay, allDisplay, maskDisplay, name, wholeKeyword, checklistKeyword, datas, otherDatas } = state;
+	const { actions, current, chooseIndex, relatedDisplay, wholeDisplay, checklistDisplay, currentDisplay, allDisplay, maskDisplay, name, wholeKeyword, checklistKeyword, datas, otherDatas, checkedBearDuty, allRecordsData } = state;
 	const { onhandleClickMajor, onhandleClickRecord, switchMajor, switchRecord, removeCertainDuty, isCheacked } = actions;
+	const oBearDuty = document.getElementById("bearDuty");
 	const remove = (item, index) => {
 		console.log(item, index);
-		removeCertainDuty(datas, index);
+		console.log(maskDisplay);
+		removeCertainDuty(datas, index, maskDisplay);
 	}
 	const select = (selectedKeys, info) => {
 	    console.log('selected', selectedKeys, info);
@@ -68,12 +70,10 @@ const AllotStaffResponsibility = (state) => {
 	const changeChecklistKeyword = (e) => {
 	    console.log(e);
 	}
-	const changeName = (e) => {
-	    console.log(e);
-	}
 	const changeBearDuty = (e) => {
 	    console.log(`checked = ${e.target.checked}`);
-	    isCheacked(e.target.checked, datas, otherDatas);
+	    console.log(checkedBearDuty);
+	    isCheacked(checkedBearDuty, datas, otherDatas);
 	}
 	const list = [];
 	datas.map( (item, index) => {
@@ -106,11 +106,11 @@ const AllotStaffResponsibility = (state) => {
 					    </Menu>
 					    <Layout style={{ padding: '5px' }}>
 					    	<div style={{display: relatedDisplay}} className="related-major">
-					    		<p>请勾选<Input value={name} className="related-major-name" onChange={changeName}/>的关键职责</p>
+					    		<p>请勾选<span className="related-major-name">{name}</span>的关键职责</p>
 					    		<AllotRelated />
 					    	</div>
 						    <div style={{display: wholeDisplay}} className="whole-major">
-						    	<p>请勾选<Input value={name} className="whole-major-name" readOnly="readonly"/>的关键职责</p>
+						    	<p>请勾选<span className="whole-major-name">{name}</span>的关键职责</p>
 						    	<div className="whole-major-search">
 						    		关键词：<Input value={wholeKeyword} onChange={changeWholeKeyword}/>
 						    		<Button type="primary" icon="search" style={{marginRight: '12px'}}>查询</Button>
@@ -119,7 +119,7 @@ const AllotStaffResponsibility = (state) => {
 						    	<AllotWhole />
 						    </div>
 						    <div style={{display: checklistDisplay}} className="checklist-major">
-						    	<p>请勾选<Input value={name} className="checklist-major-name" readOnly="readonly"/>的关键职责</p>
+						    	<p>请勾选<span className="checklist-major-name">{name}</span>的关键职责</p>
 						    	<div className="checklist-major-search">
 						    		关键词：<Input value={checklistKeyword} onChange={changeChecklistKeyword}/>
 						    		<Button type="primary" icon="search" style={{marginRight: '12px'}}>查询</Button>
@@ -136,8 +136,8 @@ const AllotStaffResponsibility = (state) => {
 					    </Menu>
 					    <Layout style={{ padding: '5px' }}>
 					    	<div style={{display: currentDisplay}} className="current-record">
-					    		<p><Input value={name} className="current-record-name" readOnly="readonly"/>的关键职责(工作量之和：0%) <Button icon="save">保存</Button></p>
-					    		<Checkbox onChange={changeBearDuty}>不承担任何工作职责</Checkbox>
+					    		<p><span className="current-record-name">{name}</span>的关键职责(工作量之和：0%) <Button icon="save">保存</Button></p>
+					    		<Checkbox onChange={changeBearDuty} id="bearDuty" checked={checkedBearDuty}>不承担任何工作职责</Checkbox>
 					    		<div className="key-duty-list">
 						        	<div className="key-duty-list-top">
 										<span className="key-duty-list-execute">关键职责(主要执行)</span> 
@@ -148,7 +148,9 @@ const AllotStaffResponsibility = (state) => {
 									</div>
 						        </div>
 					    	</div>
-						    <div style={{display: allDisplay}} className="all-record"><h3>全部记录</h3></div>
+						    <div style={{display: allDisplay}} className="all-record">
+						    	<Tree style={{ width: '100%' }} showLine treeData={allRecordsData} />
+						    </div>
 				        </Layout>
 					</div>
 				</div>

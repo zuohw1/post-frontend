@@ -11,20 +11,17 @@ const WrappedModifyPostInstructions = Form.create()(ModifyPostInstructions);
 class TableInstructions extends Component {
   render() {
     const {
-      records, current, size, total, actions, search, loading, visibleCheckPost, visibleModifyPost, loginName, respId, rangeId, recordNum, executeOnce,
+      records, current, total, actions, search, loading, visibleCheckPost, visibleModifyPost, loginName, respId, rangeId, recordNum, executeOnce,
     } = this.props;
-    const { listTable, getCheckPost, closeCheckPost, getModifyPost, closeModifyPost, isExecuteOnce, checkDetail } = actions;
+    const { listTable, getCheckPost, closeCheckPost, getModifyPost, closeModifyPost, isExecuteOnce, checkDetail, changePageNumberSize } = actions;
     if (executeOnce === true) {
       listTable(loginName, respId, rangeId, current, recordNum);
       isExecuteOnce();
     }
-    const onChange = (pageNumber, pageSize) => {
-      const searchF = { ...search, pageSize, pageNumber };
-    };
-    const onChangePageSize = (current, size) => {
-      const searchF = { ...search, pageSize: size, pageNumber: current };
-    };
-    const handleExportProvPos = () => {
+    const onChangePage = (pageNumber, pageSize) => {
+      console.log(pageNumber, pageSize);
+      changePageNumberSize(pageNumber, pageSize);
+      listTable(loginName, respId, rangeId, pageNumber, pageSize);
     };
     const onClickView = (_, row) => {
       console.log(row);
@@ -133,10 +130,8 @@ class TableInstructions extends Component {
           showQuickJumper
           current={current}
           total={total}
-          pageSize={size}
-          onChange={onChange}
-          onShowSizeChange={onChangePageSize}
-          showTotal={tota => `共 ${tota} 条`}
+          onChange={onChangePage}
+          showTotal={total => `共 ${total} 条`}
           showSizeChanger
           style={{ marginTop: 10, float: 'right' }}
         />

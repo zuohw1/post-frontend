@@ -10,6 +10,8 @@ export default {
     /* 点击的组织树节点code */
     clickOrgCode: '',
     /* 列表数据 */
+    record: {},
+    people: {},
     dataSourceAll: [{
       key: '0',
       grouping: '测试分组',
@@ -79,6 +81,16 @@ export default {
     },
   },
   effects: {
+    /* 获取列表选中记录 */
+    * getPerson({ payload: { man, people } }, { put }) {
+      let { person } = people;
+      const peopleTwo = man.employee;
+      person = peopleTwo;
+      yield put({
+        type: 'stateWillUpdate',
+        payload: { record: { ...people, person } },
+      });
+    },
   },
   subscriptions: {
   },
