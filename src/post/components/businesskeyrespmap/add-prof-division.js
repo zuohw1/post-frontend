@@ -33,13 +33,17 @@ const AddProfDivision = ({
   };
   const addProfModalOk = (e) => {
     e.preventDefault();
-    // 获取左树
-    const newTree = [...leftCardTree];
+    // 获取左树,请求数据
+    const newTempTree = [...leftCardTree];
+    const newTree = newTempTree[0].children;
     // 设置新的树节点
     const newTreeNode = {};
     form.validateFields((err, values) => {
       if (!err) {
+        console.log(newTempTree);
+        console.log(newTree);
         const { businessname, radiogroup, select } = values;
+        /* 此处后端应返回一条数据 */
         newTreeNode.title = businessname.trim();
         // newTreeNode.key = businessname.trim();
         if (radiogroup === 1) {
@@ -51,14 +55,13 @@ const AddProfDivision = ({
             isAlertShow(true);
             return;
           }
-          newTreeNode.key = newTree.length;
+          newTreeNode.key = newTree.length.toString();
           newTree.push(newTreeNode);
         } else if (radiogroup === 2) {
           // 找到与select名字相同的一级业务划分
           const index = newTree.findIndex((ele) => {
             return ele.title === select;
           });
-          console.log(11111, index);
           // 如果她没有children,就让她有children，再push进去
           if (typeof newTree[index].children === 'undefined') {
             newTreeNode.key = `${index}-0`;
@@ -75,7 +78,7 @@ const AddProfDivision = ({
             children.push(newTreeNode);
           }
         }
-        updateLeftCardTree(newTree);
+        updateLeftCardTree(newTempTree);
         isAlertShow(false);
         isAddprofModalShow(false);
       }

@@ -3,10 +3,10 @@ import { Card, Button, List } from 'antd';
 
 const { Item } = List;
 
-const KeyRespList = ({ keyRespList }) => {
+const KeyRespList = ({ keyRespList, listTitle, isTitleSelected }) => {
   return (
     <Card
-      title="关键职责列表"
+      title={isTitleSelected ? `(${listTitle})关键职责列表` : '关键职责列表'}
       extra={<Button>导出</Button>}
     >
       <List

@@ -1,26 +1,36 @@
 import React from 'react';
 import {
-  Card, Button, Icon, Modal, Tree,
+  Card, Button, Icon, Modal, Tree, message,
 } from 'antd';
 import AddProfDivision from './add-prof-division';
 
 const { TreeNode } = Tree;
 
 const LeftCard = ({
-  actions, addProfModal, leftCardTree, isPrimaryShow, primaryBusinessData, showAlert, checkedKeys,
+  actions, addProfModal, leftCardTree, isPrimaryShow, primaryBusinessData, showAlert, selectedKeys,
+  keyRespList,
 }) => {
   const {
-    isAddprofModalShow, setPrimaryBusinessData, isAlertShow, updateLeftCardTree, setCheckedKeys,
+    isAddprofModalShow, setPrimaryBusinessData, isAlertShow, updateLeftCardTree, setSelectedKeys,
+    setListTitle, setKeyCheckedKeys,
   } = actions;
   const addProf = () => {
     const newLeftCardTree = [...leftCardTree];
-    const newprimaryBusinessData = newLeftCardTree.map(ele => ele.title);
+    const newprimaryBusinessData = newLeftCardTree[0].children.map(
+      ele => ele.title,
+    );
     setPrimaryBusinessData(newprimaryBusinessData);
     isAddprofModalShow(true);
   };
   const deleteProf = () => {
+    if (selectedKeys.length === 0) {
+      return;
+    }
+    if (keyRespList.length !== 0) {
+      message.warning('请先删除关联映射');
+      return;
+    }
     const newLeftTree = [...leftCardTree];
-    console.log(333333, newLeftTree);
     removeTreeNode(newLeftTree);
     updateLeftCardTree(newLeftTree);
   };
@@ -28,19 +38,29 @@ const LeftCard = ({
     isAlertShow(false);
     isAddprofModalShow(false);
   };
-  const onCheck = (checkedKey) => {
-    setCheckedKeys(checkedKey);
+  const onselect = (selectedKey, e) => {
+    const { selected } = e;
+    console.log(selectedKey);
+    if (selectedKey.indexOf('0') > -1) {
+      console.log(111);
+      setKeyCheckedKeys(['0', '0-0', '1', '1-0', '2-0', '2-1', '2-2'], ['0', '1', '2']);
+    } else {
+      setKeyCheckedKeys([], []);
+    }
+    // 设置要删除的元素
+    setSelectedKeys(selectedKey);
+    // 设置右边card的title
+    const { title } = e.node.props;
+    setListTitle(title, selected);
   };
 
   const removeTreeNode = (nodes) => {
-    console.log(11111, nodes);
     nodes.forEach((ele, index) => {
       if (typeof ele.children !== 'undefined') {
         removeTreeNode(ele.children);
       }
-      console.log(checkedKeys);
-      if (checkedKeys.indexOf(ele.key) >= 0) {
-        console.log(2222, ele.key);
+      console.log(1111, selectedKeys);
+      if (selectedKeys.indexOf(ele.key) >= 0) {
         nodes.splice(index, 1);
       }
     });
@@ -68,8 +88,7 @@ const LeftCard = ({
     >
       <Tree
         showLine
-        checkable
-        onCheck={onCheck}
+        onSelect={onselect}
       >
         {renderTreeNodes(leftCardTree)}
       </Tree>

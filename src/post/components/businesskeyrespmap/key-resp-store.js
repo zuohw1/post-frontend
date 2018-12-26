@@ -1,40 +1,39 @@
 import React from 'react';
 import { Card, Tree } from 'antd';
 
-const KeyRespStore = ({ actions }) => {
+const KeyRespStore = ({ actions, keyCheckedKeys, keyExpandedKeys }) => {
+  console.log(55555, keyCheckedKeys, keyExpandedKeys);
   const { setKeyRespList } = actions;
   const { TreeNode } = Tree;
   const libtree = [
     {
-      title: '管理序列.管理',
+      title: '222222',
       key: '0',
       children: [
-        { title: '省管理人员', key: '0-0' },
-        { title: '市管理人员', key: '0-1' },
-        { title: '集团管管理人员', key: '0-2' }],
-    },
-    {
-      title: '技术序列.采购管理',
-      key: '1',
-      children: [
-        { title: '采购管理', key: '1-0' },
-        { title: '物资管理', key: '1-1' },
+        { title: 'z2222', key: '0-0' },
       ],
     },
     {
-      title: '技术序列.工程建设',
+      title: 'test1204',
+      key: '1',
+      children: [
+        { title: ' test-gjzz001', key: '1-0' },
+      ],
+    },
+    {
+      title: '管理序列',
       key: '2',
       children: [
-        { title: '平台工程', key: '2-0' },
-        { title: '交换工程', key: '2-1' },
-        { title: '接入网工程', key: '2-2' },
-        { title: ' 国际工程', key: '2-3' },
-        { title: '局房建设', key: '2-4' },
-        { title: '集团客户工程', key: '2-5' },
-        { title: '动力、环境及配套工程', key: '2-6' },
-        { title: '数据工程', key: '2-7' },
-        { title: '传输工程', key: '2-8' },
-        { title: '移动工程', key: '2-9' },
+        { title: '集团本部部门正职', key: '2-0' },
+        { title: '市本部部门正职', key: '2-1' },
+        { title: '其他', key: '2-2' },
+        { title: '市公司副职', key: '2-3' },
+        { title: '区县公司副职', key: '2-4' },
+        { title: '市本部部门副职', key: '2-5' },
+        { title: '省公司正职', key: '2-6' },
+        { title: '集团本部部门副职', key: '2-7' },
+        { title: '省本部部门正职', key: '2-8' },
+        { title: '省本部部门副职', key: '2-9' },
       ],
     },
     {
@@ -101,7 +100,13 @@ const KeyRespStore = ({ actions }) => {
     <Card
       title="关键职责库（请勾选映射至专业的职责）"
     >
-      <Tree checkable showLine onCheck={onCheck}>
+      <Tree
+        checkable
+        showLine
+        onCheck={onCheck}
+        defaultCheckedKeys={keyCheckedKeys}
+        defaultExpandedKeys={keyExpandedKeys}
+      >
         {renderTreeNodes(libtree)}
       </Tree>
     </Card>
