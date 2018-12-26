@@ -41,7 +41,7 @@ const LeftCard = ({
   const onselect = (selectedKey, e) => {
     const { selected } = e;
     console.log(selectedKey);
-    if (selectedKey.indexOf('0-1') > -1) {
+    if (selectedKey.indexOf('0') > -1) {
       console.log(111);
       setKeyCheckedKeys(['0', '0-0', '1', '1-0', '2-0', '2-1', '2-2'], ['0', '1', '2']);
     } else {
