@@ -99,3 +99,22 @@ export function setListCountFinance(countFinance) {
     },
   };
 }
+/* 获取列表数据记录数 */
+export function getRecord(record) {
+  return {
+    type: 'employeeGroup/stateWillUpdate',
+    payload: {
+      record,
+    },
+  };
+}
+/* 获取列表数据记录数 */
+export function getPerson(man, people) {
+  return {
+    type: 'employeeGroup/getPerson',
+    payload: {
+      man,
+      people,
+    },
+  };
+}
