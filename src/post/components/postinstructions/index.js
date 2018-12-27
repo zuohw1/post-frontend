@@ -4,13 +4,13 @@ import { Layout, Breadcrumb, Collapse, TreeSelect, Select, Input, Button, DatePi
 import '../assets/styles/post-instructions.less';
 import TableInstructions from './main-table';
 import TableposKey from './poskey-search-table';
-import DrawerForm from './drawer-form';
+import AddPostInstructions from './add-post-instructions';
 import Search from './search';
 
 const { Content } = Layout;
 const Panel = Collapse.Panel;
 const Option = Select.Option;
-const WrappedDrawerForm = Form.create()(DrawerForm);
+const WrappedAddPostInstructions = Form.create()(AddPostInstructions);
 const noBorderBottom={
     borderBottom:'0',
 };
@@ -75,8 +75,8 @@ const handleChangeRank = (value) => {
   console.log(`selected ${value}`);
 }
 const PostInstructions = (state) => {
-	const { actions, refSelectData } = state;
-  	const { getInstructions, closeInstructions, getInsDrawer, closeInsDrawer, } = actions;
+	const { actions, refSelectData, sortList, loginName, respId, rangeId, current, recordNum } = state;
+  	const { getInstructions, closeInstructions, getInsDrawer, closeInsDrawer, deleteSortList, listTable, showMajor } = actions;
 	const onInstructionsView = () => {
 	  	getInstructions();
 	};
@@ -91,6 +91,13 @@ const PostInstructions = (state) => {
 	const showDrawer = (e) => {
 	    e.preventDefault();
 		getInsDrawer();
+		showMajor();
+	};
+	const deleteSomeData = () => {
+		deleteSortList(sortList);
+		if(sortList.length > 0){
+			listTable(loginName, respId, rangeId, current, recordNum);
+		}
 	};
 	const closeDrawer = (e) => {
 	    e.preventDefault();
@@ -121,13 +128,13 @@ const PostInstructions = (state) => {
 			    	<TableposKey  {...state} />
 			    </Modal>
 			    <Drawer title="岗位说明书" width={880} placement="right" onClose={closeDrawer} maskClosable={false} visible={state.visibleDrawer} style={{ height: 'calc(100% - 55px)',overflow: 'auto',paddingBottom: 53, }} >
-		    		<WrappedDrawerForm {...state} />
+		    		<WrappedAddPostInstructions {...state} />
 			    </Drawer>
 	      		<div className="post-instructions">
 		    		<Search {...state} />
 		    		<div>
 		    			<Button htmlType="button" type="primary" style={{ marginTop: '10px', marginBottom: '10px' }} onClick={showDrawer}>新增</Button>
-		    			<Button htmlType="button" type="primary" style={{ marginLeft: '10px', marginTop: '10px', marginBottom: '10px' }}>删除</Button>
+		    			<Button htmlType="button" type="primary" style={{ marginLeft: '10px', marginTop: '10px', marginBottom: '10px' }} onClick={deleteSomeData}>删除</Button>
 		    			<Button htmlType="button" type="primary" style={{ marginLeft: '10px', marginTop: '10px', marginBottom: '10px' }}>导入</Button>
 		    		</div>
 					<TableInstructions {...state} />

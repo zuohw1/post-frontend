@@ -37,13 +37,27 @@ export default {
     disInputThree: true,
     checkedFour: false,
     disInputFour: true,
-    comments: [{orderNum:"1",content:"接入网专业.接入网设备维护"},{orderNum:"2",content:"采购管理.报账管理"}],
-    divisionValue: undefined,
     instructions: {},///查看修改部门的字段
+    keyRespList: [],
     expand: false,
     keyDutyDisplay: 'none',
     searchDateDisplay: 'none',
     stationNameDisplay: 'none',
+    checkChecked1: false,
+    checkChecked2: false,
+    checkChecked3: false,
+    checkChecked4: false,
+    sortList: [],
+    nativeMajor: [],
+    posId: undefined,
+    param: {rangeId:"",posName:"",currentPageNum:1,recordNum:10,login_name:"hq-ehr",resp_id:"200000410"},
+    postNameSearchList: [],
+    divisionValue: undefined,
+    sequenceValue: undefined,
+    rankValue: undefined,
+    keyDutyValue: undefined,
+    searchDateValue: undefined,
+    stationNameValue: '',
   },
   reducers: {
     stateWillUpdate(state, { payload }) {
@@ -54,7 +68,7 @@ export default {
     },
   },
   effects: {
-    *listTable({ payload: { loginName, respId, rangeId, currentPageNum, recordNum } }, { call, put }) {
+    *listTable({ payload: { loginName, respId, rangeId, currentPageNum, recordNum } }, { call, put }) {//初始化数据 主列表数据 树选择数据
       const result = yield call(PostInstructionsService.list, loginName, respId, rangeId, currentPageNum, recordNum);
       console.log(result);
       yield put({
@@ -67,7 +81,7 @@ export default {
         },
       });
     },
-    *posKeyTable({ payload: { currentPageNum, recordNum } }, { call, put }) {
+    *posKeyTable({ payload: { currentPageNum, recordNum } }, { call, put }) {//列表 关键职责
       const arr = yield call(PostInstructionsService.posKey, currentPageNum, recordNum);
       console.log(arr);
       yield put({
@@ -79,13 +93,46 @@ export default {
         },
       });
     },
-    *checkDetail({ payload: { posdesId } }, { call, put }) {
+    *checkDetail({ payload: { posdesId } }, { call, put }) {//主列表查看
       const data = yield call(PostInstructionsService.detail, posdesId);
       console.log(data);
       yield put({
         type: 'stateWillUpdate',
         payload: {
           instructions: data.instructions,
+          keyRespList: data.keyRespList,
+        },
+      });
+    },
+    *deleteSortList({ payload: { sort } }, { call, put }) {//主页面删除
+      if(sort.length > 0){
+        const data0 = yield call(PostInstructionsService.delete, sort);
+        console.log(data0);
+        yield put({
+          type: 'stateWillUpdate',
+          payload: {
+            sortList: [],
+          },
+        });
+      }
+    },
+    *showMajor({ payload }, { call, put }) {//新增和修改功能中 本企专业
+      const data2 = yield call(PostInstructionsService.major);
+      console.log(data2);
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          nativeMajor: data2,
+        },
+      });
+    },
+    *showInstructionList({ payload: { param } }, { call, put }) {//新增  岗位名称搜索列表
+      const data3 = yield call(PostInstructionsService.instructionList, param);
+      console.log(data3);
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          postNameSearchList: data3,
         },
       });
     },
@@ -312,14 +359,6 @@ export default {
         },
       });
     },
-    *changeDivisionValue({ payload: { value } }, { put }) {
-      yield put({
-        type: 'stateWillUpdate',
-        payload: {
-          divisionValue: value,
-        },
-      });
-    },
     *toggleDisplay({ payload: { expand } }, { put }) {
       console.log(expand);
       if(expand == false){
@@ -359,6 +398,77 @@ export default {
         payload: {
           posKeycurrent: pageNumber,
           posKeyrecordNum: pageSize,
+        },
+      });
+    },
+    *changeSortList({ payload: { sort } }, { put }) {
+      console.log(sort);
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          sortList: sort,
+        },
+      });
+    },
+    *changeDutyValue({ payload: { value } }, { put }) {
+      console.log(value);
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          posId: value,
+        },
+      });
+    },
+    *handleResetValue({ payload }, { put }) {// 重置功能
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          divisionValue: undefined,
+          sequenceValue: undefined,
+          rankValue: undefined,
+          keyDutyValue: undefined,
+          stationNameValue: '',
+        },
+      });
+    },
+    *changeDivisionValue({ payload: { value } }, { put }) {
+      console.log(value);
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          divisionValue: value,
+        },
+      });
+    },
+    *changeSequenceValue({ payload: { value } }, { put }) {
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          sequenceValue: value,
+        },
+      });
+    },
+    *changeRankValue({ payload: { value } }, { put }) {
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          rankValue: value,
+        },
+      });
+    },
+    *changeSearchDateValue({ payload: { value } }, { put }) {
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          searchDateValue: value,
+        },
+      });
+    },
+    *changeStationNameValue({ payload: { value } }, { put }) {
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          stationNameValue: value,
         },
       });
     },

@@ -28,10 +28,12 @@ export default (props) => {
     dutyNameRefSelectData,
     InstructionsModal,
     refSelectData,
+    nativeMajor,
   } = props;
   const { getInstructions, closeInsDrawer, userNameEmpty, changeUserName, isShowPost, onchangeDisInputOne, onchangeDisInputTwo, onchangeDisInputThree, onchangeDisInputFour, closeDutyName, getDutyName, closeInstructions, } = actions;
   const SerialNumberChildren = [];
   const ProfessionChildren = [];
+  const nativeMajorChildren = [];
   const GradeChildren = [];
   const data3 = [1,2,3,4,5,6,7,8,9];
   for (let i = 0; i < data3.length; i += 1) {
@@ -39,6 +41,9 @@ export default (props) => {
   }
   for (let i = 0; i < data3.length; i += 1) {
     ProfessionChildren.push(<Option key={data3[i]}>{ data3[i] }</Option>);
+  }
+  for (let i = 0; i < nativeMajor.length; i += 1) {
+    nativeMajorChildren.push(<Option key={nativeMajor[i].elementId}>{ nativeMajor[i].elementName }</Option>);
   }
   for (let i = 0; i < data3.length; i += 1) {
     GradeChildren.push(<Option key={data3[i]}>{ data3[i] }</Option>);
@@ -473,7 +478,7 @@ export default (props) => {
             </FormItem>
             <FormItem label="8、本企业专业资格："> 
               <div className="professional-qualifications">
-                专业：<Select placeholder="请选择" allowClear style={{ width: 133, marginRight:16 }}>{ProfessionChildren}</Select>
+                专业：<Select placeholder="请选择" allowClear style={{ width: 133, marginRight:16 }}>{nativeMajorChildren}</Select>
                 等级：<Select placeholder="请选择" allowClear style={{ width: 133 }}>{GradeChildren}</Select>
               </div>
             </FormItem>

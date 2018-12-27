@@ -31,18 +31,24 @@ export default (props) => {
     actions,
     expand,
     duty,
-    divisionValue,
     treeSelectData,
     keyDutyDisplay,
     searchDateDisplay,
     stationNameDisplay,
+    divisionValue,
+    sequenceValue,
+    rankValue,
+    keyDutyValue,
+    searchDateValue,
+    stationNameValue,
   } = props;
   const { getFieldDecorator } = form;
-  const { setToggle, getInstructions, changeDivisionValue, toggleDisplay } = actions;
-  const dutyChildren = [];
+  const { setToggle, getInstructions, toggleDisplay, changeDutyValue, handleResetValue, changeDivisionValue, changeSequenceValue, changeRankValue, changeSearchDateValue, changeStationNameValue } = actions;
+  const sequenceChildren = [];
   const rankChildren = [];
+  console.log(duty);
   for (let i = 0; i < duty.length; i += 1) {
-    dutyChildren.push(<Option key={duty[i].elementId}>{duty[i].elementName}</Option>);
+    sequenceChildren.push(<Option key={duty[i].elementId}>{duty[i].elementName}</Option>);
   }
   for (let i = 1; i < 23; i += 1) {
     rankChildren.push(<Option key={i.toString()}>{i.toString()}</Option>);
@@ -55,10 +61,43 @@ export default (props) => {
   };
   const handleReset = () => {
     form.resetFields();
+    handleResetValue();
+  };
+  const handleChangeDuty = (value) => {
+    console.log(`selected ${value}`);
+    changeDutyValue(value);
   };
   const onChangeDivisionValue = (value, label, extra) => {
     console.log(value, label, extra);
     changeDivisionValue(value);
+  }
+  const onChangeSequence = (value, option) => {
+    console.log(value, option);
+    if(option === undefined){
+      changeSequenceValue(undefined);
+    }else{
+      changeSequenceValue(option.props.children);
+    };
+  }
+  const onChangeRank = (value, option) => {
+    console.log(value, option);
+    if(option === undefined){
+      changeRankValue(undefined);
+    }else{
+      changeRankValue(option.props.children);
+    };
+  }
+  const onChangeSearchDate = (date, dateString) => {
+    console.log(date, dateString);
+    if(dateString === undefined){
+      changeSearchDateValue(undefined);
+    }else{
+      changeSearchDateValue(dateString);
+    };
+  }
+  const onChangeStationName = (e) => {
+    console.log(e.target.value);
+    changeStationNameValue(e.target.value);
   }
   const toggle = () => {
     setToggle(!expand);
@@ -83,32 +122,32 @@ export default (props) => {
       <Row gutter={24}>
         <Col span={6}>
           <FormItem label="部门" labelCol={{ span: 6 }}>
-              <TreeSelect allowClear showSearch={false} value={divisionValue} dropdownStyle={{ maxHeight: 400, overflow: 'auto' }} treeData={treeSelectData} placeholder="请选择" onChange={onChangeDivisionValue} />
+              <TreeSelect allowClear showSearch={false} dropdownStyle={{ maxHeight: 400, overflow: 'auto' }} value={divisionValue} onChange={onChangeDivisionValue} treeData={treeSelectData} placeholder="请选择" />
           </FormItem>
         </Col>
         <Col span={6}>
           <FormItem label="岗位序列" labelCol={{ span: 6 }}>
-              <Select style={{ width: 200, marginLeft: 5, marginRight: 8 }} placeholder="请选择" allowClear>{ dutyChildren }</Select>
+              <Select style={{ width: 200, marginLeft: 5, marginRight: 8 }} placeholder="请选择" allowClear onChange={onChangeSequence} value={sequenceValue}>{ sequenceChildren }</Select>
           </FormItem>
         </Col>
         <Col span={6}>
           <FormItem label="职级" labelCol={{ span: 6 }}>
-              <Select style={{ width: 200, marginLeft: 5, marginRight: 8 }} placeholder="请选择" allowClear>{ rankChildren }</Select>
+              <Select style={{ width: 200, marginLeft: 5, marginRight: 8 }} placeholder="请选择" allowClear onChange={onChangeRank} value={rankValue}>{ rankChildren }</Select>
           </FormItem>
         </Col>
         <Col span={6} style={{ display: keyDutyDisplay }}>
           <FormItem label="关键职责" labelCol={{ span: 6 }}>
-              <Input placeholder="请输入" style={{ width: 196, marginLeft: 5 }} suffix={<Icon type="check-square" style={{ color: "rgba(0,0,0,.25)" }} onClick={onInstructionsView} />} />
+              <Input placeholder="请输入" style={{ width: 196, marginLeft: 5 }} readOnly="readonly" value={keyDutyValue} suffix={<Icon type="check-square" style={{ color: "rgba(0,0,0,.25)" }} onClick={onInstructionsView} />} />
           </FormItem>
         </Col>
         <Col span={6} style={{ display: searchDateDisplay }}>
           <FormItem label="查询日期" labelCol={{ span: 6 }}>
-              <DatePicker style={{ width: 200, marginLeft: 5, marginRight: 20 }} />
+              <DatePicker style={{ width: 200, marginLeft: 5, marginRight: 20 }} onChange={onChangeSearchDate} />
           </FormItem>
         </Col>
         <Col span={6} style={{ display: stationNameDisplay }}>
           <FormItem label="岗位名称" labelCol={{ span: 6 }}>
-              <Input placeholder="请输入" style={{ width: 196, marginLeft: 5 }} />
+              <Input placeholder="请输入" style={{ width: 196, marginLeft: 5 }} value={stationNameValue} onChange={onChangeStationName} />
           </FormItem>
         </Col>
         <Col span={6} style={{ textAlign: 'right', marginTop: 5, float: 'right' }}>

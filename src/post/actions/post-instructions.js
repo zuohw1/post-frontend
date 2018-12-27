@@ -161,14 +161,6 @@ export function isposKeyExecuteOnce() {
     },
   };
 }
-export function changeDivisionValue(value) {
-  return {
-    type: 'postInstructions/changeDivisionValue',
-    payload: {
-      value,
-    },
-  };
-}
 export function checkDetail(posdesId) {
   return {
     type: 'postInstructions/checkDetail',
@@ -198,6 +190,84 @@ export function posKeychangePageNumberSize(pageNumber, pageSize) {
     type: 'postInstructions/posKeychangePageNumberSize',
     payload: {
       pageNumber, pageSize,
+    },
+  };
+}
+export function changeSortList(sort) {
+  return {
+    type: 'postInstructions/changeSortList',
+    payload: {
+      sort,
+    },
+  };
+}
+export function deleteSortList(sort) {
+  return {
+    type: 'postInstructions/deleteSortList',
+    payload: {
+      sort,
+    },
+  };
+}
+export function showMajor() {
+  return {
+    type: 'postInstructions/showMajor',
+    payload: {
+    },
+  };
+}
+export function changeDutyValue(value) {
+  return {
+    type: 'postInstructions/changeDutyValue',
+    payload: {
+      value,
+    },
+  };
+}
+export function handleResetValue() {
+  return {
+    type: 'postInstructions/handleResetValue',
+    payload: {
+    },
+  };
+}
+export function changeDivisionValue(value) {
+  return {
+    type: 'postInstructions/changeDivisionValue',
+    payload: {
+      value,
+    },
+  };
+}
+export function changeSequenceValue(value) {
+  return {
+    type: 'postInstructions/changeSequenceValue',
+    payload: {
+      value,
+    },
+  };
+}
+export function changeRankValue(value) {
+  return {
+    type: 'postInstructions/changeRankValue',
+    payload: {
+      value,
+    },
+  };
+}
+export function changeSearchDateValue(value) {
+  return {
+    type: 'postInstructions/changeSearchDateValue',
+    payload: {
+      value,
+    },
+  };
+}
+export function changeStationNameValue(value) {
+  return {
+    type: 'postInstructions/changeStationNameValue',
+    payload: {
+      value,
     },
   };
 }

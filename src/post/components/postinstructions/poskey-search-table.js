@@ -4,6 +4,8 @@ import { Table, Pagination, Select, Input, Button } from 'antd';
 import CheckPostInstructions from './check-post-instructions';
 import ModifyPostInstructions from './modify-post-instructions';
 
+const Option = Select.Option;
+
 class TableposKey extends Component {
   render() {
     const {
@@ -26,7 +28,6 @@ class TableposKey extends Component {
     for (let i = 0; i < professionList.length; i += 1) {
       ResponseChildren.push(<Option key={professionList[i].elementId}>{ professionList[i].elementName }</Option>);
     }
-    /* 列表字段 */
     const tableCols = [{
       title: '关键职责',
       dataIndex: 'elementName',

@@ -13,7 +13,7 @@ class TableInstructions extends Component {
     const {
       records, current, total, actions, search, loading, visibleCheckPost, visibleModifyPost, loginName, respId, rangeId, recordNum, executeOnce,
     } = this.props;
-    const { listTable, getCheckPost, closeCheckPost, getModifyPost, closeModifyPost, isExecuteOnce, checkDetail, changePageNumberSize } = actions;
+    const { listTable, getCheckPost, closeCheckPost, getModifyPost, closeModifyPost, isExecuteOnce, checkDetail, changePageNumberSize, changeSortList } = actions;
     if (executeOnce === true) {
       listTable(loginName, respId, rangeId, current, recordNum);
       isExecuteOnce();
@@ -26,15 +26,19 @@ class TableInstructions extends Component {
     const onClickView = (_, row) => {
       console.log(row);
       getCheckPost();
-      checkDetail("80946");//row.POSDES_ID
+      checkDetail(row.POSDES_ID);
     };
     const onClickModify = (_, row) => {
       getModifyPost();
     };
-    const onClickDelete = (row) => {
+    const onClickExport = (row) => {
+      console.log(row);
       confirm({
         title: '确定要导出本条记录为doc文件吗?',
         onOk() {
+          console.log(row.POSDES_ID);
+          window.location.href=`http://10.0.210.93/post/api/posPosdes/world?posdesId=${row.POSDES_ID}`;
+          message.success('导出world成功');
         },
       });
     };
@@ -77,12 +81,17 @@ class TableInstructions extends Component {
       align: 'center',
       width: 150,
     }];
+    const sort = [];
     const rowSelection = {
       onChange: (selectedRowKeys, selectedRows) => {
         console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+        for(var i = 0; i < selectedRows.length; i ++){
+          sort.push(selectedRows[i].POSDES_ID);
+        }
+        console.log(sort);
+        changeSortList(sort);
       },
     };
-    //ize: Math.ceil(result.count/result.dutyList.length),
     function getFields() {
       const children = [];
       for (let i = 0; i < tableCols.length; i += 1) {
@@ -101,7 +110,7 @@ class TableInstructions extends Component {
               <Divider type="vertical" />
               <a href=" javascript:;" onClick={() => onClickModify(text, records)}>修改</a>
               <Divider type="vertical" />
-              <a href=" javascript:;" onClick={() => onClickDelete(records)}>导出</a>
+              <a href=" javascript:;" onClick={() => onClickExport(records)}>导出</a>
             </span>
           ),
         },
