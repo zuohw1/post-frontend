@@ -42,11 +42,11 @@ class SyncTreeSelect extends React.PureComponent {
 
   render() {
     const { treeData, value } = this.state;
-    const { checkbox, showSearch } = this.props;
+    const { checkbox } = this.props;
     return (
       <TreeSelect
         allowClear
-        showSearch={showSearch}
+        showSearch
         treeCheckable={checkbox}
         value={value}
         dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
