@@ -15,10 +15,10 @@ if (!env) {
   throw new Error('--env参数不能为空');
 }
 let debug = true;
-let api = 'http://localhost';
+let api = 'http://localhost/api';
 if (env !== 'development') {
   debug = false;
-  api = 'http://10.0.210.93';
+  api = 'http://10.0.210.93/post/api';
 }
 const injectString = `
 /* -- please ignore this file, it will be generated dynamically -- */
