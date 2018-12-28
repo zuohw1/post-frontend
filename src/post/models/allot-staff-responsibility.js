@@ -1,5 +1,3 @@
-/* eslint-disable */
-import AllotStaffService from '../services/allot-staff-responsibility';
 
 export default {
   namespace: 'allotStaffResponsibility',
@@ -15,18 +13,18 @@ export default {
     name: '',
     wholeKeyword: '',
     checklistKeyword: '',
-    datas: [{dutyExecute:"公众客户销售.营业厅销售经理",proportion:"100"},{dutyExecute:"终端支撑.终端销售",proportion:"66"}],
+    datas: [{ dutyExecute: '公众客户销售.营业厅销售经理', proportion: '100' }, { dutyExecute: '终端支撑.终端销售', proportion: '66' }],
     otherDatas: [],
     checkedBearDuty: false,
     allRecordsData: [
       {
         title: '2015-12-01   - ',
         key: '0',
-        children: 
+        children:
           [{
             title: '其他.不承担任何工作职责 - 0%',
             key: '0-0',
-          }]
+          }],
       }],
   },
   reducers: {
@@ -56,7 +54,7 @@ export default {
     },
     *switchMajor({ payload: { major } }, { put }) {
       console.log(major);
-      if(major === "related"){
+      if (major === 'related') {
         yield put({
           type: 'stateWillUpdate',
           payload: {
@@ -65,7 +63,7 @@ export default {
             checklistDisplay: 'none',
           },
         });
-      }else if(major === "whole"){
+      } else if (major === 'whole') {
         yield put({
           type: 'stateWillUpdate',
           payload: {
@@ -74,7 +72,7 @@ export default {
             checklistDisplay: 'none',
           },
         });
-      }else if(major === "checklist"){
+      } else if (major === 'checklist') {
         yield put({
           type: 'stateWillUpdate',
           payload: {
@@ -83,11 +81,11 @@ export default {
             checklistDisplay: 'block',
           },
         });
-      } 
+      }
     },
     *switchRecord({ payload: { record } }, { put }) {
       console.log(record);
-      if(record === "currentrecord"){
+      if (record === 'currentrecord') {
         yield put({
           type: 'stateWillUpdate',
           payload: {
@@ -96,7 +94,7 @@ export default {
             maskDisplay: 'none',
           },
         });
-      }else if(record === "allrecords"){
+      } else if (record === 'allrecords') {
         yield put({
           type: 'stateWillUpdate',
           payload: {
@@ -109,40 +107,40 @@ export default {
     },
     *removeCertainDuty({ payload: { datas, index, maskDisplay } }, { put }) {
       console.log(maskDisplay);
-      if(maskDisplay === 'block'){
-        datas.splice(index,1);
+      if (maskDisplay === 'block') {
+        datas.splice(index, 1);
         yield put({
           type: 'stateWillUpdate',
           payload: {
             maskDisplay: 'none',
             checkedBearDuty: false,
-            datas: datas,
+            datas,
           },
         });
-      }else{
-        datas.splice(index,1);
+      } else {
+        datas.splice(index, 1);
         console.log(datas);
         yield put({
           type: 'stateWillUpdate',
           payload: {
-            datas: datas,
+            datas,
           },
         });
       }
     },
     *isCheacked({ payload: { checkedBearDuty, datas, otherDatas } }, { put }) {
       console.log(checkedBearDuty);
-      if(checkedBearDuty === false){
+      if (checkedBearDuty === false) {
         yield put({
           type: 'stateWillUpdate',
           payload: {
             maskDisplay: 'block',
             checkedBearDuty: true,
             otherDatas: datas,
-            datas: [{dutyExecute:"其他.不承担任何工作职责",proportion:"0"}],
+            datas: [{ dutyExecute: '其他.不承担任何工作职责', proportion: '0' }],
           },
         });
-      }else if(checkedBearDuty === true){
+      } else if (checkedBearDuty === true) {
         yield put({
           type: 'stateWillUpdate',
           payload: {

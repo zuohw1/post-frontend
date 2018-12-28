@@ -1,6 +1,7 @@
-/* eslint-disable */
 import React, { Component } from 'react';
-import { Table, Pagination, Button, Divider, Modal, Form, Drawer, } from 'antd';
+import {
+  Table, Pagination, Divider, Modal, Form, Drawer, message,
+} from 'antd';
 import CheckPostInstructions from './check-post-instructions';
 import ModifyPostInstructions from './modify-post-instructions';
 
@@ -11,9 +12,30 @@ const WrappedModifyPostInstructions = Form.create()(ModifyPostInstructions);
 class TableInstructions extends Component {
   render() {
     const {
-      records, current, total, actions, search, loading, visibleCheckPost, visibleModifyPost, loginName, respId, rangeId, recordNum, executeOnce,
+      records,
+      current,
+      total,
+      actions,
+      loading,
+      visibleCheckPost,
+      visibleModifyPost,
+      loginName,
+      respId,
+      rangeId,
+      recordNum,
+      executeOnce,
     } = this.props;
-    const { listTable, getCheckPost, closeCheckPost, getModifyPost, closeModifyPost, isExecuteOnce, checkDetail, changePageNumberSize, changeSortList } = actions;
+    const {
+      listTable,
+      getCheckPost,
+      closeCheckPost,
+      getModifyPost,
+      closeModifyPost,
+      isExecuteOnce,
+      checkDetail,
+      changePageNumberSize,
+      changeSortList,
+    } = actions;
     if (executeOnce === true) {
       listTable(loginName, respId, rangeId, current, recordNum);
       isExecuteOnce();
@@ -28,7 +50,7 @@ class TableInstructions extends Component {
       getCheckPost();
       checkDetail(row.POSDES_ID);
     };
-    const onClickModify = (_, row) => {
+    const onClickModify = () => {
       getModifyPost();
     };
     const onClickExport = (row) => {
@@ -37,7 +59,7 @@ class TableInstructions extends Component {
         title: '确定要导出本条记录为doc文件吗?',
         onOk() {
           console.log(row.POSDES_ID);
-          window.location.href=`http://10.0.210.93/post/api/posPosdes/world?posdesId=${row.POSDES_ID}`;
+          window.location.href = `http://10.0.210.93/post/api/posPosdes/world?posdesId=${row.POSDES_ID}`;
           message.success('导出world成功');
         },
       });
@@ -66,8 +88,8 @@ class TableInstructions extends Component {
       align: 'center',
       width: 110,
       render: (text, record) => (
-        <span>{record.POS_LEVEL_LOW} -- {record.POS_LEVEL_HIGH}</span> 
-      )
+        <span>{record.POS_LEVEL_LOW} -- {record.POS_LEVEL_HIGH}</span>
+      ),
     }, {
       title: '开始日期',
       dataIndex: 'ACTIVE_START_DATE',
@@ -85,7 +107,7 @@ class TableInstructions extends Component {
     const rowSelection = {
       onChange: (selectedRowKeys, selectedRows) => {
         console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-        for(var i = 0; i < selectedRows.length; i ++){
+        for (let i = 0; i < selectedRows.length; i += 1) {
           sort.push(selectedRows[i].POSDES_ID);
         }
         console.log(sort);
@@ -104,13 +126,13 @@ class TableInstructions extends Component {
           key: 'JHTRIBUTE10',
           align: 'center',
           width: 240,
-          render: (text, records) => (
+          render: (text, recordsOperation) => (
             <span>
-              <a href=" javascript:;" onClick={() => onClickView(text, records)}>查看</a>
+              <a href=" javascript:;" onClick={() => onClickView(text, recordsOperation)}>查看</a>
               <Divider type="vertical" />
-              <a href=" javascript:;" onClick={() => onClickModify(text, records)}>修改</a>
+              <a href=" javascript:;" onClick={() => onClickModify(text, recordsOperation)}>修改</a>
               <Divider type="vertical" />
-              <a href=" javascript:;" onClick={() => onClickExport(records)}>导出</a>
+              <a href=" javascript:;" onClick={() => onClickExport(recordsOperation)}>导出</a>
             </span>
           ),
         },
@@ -119,10 +141,10 @@ class TableInstructions extends Component {
     }
     return (
       <div>
-        <Drawer title="岗位说明书" width={880} placement="right" onClose={closeCheckPost} maskClosable={false} visible={visibleCheckPost} style={{ height: 'calc(100% - 55px)',overflow: 'auto',paddingBottom: 53, }} >
+        <Drawer title="岗位说明书" width={880} placement="right" onClose={closeCheckPost} maskClosable={false} visible={visibleCheckPost} style={{ height: 'calc(100% - 55px)', overflow: 'auto', paddingBottom: 53 }}>
           <WrappedCheckPostInstructions {...this.props} />
         </Drawer>
-        <Drawer title="岗位说明书" width={880} placement="right" onClose={closeModifyPost} maskClosable={false} visible={visibleModifyPost} style={{ height: 'calc(100% - 55px)',overflow: 'auto',paddingBottom: 53, }} >
+        <Drawer title="岗位说明书" width={880} placement="right" onClose={closeModifyPost} maskClosable={false} visible={visibleModifyPost} style={{ height: 'calc(100% - 55px)', overflow: 'auto', paddingBottom: 53 }}>
           <WrappedModifyPostInstructions {...this.props} />
         </Drawer>
         <Table
@@ -140,7 +162,7 @@ class TableInstructions extends Component {
           current={current}
           total={total}
           onChange={onChangePage}
-          showTotal={total => `共 ${total} 条`}
+          showTotal={tota => `共 ${tota} 条`}
           showSizeChanger
           style={{ marginTop: 10, float: 'right' }}
         />

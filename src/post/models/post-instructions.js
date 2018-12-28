@@ -1,24 +1,24 @@
-/* eslint-disable */
+/* eslint-disable max-len */
 import PostInstructionsService from '../services/post-instructions';
 
 export default {
   namespace: 'postInstructions',
   state: {
-    loginName: 'hq-ehr',//登录名
-    respId: '200000410',//登录id
-    rangeId: '12473',//用户id
-    recordNum: '10',//请求时每页中显示多少条
-    records: [],//当前列表中的数据
-    total: 0,//总条数
-    current: 1,//当前为第几页
+    loginName: 'hq-ehr', // 登录名
+    respId: '200000410', // 登录id
+    rangeId: '12473', // 用户id
+    recordNum: '10', // 请求时每页中显示多少条
+    records: [], // 当前列表中的数据
+    total: 0, // 总条数
+    current: 1, // 当前为第几页
     posKeyrecords: [],
     posKeycurrent: 1,
     posKeyrecordNum: '10',
     posKeytotal: 0,
     posKeyExecuteOnce: true,
     professionList: [],
-    treeSelectData: [],//部门树选择的数据
-    duty: [],//
+    treeSelectData: [], // 部门树选择的数据
+    duty: [], //
     executeOnce: true,
     userName: '',
     refSelectData: {},
@@ -37,7 +37,7 @@ export default {
     disInputThree: true,
     checkedFour: false,
     disInputFour: true,
-    instructions: {},///查看修改部门的字段
+    instructions: {}, // /查看修改部门的字段
     keyRespList: [],
     expand: false,
     keyDutyDisplay: 'none',
@@ -50,7 +50,9 @@ export default {
     sortList: [],
     nativeMajor: [],
     posId: undefined,
-    param: {rangeId:"",posName:"",currentPageNum:1,recordNum:10,login_name:"hq-ehr",resp_id:"200000410"},
+    param: {
+      rangeId: '', posName: '', currentPageNum: 1, recordNum: 10, login_name: 'hq-ehr', resp_id: '200000410',
+    },
     postNameSearchList: [],
     divisionValue: undefined,
     sequenceValue: undefined,
@@ -68,7 +70,11 @@ export default {
     },
   },
   effects: {
-    *listTable({ payload: { loginName, respId, rangeId, currentPageNum, recordNum } }, { call, put }) {//初始化数据 主列表数据 树选择数据
+    *listTable({
+      payload: {
+        loginName, respId, rangeId, currentPageNum, recordNum,
+      },
+    }, { call, put }) { // 初始化数据 主列表数据 树选择数据
       const result = yield call(PostInstructionsService.list, loginName, respId, rangeId, currentPageNum, recordNum);
       console.log(result);
       yield put({
@@ -81,7 +87,7 @@ export default {
         },
       });
     },
-    *posKeyTable({ payload: { currentPageNum, recordNum } }, { call, put }) {//列表 关键职责
+    *posKeyTable({ payload: { currentPageNum, recordNum } }, { call, put }) { // 列表 关键职责
       const arr = yield call(PostInstructionsService.posKey, currentPageNum, recordNum);
       console.log(arr);
       yield put({
@@ -93,7 +99,7 @@ export default {
         },
       });
     },
-    *checkDetail({ payload: { posdesId } }, { call, put }) {//主列表查看
+    *checkDetail({ payload: { posdesId } }, { call, put }) { // 主列表查看
       const data = yield call(PostInstructionsService.detail, posdesId);
       console.log(data);
       yield put({
@@ -104,8 +110,8 @@ export default {
         },
       });
     },
-    *deleteSortList({ payload: { sort } }, { call, put }) {//主页面删除
-      if(sort.length > 0){
+    *deleteSortList({ payload: { sort } }, { call, put }) { // 主页面删除
+      if (sort.length > 0) {
         const data0 = yield call(PostInstructionsService.delete, sort);
         console.log(data0);
         yield put({
@@ -116,7 +122,8 @@ export default {
         });
       }
     },
-    *showMajor({ payload }, { call, put }) {//新增和修改功能中 本企专业
+    *showMajor({ payload }, { call, put }) { // 新增和修改功能中 本企专业
+      console.log(payload);
       const data2 = yield call(PostInstructionsService.major);
       console.log(data2);
       yield put({
@@ -126,7 +133,7 @@ export default {
         },
       });
     },
-    *showInstructionList({ payload: { param } }, { call, put }) {//新增  岗位名称搜索列表
+    *showInstructionList({ payload: { param } }, { call, put }) { // 新增  岗位名称搜索列表
       const data3 = yield call(PostInstructionsService.instructionList, param);
       console.log(data3);
       yield put({
@@ -184,7 +191,7 @@ export default {
     *closeInsDrawer({ payload }, { put }) {
       console.log(payload);
       yield put({
-        type: 'stateWillUpdate', 
+        type: 'stateWillUpdate',
         payload: {
           visibleDrawer: false,
         },
@@ -245,14 +252,14 @@ export default {
     },
     *isShowPost({ payload: { show } }, { put }) {
       console.log(show);
-      if(show == 'hide-post-seat post-seat'){
+      if (show === 'hide-post-seat post-seat') {
         yield put({
           type: 'stateWillUpdate',
           payload: {
             isShowPostSeat: 'show-post-seat post-seat',
           },
         });
-      }else if(show == 'show-post-seat post-seat'){
+      } else if (show === 'show-post-seat post-seat') {
         yield put({
           type: 'stateWillUpdate',
           payload: {
@@ -263,7 +270,7 @@ export default {
     },
     *onchangeDisInputOne({ payload: { checkedOne } }, { put }) {
       console.log(checkedOne);
-      if(checkedOne == false){
+      if (checkedOne === false) {
         yield put({
           type: 'stateWillUpdate',
           payload: {
@@ -271,7 +278,7 @@ export default {
             disInputOne: false,
           },
         });
-      }else if(checkedOne == true){
+      } else if (checkedOne === true) {
         yield put({
           type: 'stateWillUpdate',
           payload: {
@@ -283,7 +290,7 @@ export default {
     },
     *onchangeDisInputTwo({ payload: { checkedTwo } }, { put }) {
       console.log(checkedTwo);
-      if(checkedTwo == false){
+      if (checkedTwo === false) {
         yield put({
           type: 'stateWillUpdate',
           payload: {
@@ -291,7 +298,7 @@ export default {
             disInputTwo: false,
           },
         });
-      }else if(checkedTwo == true){
+      } else if (checkedTwo === true) {
         yield put({
           type: 'stateWillUpdate',
           payload: {
@@ -303,7 +310,7 @@ export default {
     },
     *onchangeDisInputThree({ payload: { checkedThree } }, { put }) {
       console.log(checkedThree);
-      if(checkedThree == false){
+      if (checkedThree === false) {
         yield put({
           type: 'stateWillUpdate',
           payload: {
@@ -311,7 +318,7 @@ export default {
             disInputThree: false,
           },
         });
-      }else if(checkedThree == true){
+      } else if (checkedThree === true) {
         yield put({
           type: 'stateWillUpdate',
           payload: {
@@ -323,7 +330,7 @@ export default {
     },
     *onchangeDisInputFour({ payload: { checkedFour } }, { put }) {
       console.log(checkedFour);
-      if(checkedFour == false){
+      if (checkedFour === false) {
         yield put({
           type: 'stateWillUpdate',
           payload: {
@@ -331,7 +338,7 @@ export default {
             disInputFour: false,
           },
         });
-      }else if(checkedFour == true){
+      } else if (checkedFour === true) {
         yield put({
           type: 'stateWillUpdate',
           payload: {
@@ -361,7 +368,7 @@ export default {
     },
     *toggleDisplay({ payload: { expand } }, { put }) {
       console.log(expand);
-      if(expand == false){
+      if (expand === false) {
         yield put({
           type: 'stateWillUpdate',
           payload: {
@@ -370,7 +377,7 @@ export default {
             stationNameDisplay: 'block',
           },
         });
-      }else if(expand == true){
+      } else if (expand === true) {
         yield put({
           type: 'stateWillUpdate',
           payload: {
@@ -419,7 +426,8 @@ export default {
         },
       });
     },
-    *handleResetValue({ payload }, { put }) {// 重置功能
+    *handleResetValue({ payload }, { put }) { // 重置功能
+      console.log(payload);
       yield put({
         type: 'stateWillUpdate',
         payload: {
