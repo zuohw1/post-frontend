@@ -2,50 +2,22 @@ import React from 'react';
 import { Tree } from 'antd';
 
 const { TreeNode } = Tree;
-const orgtree = [
-  {
-    title: '中国联通总部管理部门',
-    key: '0',
-    orgType: '10',
-    orgCode: 'glbm',
-    orgId: 'glbm01',
-    children: [
-      {
-        title: '中国联通总部-办公厅',
-        key: '0-1',
-        orgType: '20',
-        orgCode: 'ltzb-01',
-        orgId: 'ltzb001',
-        children: [],
-      },
-      {
-        title: '中国联通总部-综合部',
-        key: '0-2',
-        orgType: '30',
-        orgCode: 'ltzb-02',
-        orgId: 'ltzb002',
-        children: [],
-      },
-      {
-        title: '中国联通总部-财务部',
-        key: '0-3',
-        orgType: '40',
-        orgCode: 'ltzb-01',
-        orgId: 'ltzb003',
-        children: [],
-      },
-    ],
-  },
-];
+let vflag = true;
 
 export default (state) => {
   const {
     actions,
+    orgList,
   } = state;
   const {
-    setClickOrgIdCode,
+    getOrgTree,
+    getGroupList,
   } = actions;
 
+  if (vflag === true) {
+    getOrgTree();
+    vflag = false;
+  }
   const renderTreeNodes = (data) => {
     return data.map((item) => {
       if (item.children) {
@@ -60,10 +32,8 @@ export default (state) => {
   };
 
   const handleTreeSelect = (selectedKeys, info) => {
-    const orgType = `${info.node.props.dataRef.orgType}`;
-    const orgId = `${info.node.props.dataRef.orgId}`;
-    const orgCode = `${info.node.props.dataRef.orgCode}`;
-    setClickOrgIdCode(orgType, orgId, orgCode);
+    const orgId = `${info.node.props.pid}`;
+    getGroupList(orgId);
   };
 
   return (
@@ -81,7 +51,7 @@ export default (state) => {
     >
       <p>组织树</p>
       <Tree onSelect={handleTreeSelect}>
-        {renderTreeNodes(orgtree)}
+        {renderTreeNodes(orgList)}
       </Tree>
     </div>
   );

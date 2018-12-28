@@ -1,80 +1,15 @@
+import EmployeeGroup from '../services/employee-group';
 
 
 export default {
   namespace: 'employeeGroup',
   state: {
-    /* 点击的组织树节点类型 */
-    clickOrgType: '',
-    /* 点击的组织树节点id */
-    clickOrgId: '',
-    /* 点击的组织树节点code */
-    clickOrgCode: '',
-    /* 列表数据 */
     record: {},
-    man: {},
-    people: {},
-    peopleAll: {},
-    dataSource: {},
-    count: {},
-    dataSourceAll: [{
-      key: '0',
-      grouping: '测试分组',
-      person: '张三',
-    },
-    ],
-    /* 列表记录条数-全部 */
-    countAll: 1,
-    /* 列表数据 */
-    dataSourceOffice: [{
-      key: '0',
-      grouping: '测试分组',
-      person: '张三',
-    }, {
-      key: '1',
-      grouping: '123',
-      person: '李四',
-    },
-    ],
-    /* 列表记录条数 */
-    countOffice: 2,
-    /* 列表数据 */
-    comprehensive: [{
-      key: '0',
-      grouping: '测试分组',
-      person: '张三',
-    }, {
-      key: '1',
-      grouping: '123',
-      person: '李四',
-    }, {
-      key: '2',
-      grouping: '11111',
-      person: '王五',
-    },
-    ],
-    /* 列表记录条数-全部 */
-    countComprehensive: 3,
-    /* 列表数据 */
-    dataSourceFinance: [{
-      key: '0',
-      grouping: '测试分组',
-      person: '张三',
-    }, {
-      key: '1',
-      grouping: '123',
-      person: '李四',
-    }, {
-      key: '2',
-      grouping: '11111',
-      person: '王五',
-    }, {
-      key: '3',
-      grouping: '222222',
-      person: '马云',
-    },
-    ],
-    /* 列表记录条数-全部 */
-    countFinance: 4,
+    orgId: '',
+    count: 5650,
+    orgList: [],
+    groupList: [],
+    personList: [],
   },
   reducers: {
     stateWillUpdate(state, { payload }) {
@@ -85,14 +20,50 @@ export default {
     },
   },
   effects: {
-    /* 获取列表选中记录 */
-    * getPerson({ payload: { man, people } }, { put }) {
-      let { person } = people;
-      const peopleTwo = man.employee;
-      person = peopleTwo;
+    /* 获取分组列表数据 */
+    * getGroupList({ payload: { id } }, { call, put }) {
+      const groupData = yield call(EmployeeGroup.getGroupList, id);
+      console.log(groupData);
       yield put({
         type: 'stateWillUpdate',
-        payload: { peopleAll: { ...people, person } },
+        payload: {
+          groupList: groupData,
+          orgId: id,
+        },
+      });
+    },
+    /* 获取人员列表数据 */
+    * getPersonList({ payload: { record } }, { call, put }) {
+      console.log('search', record);
+      const personData = yield call(EmployeeGroup.getPersonList, record);
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          personList: personData,
+          record,
+        },
+      });
+    },
+    /* 删除分组列表数据 */
+    * deleteGroupList({ payload: { record } }, { call, put }) {
+      console.log('search', record);
+      yield call(EmployeeGroup.deleteGroupList, record);
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          record,
+        },
+      });
+    },
+    /* 获取组织树数据 */
+    * getOrgTree({ payload: { search } }, { call, put }) {
+      console.log('search', search);
+      const orgData = yield call(EmployeeGroup.getOrgTree);
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          orgList: orgData,
+        },
       });
     },
   },

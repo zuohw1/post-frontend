@@ -5,20 +5,39 @@ import {
 } from 'antd';
 
 
-export default ({
-  loading,
-  record,
-  actions,
-}) => {
-  const { getPerson } = actions;
+export default (state) => {
+  const {
+    personList, groupList, actions, record,
+  } = state;
+  const {
+    setGroupList,
+  } = actions;
+  let groupData = [...groupList];
+  const newRecord = record;
+  console.log(groupData);
+  console.log(newRecord);
   /* 列表字段 */
   const OnDistribution = (row) => {
-    getPerson(row, record);
+    console.log(1111);
+    if (newRecord.groupId) {
+      newRecord.managName = row.fullName;
+      groupData = groupData.map((item) => {
+        if (item.groupId === newRecord.groupId) {
+          return { ...item, managName: newRecord.managName };
+        } else {
+          return item;
+        }
+      });
+      console.log(groupData);
+      setGroupList(groupData);
+    }
   };
+
+
   const tableCols = [{
     title: '员工',
-    dataIndex: 'employee',
-    key: 'employee',
+    dataIndex: 'fullName',
+    key: 'fullName',
     align: 'center',
     width: '33.3%',
   }, {
@@ -52,29 +71,6 @@ export default ({
   },
   ];
 
-  const data = [
-    {
-      key: '1',
-      employee: '包小雪',
-    },
-    {
-      key: '2',
-      employee: '薄炜红',
-    },
-    {
-      key: '3',
-      employee: '白广川',
-    },
-    {
-      key: '4',
-      employee: '蔡雅婷',
-    },
-    {
-      key: '5',
-      employee: '曹银权',
-    },
-  ];
-
   function getFields() {
     const children = [];
     for (let i = 0; i < tableCols.length; i += 1) {
@@ -97,8 +93,7 @@ export default ({
       <p>人员列表</p>
       <Table
         columns={getFields()}
-        dataSource={data}
-        loading={loading}
+        dataSource={personList}
         size="middle"
         bordered
         pagination={false}
