@@ -47,7 +47,7 @@ export default ({
         const recordNum = 10;
         const currentPageNum = 1;
         const select = { ...values, recordNum, currentPageNum };
-        let expUrl = `${config.api}/api/posElement/export?1=1`;
+        let expUrl = `${config.api}/posElement/export?1=1`;
         if (select.sequence && select.sequence !== '') {
           expUrl += `&sequence=${select.sequence}`;
         }

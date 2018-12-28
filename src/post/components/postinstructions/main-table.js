@@ -4,6 +4,7 @@ import {
 } from 'antd';
 import CheckPostInstructions from './check-post-instructions';
 import ModifyPostInstructions from './modify-post-instructions';
+import config from '../../../env.config';
 
 const { confirm } = Modal;
 const WrappedCheckPostInstructions = Form.create()(CheckPostInstructions);
@@ -59,7 +60,7 @@ class TableInstructions extends Component {
         title: '确定要导出本条记录为doc文件吗?',
         onOk() {
           console.log(row.POSDES_ID);
-          window.location.href = `http://10.0.210.93/post/api/posPosdes/world?posdesId=${row.POSDES_ID}`;
+          window.location.href = `${config.api}/posPosdes/world?posdesId=${row.POSDES_ID}`;
           message.success('导出world成功');
         },
       });

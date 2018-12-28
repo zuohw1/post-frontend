@@ -55,7 +55,7 @@ export default ({
         const select = {
           ...values, recordNum, currentPageNum,
         };
-        let expUrl = `${config.api}/api/posJposV/outExl?currentPageNum=${select.currentPageNum}&recordNum=${select.recordNum}`;
+        let expUrl = `${config.api}/posJposV/outExl?currentPageNum=${select.currentPageNum}&recordNum=${select.recordNum}`;
         if (select.posCateId && select.posCateId !== '') {
           expUrl += `&posCateId=${select.posCateId}`;
         }

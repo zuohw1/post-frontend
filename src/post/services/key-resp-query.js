@@ -2,7 +2,7 @@ import request from '../../utils/request';
 
 export default {
   list(search) {
-    let url = `api/posElement/list?currentPageNum=${search.currentPageNum}&recordNum=${search.recordNum}`;
+    let url = `posElement/list?currentPageNum=${search.currentPageNum}&recordNum=${search.recordNum}`;
     if (search.sequence && search.sequence !== '') {
       url += `&sequence=${search.sequence}`;
     }
@@ -15,6 +15,6 @@ export default {
     return request.get(url);
   },
   getRespRangeRef() {
-    return request.get('api/posElement/tree');
+    return request.get('posElement/tree');
   },
 };
