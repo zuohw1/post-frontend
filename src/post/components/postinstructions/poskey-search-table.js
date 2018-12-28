@@ -1,17 +1,26 @@
-/* eslint-disable */
 import React, { Component } from 'react';
-import { Table, Pagination, Select, Input, Button } from 'antd';
-import CheckPostInstructions from './check-post-instructions';
-import ModifyPostInstructions from './modify-post-instructions';
+import {
+  Table, Pagination, Select, Input, Button,
+} from 'antd';
 
-const Option = Select.Option;
+const { Option } = Select;
 
 class TableposKey extends Component {
   render() {
     const {
-      posKeyrecords, posKeycurrent, posKeyrecordNum, posKeytotal, actions, loading, posKeyExecuteOnce, professionList,
+      actions,
+      posKeyrecords,
+      posKeycurrent,
+      posKeyrecordNum,
+      posKeytotal,
+      posKeyExecuteOnce,
+      professionList,
     } = this.props;
-    const { posKeyTable, isposKeyExecuteOnce, posKeychangePageNumberSize } = actions;
+    const {
+      posKeyTable,
+      isposKeyExecuteOnce,
+      posKeychangePageNumberSize,
+    } = actions;
     if (posKeyExecuteOnce === true) {
       posKeyTable(posKeycurrent, posKeyrecordNum);
       isposKeyExecuteOnce();
@@ -23,10 +32,12 @@ class TableposKey extends Component {
     };
     const handleChangeResponse = (value) => {
       console.log(`selected ${value}`);
-    }
+    };
     const ResponseChildren = [];
     for (let i = 0; i < professionList.length; i += 1) {
-      ResponseChildren.push(<Option key={professionList[i].elementId}>{ professionList[i].elementName }</Option>);
+      ResponseChildren.push(
+        <Option key={professionList[i].elementId}>{ professionList[i].elementName }</Option>,
+      );
     }
     const tableCols = [{
       title: '关键职责',
@@ -35,11 +46,6 @@ class TableposKey extends Component {
       align: 'left',
       width: 360,
     }];
-    const rowSelection = {
-      onChange: (selectedRowKeys, selectedRows) => {
-        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-      },
-    };
     return (
       <div>
         <div className="instructions-model-top">
@@ -60,7 +66,7 @@ class TableposKey extends Component {
           current={posKeycurrent}
           total={posKeytotal}
           onChange={onChangePage}
-          showTotal={posKeytotal => `共 ${posKeytotal} 条`}
+          showTotal={posKeytota => `共 ${posKeytota} 条`}
           showSizeChanger
           style={{ marginTop: 10, float: 'right' }}
         />

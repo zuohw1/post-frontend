@@ -10,11 +10,11 @@ export function setClickOrgIdCode(clickOrgType, clickOrgId, clickOrgCode) {
   };
 }
 /* 更新列表数据 */
-export function setListDataSource(dataSource) {
+export function setGroupList(groupList) {
   return {
     type: 'employeeGroup/stateWillUpdate',
     payload: {
-      dataSource,
+      groupList,
     },
   };
 }
@@ -27,94 +27,42 @@ export function setListCount(count) {
     },
   };
 }
-/* 更新列表数据 */
-export function setListDataSourceAll(dataSourceAll) {
+
+/* 获取人员列表数据 */
+export function getPersonList(record) {
   return {
-    type: 'employeeGroup/stateWillUpdate',
-    payload: {
-      dataSourceAll,
-    },
-  };
-}
-/* 更新列表数据记录数 */
-export function setListCountAll(countAll) {
-  return {
-    type: 'employeeGroup/stateWillUpdate',
-    payload: {
-      countAll,
-    },
-  };
-}
-/* 更新列表数据 */
-export function setListDataSourceOffice(dataSourceOffice) {
-  return {
-    type: 'employeeGroup/stateWillUpdate',
-    payload: {
-      dataSourceOffice,
-    },
-  };
-}
-/* 更新列表数据记录数 */
-export function setListCountOffice(countOffice) {
-  return {
-    type: 'employeeGroup/stateWillUpdate',
-    payload: {
-      countOffice,
-    },
-  };
-}
-/* 更新列表数据 */
-export function setListComprehensive(comprehensive) {
-  return {
-    type: 'employeeGroup/stateWillUpdate',
-    payload: {
-      comprehensive,
-    },
-  };
-}
-/* 更新列表数据记录数 */
-export function setListCountComprehensive(countComprehensive) {
-  return {
-    type: 'employeeGroup/stateWillUpdate',
-    payload: {
-      countComprehensive,
-    },
-  };
-}
-/* 更新列表数据 */
-export function setListDataSourceFinance(dataSourceFinance) {
-  return {
-    type: 'employeeGroup/stateWillUpdate',
-    payload: {
-      dataSourceFinance,
-    },
-  };
-}
-/* 更新列表数据记录数 */
-export function setListCountFinance(countFinance) {
-  return {
-    type: 'employeeGroup/stateWillUpdate',
-    payload: {
-      countFinance,
-    },
-  };
-}
-/* 获取列表数据记录数 */
-export function getRecord(record) {
-  return {
-    type: 'employeeGroup/stateWillUpdate',
+    type: 'employeeGroup/getPersonList',
     payload: {
       record,
     },
   };
 }
-/* 获取列表数据记录数 */
-export function getPerson(man, people) {
+
+/* 获取分组列表数据 */
+export function getGroupList(id) {
   return {
-    type: 'employeeGroup/getPerson',
+    type: 'employeeGroup/getGroupList',
     payload: {
-      man,
-      people,
+      id,
+    },
+  };
+}
+
+/* 获取分组列表数据 */
+export function deleteGroupList(record) {
+  return {
+    type: 'employeeGroup/deleteGroupList',
+    payload: {
+      record,
+    },
+  };
+}
+
+/* 获取分组列表数据 */
+export function getOrgTree() {
+  return {
+    type: 'employeeGroup/getOrgTree',
+    payload: {
     },
   };
 }
