@@ -12,11 +12,9 @@ export default {
     if (search.posName && search.posName !== '') {
       url += `&posName=${search.posName}`;
     }
-    if (search.orgLevel && search.orgLevel !== '') {
+    if (search.orgLevel && search.orgLevel.length !== 0) {
       const orgLevelStr = search.orgLevel.map(item => item).join('.');
-      console.log('22222', orgLevelStr);
       url += `&orgLevel=.${orgLevelStr}.`;
-      // url += `&orgLevel=${search.orgLevel}`;
     }
     if (search.coreFlag && search.coreFlag !== '') {
       url += `&coreFlag=${search.coreFlag}`;

@@ -3,7 +3,8 @@ import {
   Table,
   Pagination, Button, Modal,
 } from 'antd';
-import DetailList from '../provpostquery/detail-list';
+import DetailList from './detail-list';
+import config from '../../../env.config';
 
 /* table size统一设置为small 固定表头，
    scroll={{ y: document.body.scrollHeight - 460 }}
@@ -51,7 +52,37 @@ export default ({
   };
 
   const handleExportGroupPos = () => {
-    alert('导出，待处理');
+    form.validateFields((err, values) => {
+      if (!err) {
+        const pageSize = 10;
+        const pageNumber = 1;
+        const select = {
+          ...values, pageSize, pageNumber,
+        };
+
+        let expUrl = `${config.api}/posStandardpos/exportNewPosList?1=1`;
+        if (select.posCateId && select.posCateId !== '') {
+          expUrl += `&posCateId=${select.posCateId}`;
+        }
+        if (select.posSubcateId && select.posSubcateId !== '') {
+          expUrl += `&posSubcateId=${select.posSubcateId}`;
+        }
+        if (select.posName && select.posName !== '') {
+          expUrl += `&posName=${select.posName}`;
+        }
+        if (select.orgLevel && select.orgLevel.length !== 0) {
+          const orgLevelStr = select.orgLevel.map(item => item).join('.');
+          expUrl += `&orgLevel=.${orgLevelStr}.`;
+        }
+        if (select.coreFlag && select.coreFlag !== '') {
+          expUrl += `&coreFlag=${select.coreFlag}`;
+        }
+        if (select.educationDegree && select.educationDegree !== '') {
+          expUrl += `&educationDegree=${select.educationDegree}`;
+        }
+        window.open(expUrl, '_self');
+      }
+    });
   };
   const translateTime = (time) => { // 将毫秒转换为年月日时分秒
     if (!time) {

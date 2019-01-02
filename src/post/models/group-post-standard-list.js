@@ -2,7 +2,6 @@ import GroupPostStandardListService from '../services/group-post-standard-list.j
 
 /* 格式化table数据 */
 const formatTableData = (tableData, currentPageNum, recordNum) => {
-  // console.log('格式化table数据', tableData);
   const num = currentPageNum * recordNum - recordNum;
   const table = tableData.pageInfo.map((item, index) => {
     const ite = { ...item, key: index + 1 + num };
@@ -54,7 +53,7 @@ export default {
   effects: {
     /* 岗位序列，参照查询 */
     * getPostSeqRef({ payload: { search } }, { call, put }) {
-      console.log('search', search);
+      console.log(search);
       const post = yield call(GroupPostStandardListService.getPostSeqRef);
       const postSeqData = post.cateList;
       yield put({
@@ -66,7 +65,6 @@ export default {
     },
     /* 子序列，参照查询 */
     * getSubSeqRef({ payload: { search } }, { call, put }) {
-      console.log('search', search);
       const subSeqData = yield call(GroupPostStandardListService.getSubSeqRef, search);
       yield put({
         type: 'stateWillUpdate',
@@ -77,7 +75,7 @@ export default {
     },
     /* 学历要求，参照查询 */
     * getEduRequireRef({ payload: { search } }, { call, put }) {
-      console.log('search', search);
+      console.log(search);
       const post = yield call(GroupPostStandardListService.getEduRequireRef);
       const eduRequireData = post.eduList;
       yield put({

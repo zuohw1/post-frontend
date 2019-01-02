@@ -52,8 +52,8 @@ export default ({
               labelCol={{ span: 8 }}
               wrapperCol={{ span: 12 }}
             >
-              {getFieldDecorator('sname', {
-                initialValue: record.sname ? record.sname : '',
+              {getFieldDecorator('sName', {
+                initialValue: record.sName ? `${record.cName}.${record.sName}` : '',
                 rules: [{ required: true, whitespace: true, message: '请输入名称' }],
               })(
                 <Input
@@ -123,7 +123,7 @@ export default ({
           <Col span={8} style={{ display: 'block' }}>
             <FormItem label="有效开始日期" labelCol={{ span: 8 }}>
               {getFieldDecorator('activeStartDate', {
-                initialValue: record.activeStartDatePage ? moment(record.activeStartDatePage, 'YYYY/MM/DD') : moment(),
+                initialValue: record.activeStartDatePage ? moment(record.activeStartDatePage, 'YYYY-MM-DD') : '',
               })(
                 <DatePicker
                   disabled={!formEdit}
@@ -135,7 +135,7 @@ export default ({
           <Col span={8} style={{ display: 'block' }}>
             <FormItem label="有效结束日期" labelCol={{ span: 8 }}>
               {getFieldDecorator('activeEndDate', {
-                initialValue: record.activeEndDate ? moment(record.activeEndDate, 'YYYY/MM/DD') : '',
+                initialValue: record.activeEndDatePage ? moment(record.activeEndDatePage, 'YYYY-MM-DD') : '',
               })(
                 <DatePicker
                   disabled={!formEdit}

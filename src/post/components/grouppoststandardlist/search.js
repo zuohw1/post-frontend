@@ -72,6 +72,7 @@ export default (props) => {
       postSeqList.push(respV);
     }
   }
+  subSeqList = [];
   if (subSeqList.length === 0) {
     for (let i = 0; i < subSeqData.length; i += 1) {
       const respV = {
@@ -81,6 +82,7 @@ export default (props) => {
       subSeqList.push(respV);
     }
   }
+
   if (eduRequireList.length === 0) {
     for (let i = 0; i < eduRequireData.length; i += 1) {
       const respV = {
@@ -90,19 +92,14 @@ export default (props) => {
       eduRequireList.push(respV);
     }
   }
-  const handlePostChange = () => {
-    handleSubflagSearch();
+
+  const handlePostChange = (posCateId) => {
     subSeqList = [];
     form.setFieldsValue({
+      posCateId,
       posSubcateId: null,
     });
-    for (let i = 0; i < subSeqData.length; i += 1) {
-      const respV = {
-        id: subSeqData[i].elementId,
-        title: subSeqData[i].elementName,
-      };
-      subSeqList.push(respV);
-    }
+    handleSubflagSearch();
   };
   const handleReset = () => {
     form.resetFields();
