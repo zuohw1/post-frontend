@@ -6,7 +6,9 @@ export default {
   state: {
     record: {},
     orgId: '',
-    count: 5650,
+    groupObj: {},
+    newRecord: {},
+    count: 0,
     orgList: [],
     groupList: [],
     personList: [],
@@ -23,7 +25,6 @@ export default {
     /* 获取分组列表数据 */
     * getGroupList({ payload: { id } }, { call, put }) {
       const groupData = yield call(EmployeeGroup.getGroupList, id);
-      console.log(groupData);
       yield put({
         type: 'stateWillUpdate',
         payload: {
@@ -33,20 +34,19 @@ export default {
       });
     },
     /* 获取人员列表数据 */
-    * getPersonList({ payload: { record } }, { call, put }) {
-      console.log('search', record);
-      const personData = yield call(EmployeeGroup.getPersonList, record);
+    * getPersonList({ payload: { orgId, record } }, { call, put }) {
+      const personData = yield call(EmployeeGroup.getPersonList, orgId, record);
       yield put({
         type: 'stateWillUpdate',
         payload: {
           personList: personData,
           record,
+          orgId,
         },
       });
     },
     /* 删除分组列表数据 */
     * deleteGroupList({ payload: { record } }, { call, put }) {
-      console.log('search', record);
       yield call(EmployeeGroup.deleteGroupList, record);
       yield put({
         type: 'stateWillUpdate',
@@ -63,6 +63,36 @@ export default {
         type: 'stateWillUpdate',
         payload: {
           orgList: orgData,
+        },
+      });
+    },
+    /* 保存分组列表数据 */
+    * saveGroupList({ payload: { groupObj } }, { call, put }) {
+      yield call(EmployeeGroup.saveGroupList, groupObj);
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          groupObj,
+        },
+      });
+    },
+    /* 分配至改组 */
+    * distributionGroup({ payload: { newRecord } }, { call, put }) {
+      yield call(EmployeeGroup.distributionGroup, newRecord);
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          newRecord,
+        },
+      });
+    },
+    /* 分配负责人 */
+    * distributionBlame({ payload: { newData } }, { call, put }) {
+      const blamPerson = yield call(EmployeeGroup.distributionBlame, newData);
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          personList: blamPerson,
         },
       });
     },

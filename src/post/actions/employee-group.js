@@ -1,14 +1,4 @@
-/* 设置职责树点击节点信息 */
-export function setClickOrgIdCode(clickOrgType, clickOrgId, clickOrgCode) {
-  return {
-    type: 'employeeGroup/stateWillUpdate',
-    payload: {
-      clickOrgType,
-      clickOrgId,
-      clickOrgCode,
-    },
-  };
-}
+
 /* 更新列表数据 */
 export function setGroupList(groupList) {
   return {
@@ -29,10 +19,11 @@ export function setListCount(count) {
 }
 
 /* 获取人员列表数据 */
-export function getPersonList(record) {
+export function getPersonList(orgId, record) {
   return {
     type: 'employeeGroup/getPersonList',
     payload: {
+      orgId,
       record,
     },
   };
@@ -48,7 +39,7 @@ export function getGroupList(id) {
   };
 }
 
-/* 获取分组列表数据 */
+/* 删除分组列表数据 */
 export function deleteGroupList(record) {
   return {
     type: 'employeeGroup/deleteGroupList',
@@ -58,11 +49,39 @@ export function deleteGroupList(record) {
   };
 }
 
-/* 获取分组列表数据 */
+/* 获取组织树数据 */
 export function getOrgTree() {
   return {
     type: 'employeeGroup/getOrgTree',
     payload: {
+    },
+  };
+}
+/* 保存分组列表数据 */
+export function saveGroupList(groupObj) {
+  return {
+    type: 'employeeGroup/saveGroupList',
+    payload: {
+      groupObj,
+    },
+  };
+}
+/* 分配至该组 */
+export function distributionGroup(newRecord) {
+  return {
+    type: 'employeeGroup/distributionGroup',
+    payload: {
+      newRecord,
+    },
+  };
+}
+
+/* 分配负责人 */
+export function distributionBlame(newData) {
+  return {
+    type: 'employeeGroup/distributionBlame',
+    payload: {
+      newData,
     },
   };
 }

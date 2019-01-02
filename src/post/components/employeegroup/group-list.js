@@ -13,10 +13,11 @@ export default ({
   groupList,
   actions,
   orgId,
+  count,
   loading,
 }) => {
   const {
-    getPersonList, setGroupList, deleteGroupList,
+    getPersonList, setGroupList, deleteGroupList, saveGroupList, setListCount,
   } = actions;
 
 
@@ -71,15 +72,20 @@ export default ({
   /* 新增按钮 */
   const handleAdd = () => {
     const newData = {
+      groupId: count,
       groupName: '',
-      managName: '',
-      orgId: `${orgId}`,
+      orgId,
     };
+    setListCount(count - 1);
     setGroupList([...groupList, newData]);
   };
   /* 保存按钮 */
   const handleSave = () => {
     console.log('groupList=====', groupList);
+    const rrr = {};
+    rrr.entityList = groupList;
+    console.log('11111', rrr);
+    saveGroupList(rrr);
   };
 
   /* 删除 */
@@ -89,7 +95,9 @@ export default ({
   };
   /* 点击对应每行显示出人员列表的信息 */
   const onClickView = (row) => {
-    getPersonList(row);
+    if (row.groupName) {
+      getPersonList(orgId, row);
+    }
   };
   function getFields() {
     const children = [];
