@@ -15,9 +15,15 @@ export default ({
   orgId,
   count,
   loading,
+  // rowId,
 }) => {
   const {
-    getPersonList, setGroupList, deleteGroupList, saveGroupList, setListCount,
+    getPersonList,
+    setGroupList,
+    deleteGroupList,
+    saveGroupList,
+    setListCount,
+    // onClickStyle,
   } = actions;
 
 
@@ -32,6 +38,13 @@ export default ({
       return (
         <Input
           defaultValue={records.groupName}
+          onChange={e => onChange(e, records)}
+          onClick={(e) => {
+            e.nativeEvent.stopImmediatePropagation();
+            e.stopPropagation();
+            e.preventDefault();
+            return false;
+          }}
           style={{ width: 200 }}
         />);
     },
@@ -51,14 +64,26 @@ export default ({
       return (
         groupList.length >= 1
           ? (
-            <Popconfirm title="确认要删除?" onConfirm={() => handleDelete(records)}>
+            <Popconfirm
+              title="确认要删除?"
+              onConfirm={(e) => {
+                handleDelete(records);
+                e.nativeEvent.stopImmediatePropagation();
+                e.stopPropagation();
+                e.preventDefault();
+              }}
+              onCancel={(e) => {
+                e.nativeEvent.stopImmediatePropagation();
+                e.stopPropagation();
+                e.preventDefault();
+              }}
+            >
               <a
                 href="jacascript:void(0);"
                 onClick={(e) => {
                   e.nativeEvent.stopImmediatePropagation();
                   e.stopPropagation();
                   e.preventDefault();
-                  return false;
                 }}
               >删除
               </a>
@@ -72,33 +97,49 @@ export default ({
   /* 新增按钮 */
   const handleAdd = () => {
     const newData = {
-      groupId: count,
       groupName: '',
       orgId,
+      count,
     };
     setListCount(count - 1);
     setGroupList([...groupList, newData]);
   };
+  /* 输入框变化 */
+  const onChange = (e, row) => {
+    const newRow = row;
+    const { value } = e.target;
+    newRow.groupName = value;
+    // console.log(groupList);
+  };
   /* 保存按钮 */
   const handleSave = () => {
-    console.log('groupList=====', groupList);
     const rrr = {};
     rrr.entityList = groupList;
-    console.log('11111', rrr);
+    // console.log('11111', rrr);
     saveGroupList(rrr);
   };
 
   /* 删除 */
   const handleDelete = (records) => {
-    setGroupList(groupList.filter(item => item.groupId !== records.groupId));
-    deleteGroupList(records);
+    if (!records.groupId) {
+      setGroupList(groupList.filter(item => item.count !== records.count));
+    } else if (records.groupId) {
+      setGroupList(groupList.filter(item => item.groupId !== records.groupId));
+      deleteGroupList(records);
+    }
   };
+
   /* 点击对应每行显示出人员列表的信息 */
   const onClickView = (row) => {
-    if (row.groupName) {
+    if (row.groupId) {
       getPersonList(orgId, row);
     }
   };
+
+  // const setRowClassName = (records) => {
+  //   // console.log(8888, rowId);
+  //   return records.groupId === rowId ? 'clickRowStyle' : '';
+  // };
   function getFields() {
     const children = [];
     for (let i = 0; i < tableCols.length; i += 1) {
@@ -133,11 +174,17 @@ export default ({
         </Col>
       </Row>
       <Table
+        className="groupList"
         onRow={(records) => {
           return {
-            onClick: () => onClickView(records), // 点击行
+            onClick: () => {
+              onClickView(records);
+              // onClickStyle(records.count);
+            }, // 点击行
           };
         }}
+        // rowClassName={setRowClassName}
+        // rowKey={records => records.groupId.c[0]}
         columns={getFields()}
         loading={loading}
         dataSource={groupList}

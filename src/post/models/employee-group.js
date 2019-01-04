@@ -4,14 +4,24 @@ import EmployeeGroup from '../services/employee-group';
 export default {
   namespace: 'employeeGroup',
   state: {
+    /* 行的Id */
+    rowId: '',
+    /* 分组列表行的数据 */
     record: {},
+    /* 组织树的id */
     orgId: '',
+    /* 需要保存的分组列表的数据 */
     groupObj: {},
+    /* 分配成员的数据 */
     newRecord: {},
-    count: 0,
+    /* 组织树的数据 */
     orgList: [],
+    /* 分组列表的数据 */
     groupList: [],
+    /* 人员列表的数据 */
     personList: [],
+    /* 人员列表的数据 */
+    count: 0,
   },
   reducers: {
     stateWillUpdate(state, { payload }) {
@@ -76,13 +86,22 @@ export default {
         },
       });
     },
-    /* 分配至改组 */
-    * distributionGroup({ payload: { newRecord } }, { call, put }) {
+    /* 分配至该组 */
+    * distributionGroup({ payload: { orgId, record, newRecord } }, { call, put }) {
       yield call(EmployeeGroup.distributionGroup, newRecord);
       yield put({
         type: 'stateWillUpdate',
         payload: {
           newRecord,
+        },
+      });
+      const personData = yield call(EmployeeGroup.getPersonList, orgId, record);
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          personList: personData,
+          record,
+          orgId,
         },
       });
     },

@@ -16,8 +16,6 @@ export default (state) => {
   const {
     distributionGroup,
     setGroupList,
-    getPersonList,
-    // saveGroupList,
     distributionBlame,
   } = actions;
   /* 分配至该组 */
@@ -29,31 +27,47 @@ export default (state) => {
       groupAssId: row.groupAssId,
       groupId: record.groupId,
       orgId,
-      mangerFlag: row.mangerFlag,
+      managerFlag: row.mangerFlag,
       presonId: row.personId,
       type: `${row.groupAssId === 0 ? 'add' : 'delete'}`,
     };
-    console.log('newData==', newData);
-    distributionGroup(newData);
-    getPersonList(orgId, record);
+    // console.log('newData==', newData);
+    distributionGroup(orgId, record, newData);
+    // getPersonList(orgId, record);
   };
 
   /* 分配组负责人 */
-  let groupData = [...groupList];
+  let newGroupList = [...groupList];
+  // console.log('newGroupList===', newGroupList);
   const OnDistributionBlame = (row) => {
     if (row.groupAssId === 0) {
-      alert('hh');
+      alert('该员工不属于这个分组不能进行此操作');
+    } else if (record.managName !== '' && record.managName !== row.fullName) {
+      alert('已经有其他负责人，不允许此操作');
     } else {
-      record.managName = row.fullName;
-      groupData = groupData.map((item) => {
-        if (item.groupId === record.groupId) {
-          return { ...item, managName: record.managName };
-        } else {
-          return item;
-        }
-      });
-      console.log(groupData);
-      setGroupList(groupData);
+      if (record.managName === '') {
+        record.managName = row.fullName;
+        newGroupList = newGroupList.map((item) => {
+          if (item.groupId === record.groupId) {
+            return { ...item, managName: record.managName };
+          } else {
+            return item;
+          }
+        });
+        // console.log(newGroupList);
+        setGroupList(newGroupList);
+      } else if (record.managName === row.fullName) {
+        record.managName = '';
+        newGroupList = newGroupList.map((item) => {
+          if (item.groupId === record.groupId) {
+            return { ...item, managName: record.managName };
+          } else {
+            return item;
+          }
+        });
+        setGroupList(newGroupList);
+      }
+      // console.log('record===', record);
       const newData = {
         assFlag: row.assFlag,
         ebsAssId: row.ebsAssId,
@@ -61,9 +75,11 @@ export default (state) => {
         groupAssId: row.groupAssId,
         groupId: record.groupId,
         orgId,
-        mangerFlag: row.mangerFlag,
+        managerFlag: `${row.managerFlag === 'N' ? 'Y' : 'N'}`,
+        type: `${row.managerFlag === 'N' ? 'inOrNot' : ''}`,
         presonId: row.personId,
       };
+      // console.log('newData===', newData);
       distributionBlame(newData);
     }
   };
@@ -85,7 +101,7 @@ export default (state) => {
         <Icon
           // type="check"
           type={`${records.assFlag === 'Y' ? 'check' : 'close'}`}
-          style={{ color: `${records.assFlag === 'Y' ? '#409030' : '#FF3010'}` }}
+          style={{ color: `${records.assFlag === 'Y' ? '#409030' : '#FF3010'}`, fontSize: 22 }}
           onClick={() => OnDistribution(records)}
         />
       );
@@ -100,6 +116,7 @@ export default (state) => {
       return (
         <Icon
           type="user"
+          style={{ color: `${records.managerFlag === 'Y' ? '#0060C8' : ''}`, fontSize: 22 }}
           onClick={() => OnDistributionBlame(records)}
         />
       );

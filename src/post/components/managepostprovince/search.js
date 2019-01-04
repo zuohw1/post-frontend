@@ -21,7 +21,7 @@ export default (props) => {
   const { getFieldDecorator } = form;
   const { listTable, getKeyResp } = actions;
 
-  const refUrl = 'api/postionmanage/getChildrenTree?topId=';
+  const refUrl = 'postionmanage/getChildrenTree?topId=';
 
   const treeSelectChange = (value, label, extra) => {
     form.setFieldsValue({

@@ -67,11 +67,13 @@ export function saveGroupList(groupObj) {
   };
 }
 /* 分配至该组 */
-export function distributionGroup(newRecord) {
+export function distributionGroup(orgId, record, newRecord) {
   return {
     type: 'employeeGroup/distributionGroup',
     payload: {
       newRecord,
+      orgId,
+      record,
     },
   };
 }
@@ -82,6 +84,16 @@ export function distributionBlame(newData) {
     type: 'employeeGroup/distributionBlame',
     payload: {
       newData,
+    },
+  };
+}
+
+
+export function onClickStyle(rowId) {
+  return {
+    type: 'employeeGroup/stateWillUpdate',
+    payload: {
+      rowId,
     },
   };
 }
