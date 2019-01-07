@@ -15,7 +15,7 @@ if (!env) {
   throw new Error('--env参数不能为空');
 }
 let debug = true;
-let api = 'http://localhost/api';
+let api = 'http://localhost:8080/api';
 if (env !== 'development') {
   debug = false;
   api = 'http://10.0.210.93/post/api';

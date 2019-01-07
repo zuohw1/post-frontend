@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import { Layout, Tree } from 'antd';
-import PropTypes from 'prop-types';
+import React from 'react';
+import { Tree, Card } from 'antd';
 
 const { TreeNode } = Tree;
 const libtree = [
@@ -79,25 +78,21 @@ const libtree = [
   },
 ];
 
-const { Content } = Layout;
-export default class ProfLib extends Component {
-  static propTypes = {
-    setArr: PropTypes.func.isRequired,
-  };
-
-  onCheck = (checkedKeys, info) => {
+const ProfLib = () => {
+  const onCheck = (checkedKeys, info) => {
     const arrFilter = info.checkedNodes.filter(value => value.key.indexOf('-') > -1);
     const arr = arrFilter.map(value => value.props.title);
-    const { setArr } = this.props;
-    setArr(arr);
+    console.log(arr);
+    // const { setArr } = this.props;
+    // setArr(arr);
   };
 
-  renderTreeNodes = (data) => {
+  const renderTreeNodes = (data) => {
     return data.map((item) => {
       if (item.children) {
         return (
           <TreeNode title={item.title} key={item.key} dataRef={item}>
-            {this.renderTreeNodes(item.children)}
+            {renderTreeNodes(item.children)}
           </TreeNode>
         );
       }
@@ -105,16 +100,12 @@ export default class ProfLib extends Component {
     });
   };
 
-  render() {
-    return (
-      <Layout className="layout">
-        <nav>专业库(请勾选映射至组织的专业)</nav>
-        <Content>
-          <Tree checkable showLine onCheck={this.onCheck}>
-            {this.renderTreeNodes(libtree)}
-          </Tree>
-        </Content>
-      </Layout>
-    );
-  }
-}
+  return (
+    <Card title="专业库(请勾选映射至组织的专业)">
+      <Tree checkable showLine onCheck={onCheck}>
+        {renderTreeNodes(libtree)}
+      </Tree>
+    </Card>
+  );
+};
+export default ProfLib;

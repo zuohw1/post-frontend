@@ -16,20 +16,11 @@ export function primaryBusinessShow(isPrimaryShow) {
   };
 }
 
-export function updateLeftCardTree(leftCardTree) {
+export function setLibTreeSpinning(libTreeSpinning) {
   return {
     type: 'businesskeyrespmap/stateWillUpdate',
     payload: {
-      leftCardTree,
-    },
-  };
-}
-
-export function updateOptionValue(optionValue) {
-  return {
-    type: 'businesskeyrespmap/stateWillUpdate',
-    payload: {
-      optionValue,
+      libTreeSpinning,
     },
   };
 }
@@ -62,11 +53,11 @@ export function setKeyRespList(keyRespList) {
 }
 
 
-export function setSelectedKeys(selectedKeys) {
+export function setSelectedKey(selectedKey) {
   return {
     type: 'businesskeyrespmap/stateWillUpdate',
     payload: {
-      selectedKeys,
+      selectedKey,
     },
   };
 }
@@ -102,6 +93,53 @@ export function setKeyExpandedKeys(keyExpandedKeys) {
     type: 'businesskeyrespmap/stateWillUpdate',
     payload: {
       keyExpandedKeys,
+    },
+  };
+}
+
+
+export function getLeftCardTree(dataRef, leftTree) {
+  return {
+    type: 'businesskeyrespmap/getLeftCardTree',
+    payload: {
+      dataRef, leftTree,
+    },
+  };
+}
+
+export function getLibTree(majorId) {
+  return {
+    type: 'businesskeyrespmap/getLibTree',
+    payload: {
+      majorId,
+    },
+  };
+}
+
+export function addTreeNode(majorName, majorDesc, majorType, majorIdParent) {
+  return {
+    type: 'businesskeyrespmap/addTreeNode',
+    payload: {
+      majorName, majorDesc, majorType, majorIdParent,
+    },
+  };
+}
+
+
+export function deleteTreeNode(majorType, majorId) {
+  return {
+    type: 'businesskeyrespmap/deleteTreeNode',
+    payload: {
+      majorType, majorId,
+    },
+  };
+}
+
+export function getCheckedTreeNodes(respId, subRespId, majorId) {
+  return {
+    type: 'businesskeyrespmap/getCheckedTreeNodes',
+    payload: {
+      respId, subRespId, majorId,
     },
   };
 }

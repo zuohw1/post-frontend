@@ -6,8 +6,8 @@ import * as actions from '../actions/org-prof-map';
 
 /* 建立组件跟 store 的 state 的映射关系 */
 const mapStateToProps = state => ({
-  ...state.OrgProfMap,
-  loading: state.loading.models.OrgProfMap,
+  ...state.orgprofmap,
+  loading: state.loading.models.orgprofmap,
 });
 
 const WrappedApp = Form.create()(Index);

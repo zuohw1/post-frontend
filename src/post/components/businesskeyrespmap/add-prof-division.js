@@ -12,7 +12,8 @@ const AddProfDivision = ({
   form, isPrimaryShow, leftCardTree, actions, primaryBusinessData, showAlert,
 }) => {
   const {
-    primaryBusinessShow, isAddprofModalShow, updateLeftCardTree, isAlertShow,
+    primaryBusinessShow,
+    isAddprofModalShow, isAlertShow, addTreeNode,
   } = actions;
   const formItemLayout = {
     labelCol: {
@@ -31,54 +32,31 @@ const AddProfDivision = ({
       primaryBusinessShow(false);
     }
   };
-  const addProfModalOk = (e) => {
-    e.preventDefault();
-    // 获取左树,请求数据
-    const newTempTree = [...leftCardTree];
-    const newTree = newTempTree[0].children;
-    // 设置新的树节点
-    const newTreeNode = {};
+  const addProfModalOk = () => {
+    // 获取input值
     form.validateFields((err, values) => {
       if (!err) {
-        console.log(newTempTree);
-        console.log(newTree);
-        const { businessname, radiogroup, select } = values;
-        /* 此处后端应返回一条数据 */
-        newTreeNode.title = businessname.trim();
-        // newTreeNode.key = businessname.trim();
+        const {
+          businessname, radiogroup, select, businessdescript,
+        } = values;
         if (radiogroup === 1) {
-          // 避免重复添加
-          const index = newTree.findIndex((ele) => {
-            return ele.title === businessname.trim();
+          // 查找一级树中有没有同名的节点
+          const index = leftCardTree.findIndex((ele) => {
+            return ele.majorName === businessname.trim();
           });
           if (index >= 0) {
             isAlertShow(true);
             return;
           }
-          newTreeNode.key = newTree.length.toString();
-          newTree.push(newTreeNode);
+          addTreeNode(businessname, businessdescript, 'M', '');
         } else if (radiogroup === 2) {
-          // 找到与select名字相同的一级业务划分
-          const index = newTree.findIndex((ele) => {
-            return ele.title === select;
+          // 找到与select名字相同的一级业务划分的id
+          const index = leftCardTree.findIndex((ele) => {
+            return ele.majorName === select;
           });
-          // 如果她没有children,就让她有children，再push进去
-          if (typeof newTree[index].children === 'undefined') {
-            newTreeNode.key = `${index}-0`;
-            newTree[index].children = [];
-            newTree[index].children.push(newTreeNode);
-          } else {
-            const { children } = newTree[index];
-            const innerIndex = children.findIndex(ele => ele.title === businessname.trim());
-            if (innerIndex >= 0) {
-              isAlertShow(true);
-              return;
-            }
-            newTreeNode.key = `${index}-${children.length}`;
-            children.push(newTreeNode);
-          }
+          const parentId = leftCardTree[index].majorId;
+          addTreeNode(businessname, businessdescript, 'S', parentId);
         }
-        updateLeftCardTree(newTempTree);
         isAlertShow(false);
         isAddprofModalShow(false);
       }
@@ -114,10 +92,8 @@ const AddProfDivision = ({
             label="一级业务划分"
             help=""
           >
-            {getFieldDecorator('select', {
-              initialValue: '人力专业（测试）',
-            })(
-              <Select placeholder="人力专业（测试）" style={{ width: 150 }}>
+            {getFieldDecorator('select')(
+              <Select placeholder="运维" style={{ width: 150 }}>
                 {primaryBusinessData.map(ele => <Option key={ele} value={ele}>{ele}</Option>)}
               </Select>,
             )}
@@ -132,7 +108,7 @@ const AddProfDivision = ({
           >
             {getFieldDecorator('businessname', {
               rules: [{
-                type: 'string', whitespace: true, pattern: new RegExp(/(^\s*)|(\s*$)/g),
+                type: 'string', whitespace: true,
               }, {
                 required: true,
               }],
