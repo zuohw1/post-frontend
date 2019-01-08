@@ -136,3 +136,22 @@ export function setListCountZzz(countZzz) {
     },
   };
 }
+/* 更新左侧职责树 */
+export function setResptree(resptree) {
+  return {
+    type: 'keyResp/stateWillUpdate',
+    payload: {
+      resptree,
+    },
+  };
+}
+/* 获取左树及列表数据 */
+export function getDataSource(elementType, posCateId) {
+  return {
+    type: 'keyResp/getDataSource',
+    payload: {
+      elementType: elementType === undefined ? 0 : elementType,
+      posCateId,
+    },
+  };
+}
