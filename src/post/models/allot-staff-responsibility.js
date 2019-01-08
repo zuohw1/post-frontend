@@ -2,18 +2,156 @@
 export default {
   namespace: 'allotStaffResponsibility',
   state: {
+    count: 0,
+    /* 默认显示专业的导航栏 */
     currentMajor: 'related',
-    currentRecord: 'currentrecord',
+    /* 默认显示记录的导航栏 */
+    currentRecord: 'current',
+    /* 专业选项卡切换 */
     relatedDisplay: 'block',
     wholeDisplay: 'none',
     checklistDisplay: 'none',
+    /* 记录选项卡切换 */
     currentDisplay: 'block',
     allDisplay: 'none',
+    /* 遮罩层显示 */
     maskDisplay: 'none',
-    name: '',
-    wholeKeyword: '',
-    checklistKeyword: '',
-    datas: [{ dutyExecute: '公众客户销售.营业厅销售经理', proportion: '100' }, { dutyExecute: '终端支撑.终端销售', proportion: '66' }],
+    /* 选中人员姓名 */
+    person: '',
+    /* 选中人员ID */
+    peopleId: '',
+    /* 选中人员对应的数据 */
+    personTreeOne: [
+      {
+        title: '省管管理人员',
+        key: '0',
+        children: [
+          {
+            title: '市本部部门正职',
+            key: '0-0',
+            children: [
+              { title: '市本部部门正职', key: '0-0-0' },
+            ],
+          },
+          {
+            title: '市本部部门副职',
+            key: '0-1',
+            children: [
+              { title: '市本部部门副职', key: '0-1-0' },
+            ],
+          },
+        ],
+      },
+      {
+        title: '市管管理人员',
+        key: '1',
+        children: [
+          {
+            title: '市公司正职',
+            key: '1-0',
+            children: [
+              { title: '市公司正职', key: '1-0-0' },
+            ],
+          },
+          {
+            title: '市公司副职',
+            key: '1-1',
+            children: [
+              { title: '市公司副职', key: '1-1-0' },
+            ],
+          },
+        ],
+      },
+      {
+        title: '集团管理人员',
+        key: '2',
+        children: [
+          {
+            title: '集团本部正职',
+            key: '2-1',
+            children: [
+              { title: '集团本部正职', key: '2-1-0' },
+            ],
+          },
+        ],
+      },
+    ],
+    personTreeTwo: [
+      {
+        title: '集团管理人员',
+        key: '0',
+        children: [
+          {
+            title: '集团本部部门正职',
+            key: '0-0',
+            children: [
+              { title: '集团本部部门正职', key: '0-0-0' },
+            ],
+          },
+          {
+            title: '集团本部部门副职',
+            key: '0-1',
+            children: [
+              { title: '集团本部部门副职', key: '0-1-0' },
+            ],
+          },
+        ],
+      },
+      {
+        title: '区县管理人员',
+        key: '1',
+        children: [
+          {
+            title: '区县本部部门正职',
+            key: '1-0',
+            children: [
+              { title: '区县本部部门正职', key: '1-0-0' },
+            ],
+          },
+          {
+            title: '区县本部部门副职',
+            key: '1-1',
+            children: [
+              { title: '区县本部部门副职', key: '1-1-0' },
+            ],
+          },
+        ],
+      },
+      {
+        title: '分公司管理人员',
+        key: '2',
+        children: [
+          {
+            title: '分公司本部正职',
+            key: '2-1',
+            children: [
+              { title: '分公司本部正职', key: '2-1-0' },
+            ],
+          },
+        ],
+      },
+    ],
+    /* 关键职责 */
+    keyDuty: '',
+    /* 当前记录的关键职责 */
+    recordData: [
+      {
+        dutyExecute: '公众客户销售.营业厅销售经理',
+        key: 'keyResp111',
+        dataIndex: 'keyResp111',
+        proportion: '100',
+        count: 2,
+      },
+      {
+        dutyExecute: '终端支撑.终端销售',
+        key: 'work111',
+        dataIndex: 'work111',
+        proportion: '66',
+        count: 1,
+      },
+    ],
+    /* 默认复选框 */
+    defaultCheckedKeys: '1-0',
     otherDatas: [],
     checkedBearDuty: false,
     allRecordsData: [
@@ -36,7 +174,7 @@ export default {
     },
   },
   effects: {
-    *onhandleClickMajor({ payload: { major } }, { put }) {
+    *handleClickMajor({ payload: { major } }, { put }) {
       yield put({
         type: 'stateWillUpdate',
         payload: {
@@ -44,7 +182,7 @@ export default {
         },
       });
     },
-    *onhandleClickRecord({ payload: { record } }, { put }) {
+    *handleClickRecord({ payload: { record } }, { put }) {
       yield put({
         type: 'stateWillUpdate',
         payload: {
@@ -85,7 +223,7 @@ export default {
     },
     *switchRecord({ payload: { record } }, { put }) {
       console.log(record);
-      if (record === 'currentrecord') {
+      if (record === 'current') {
         yield put({
           type: 'stateWillUpdate',
           payload: {
@@ -94,7 +232,7 @@ export default {
             maskDisplay: 'none',
           },
         });
-      } else if (record === 'allrecords') {
+      } else if (record === 'allRecords') {
         yield put({
           type: 'stateWillUpdate',
           payload: {
@@ -105,30 +243,30 @@ export default {
         });
       }
     },
-    *removeCertainDuty({ payload: { datas, index, maskDisplay } }, { put }) {
+    *removeCertainDuty({ payload: { recordData, index, maskDisplay } }, { put }) {
       console.log(maskDisplay);
       if (maskDisplay === 'block') {
-        datas.splice(index, 1);
+        recordData.splice(index, 1);
         yield put({
           type: 'stateWillUpdate',
           payload: {
             maskDisplay: 'none',
             checkedBearDuty: false,
-            datas,
+            recordData,
           },
         });
       } else {
-        datas.splice(index, 1);
-        console.log(datas);
+        recordData.splice(index, 1);
+        console.log(recordData);
         yield put({
           type: 'stateWillUpdate',
           payload: {
-            datas,
+            recordData,
           },
         });
       }
     },
-    *isCheacked({ payload: { checkedBearDuty, datas, otherDatas } }, { put }) {
+    *isChecked({ payload: { checkedBearDuty, recordData, otherDatas } }, { put }) {
       console.log(checkedBearDuty);
       if (checkedBearDuty === false) {
         yield put({
@@ -136,8 +274,8 @@ export default {
           payload: {
             maskDisplay: 'block',
             checkedBearDuty: true,
-            otherDatas: datas,
-            datas: [{ dutyExecute: '其他.不承担任何工作职责', proportion: '0' }],
+            otherDatas: recordData,
+            recordData: [{ dutyExecute: '其他.不承担任何工作职责', proportion: '0' }],
           },
         });
       } else if (checkedBearDuty === true) {
@@ -146,7 +284,7 @@ export default {
           payload: {
             maskDisplay: 'none',
             checkedBearDuty: false,
-            datas: otherDatas,
+            recordData: otherDatas,
           },
         });
       }
