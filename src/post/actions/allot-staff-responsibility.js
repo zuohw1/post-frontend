@@ -1,14 +1,14 @@
-export function onhandleClickMajor(major) {
+export function handleClickMajor(major) {
   return {
-    type: 'allotStaffResponsibility/onhandleClickMajor',
+    type: 'allotStaffResponsibility/handleClickMajor',
     payload: {
       major,
     },
   };
 }
-export function onhandleClickRecord(record) {
+export function handleClickRecord(record) {
   return {
-    type: 'allotStaffResponsibility/onhandleClickRecord',
+    type: 'allotStaffResponsibility/handleClickRecord',
     payload: {
       record,
     },
@@ -30,19 +30,69 @@ export function switchRecord(record) {
     },
   };
 }
-export function removeCertainDuty(datas, index, maskDisplay) {
+export function removeCertainDuty(recordData, index, maskDisplay) {
   return {
     type: 'allotStaffResponsibility/removeCertainDuty',
     payload: {
-      datas, index, maskDisplay,
+      recordData, index, maskDisplay,
     },
   };
 }
-export function isCheacked(checkedBearDuty, datas, otherDatas) {
+export function isChecked(checkedBearDuty, recordData, otherDatas) {
   return {
     type: 'allotStaffResponsibility/isCheacked',
     payload: {
-      checkedBearDuty, datas, otherDatas,
+      checkedBearDuty, recordData, otherDatas,
+    },
+  };
+}
+
+/* 选中人员姓名 */
+export function getPeopleTitle(person) {
+  return {
+    type: 'allotStaffResponsibility/stateWillUpdate',
+    payload: {
+      person,
+    },
+  };
+}
+
+/* 选中人员ID */
+export function setClickRespId(peopleId) {
+  return {
+    type: 'allotStaffResponsibility/stateWillUpdate',
+    payload: {
+      peopleId,
+    },
+  };
+}
+
+/* 选中关键职责 */
+export function selectKeyDuty(recordData) {
+  return {
+    type: 'allotStaffResponsibility/stateWillUpdate',
+    payload: {
+      recordData,
+    },
+  };
+}
+
+/* 数据序号 */
+export function setListCount(count) {
+  return {
+    type: 'allotStaffResponsibility/stateWillUpdate',
+    payload: {
+      count,
+    },
+  };
+}
+
+/* 更新默认复选框 */
+export function updateChecked(defaultCheckedKeys) {
+  return {
+    type: 'allotStaffResponsibility/stateWillUpdate',
+    payload: {
+      defaultCheckedKeys,
     },
   };
 }
