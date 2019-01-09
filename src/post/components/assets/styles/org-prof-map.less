@@ -11,19 +11,21 @@
             float: right;
             a {
               margin-right: 5px;
+              text-decoration: none;
             }
             i {
               cursor: pointer;
+              margin-right: 1px;
             }
           }
         }
       }
       .ant-card-body{
-        height: 520px;
+        height: 560px;
         overflow: auto;
         .ant-layout-content{
           .ant-list {
-            max-height: 500px;
+            max-height: 520px;
             overflow: auto;
             .ant-list-item:last-child {
               border-bottom: none;
@@ -31,8 +33,21 @@
           }
           .copyOrg{
             margin-top: 5px;
+            margin-left: 140px;
           }
         }
+      }
+    }
+    .profLib{
+      .ant-spin-nested-loading{
+        height: 280px;
+      }
+    }
+  }
+  .importModal{
+    .importForm{
+      .ant-form-extra{
+        padding-top: 20px;
       }
     }
   }

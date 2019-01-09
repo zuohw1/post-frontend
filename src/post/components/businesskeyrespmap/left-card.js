@@ -44,7 +44,6 @@ const LeftCard = ({
       return;
     }
     removeTreeNode(leftCardTree);
-    getLeftCardTree({ majorId: '' });
   };
   const addProfModalCancel = () => {
     isAlertShow(false);
