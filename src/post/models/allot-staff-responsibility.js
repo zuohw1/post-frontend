@@ -4,9 +4,9 @@ export default {
   state: {
     count: 0,
     /* 默认显示专业的导航栏 */
-    currentMajor: 'related',
+    currentMajor: ['related'],
     /* 默认显示记录的导航栏 */
-    currentRecord: 'current',
+    currentRecord: ['current'],
     /* 专业选项卡切换 */
     relatedDisplay: 'block',
     wholeDisplay: 'none',
@@ -140,18 +140,16 @@ export default {
         key: 'keyResp111',
         dataIndex: 'keyResp111',
         proportion: '100',
-        count: 2,
-      },
-      {
-        dutyExecute: '终端支撑.终端销售',
-        key: 'work111',
-        dataIndex: 'work111',
-        proportion: '66',
         count: 1,
       },
     ],
     /* 默认复选框 */
-    defaultCheckedKeys: '1-0',
+    checkedKeys: [],
+    // defaultExpandedKeys: ['0-0-0'],
+    selectedKeys: [],
+    /* 展开收起节点 */
+    expandedKeys: ['0', '1'],
+    autoExpandParent: true,
     otherDatas: [],
     checkedBearDuty: false,
     allRecordsData: [
@@ -191,7 +189,7 @@ export default {
       });
     },
     *switchMajor({ payload: { major } }, { put }) {
-      console.log(major);
+      console.log('major===', major);
       if (major === 'related') {
         yield put({
           type: 'stateWillUpdate',
@@ -222,7 +220,6 @@ export default {
       }
     },
     *switchRecord({ payload: { record } }, { put }) {
-      console.log(record);
       if (record === 'current') {
         yield put({
           type: 'stateWillUpdate',
@@ -244,7 +241,6 @@ export default {
       }
     },
     *removeCertainDuty({ payload: { recordData, index, maskDisplay } }, { put }) {
-      console.log(maskDisplay);
       if (maskDisplay === 'block') {
         recordData.splice(index, 1);
         yield put({

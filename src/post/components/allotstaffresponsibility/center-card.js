@@ -21,12 +21,18 @@ const CenterCard = ({
   personTreeTwo,
   recordData,
   count,
+  expandedKeys,
+  checkedKeys,
+  selectedKeys,
 }) => {
   const {
     handleClickMajor,
     switchMajor,
     selectKeyDuty,
     setListCount,
+    onExpandKeys,
+    onUpdateCheck,
+    onSelectKeys,
   } = actions;
 
   // 右侧列表title名称动态显示
@@ -36,8 +42,9 @@ const CenterCard = ({
   personTree = (vt === 1) ? personTreeOne : (
     vt === 2 ? personTreeTwo : personTree);
 
-  const onCheck = (checkedKeys, info) => {
-    console.log('info==', info);
+  const onCheck = (checkedKeyss, info) => {
+    console.log(info);
+    onUpdateCheck(checkedKeyss);
     if (info.checked) {
       const keyRespDuty = info.node.props.title;
       const newData = {
@@ -47,30 +54,40 @@ const CenterCard = ({
       };
       selectKeyDuty([...recordData, newData]);
       setListCount(count - 1);
-      console.log(count);
     } else {
-      console.log(count);
       selectKeyDuty(recordData.filter(item => item.count !== count + 1));
       setListCount(count + 1);
     }
   };
 
-  const renderTreeNodes = (data) => {
-    return data.map((item) => {
-      if (item.children) {
-        return (
-          <TreeNode title={item.title} key={item.key} dataRef={item}>
-            {renderTreeNodes(item.children)}
-          </TreeNode>
-        );
-      }
-      return <TreeNode {...item} />;
-    });
+
+  /* 展开/收起节点时触发 */
+  const onExpand = (expandedKeyss) => {
+    console.log('onExpand==', expandedKeyss);
+    onExpandKeys(expandedKeyss);
   };
 
+  /* 点击树触发 */
+  const onSelect = (selectedKeyss, info) => {
+    console.log(info);
+    console.log('onSelect', selectedKeyss);
+    onSelectKeys(selectedKeyss);
+  };
+
+  const renderTreeNodes = data => data.map((item) => {
+    if (item.children) {
+      return (
+        <TreeNode title={item.title} key={item.key} dataRef={item}>
+          {renderTreeNodes(item.children)}
+        </TreeNode>
+      );
+    }
+    return <TreeNode {...item} />;
+  });
+
   const OnHandleClickMajor = (e) => {
-    console.log('click ', e);
-    handleClickMajor(e.key);
+    console.log('click ', e.keyPath);
+    handleClickMajor(e.keyPath);
     switchMajor(e.key);
   };
 
@@ -94,7 +111,12 @@ const CenterCard = ({
           <Tree
             showLine
             checkable
+            onExpand={onExpand}
+            expandedKeys={expandedKeys}
             onCheck={onCheck}
+            checkedKeys={checkedKeys}
+            onSelect={onSelect}
+            selectedKeys={selectedKeys}
           >
             {renderTreeNodes(personTree)}
           </Tree>
