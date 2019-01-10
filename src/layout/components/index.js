@@ -25,6 +25,7 @@ import AllotStaffResponsibility from '../../post/containers/allot-staff-responsi
 import ProfKeyRespMap from '../../post/containers/prof-key-resp-map';
 import BusinessKeyRespMap from '../../post/containers/business-key-resp-map';
 import EmployeeGroup from '../../post/containers/employee-group';
+import BatchMaintain from '../../post/containers/allot-staff-batch-maintain';
 
 
 const { SubMenu } = Menu;
@@ -51,6 +52,7 @@ const MainLayout = (state) => {
       <Route exact path="/post/profkeyrespmap" component={ProfKeyRespMap} />
       <Route exact path="/post/businesskeyrespmap" component={BusinessKeyRespMap} />
       <Route exact path="/post/employeeGroup" component={EmployeeGroup} />
+      <Route exact path="/post/allotStaffResponsibility/batchMaintain" component={BatchMaintain} />
     </Switch>
   );
   const ret = state.headless ? (

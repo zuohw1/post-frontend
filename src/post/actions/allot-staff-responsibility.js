@@ -98,11 +98,12 @@ export function updateChecked(defaultCheckedKeys) {
 }
 
 /* 收起展开节点 */
-export function onExpandKeys(expandedKeys) {
+export function onExpandKeys(expandedKeys, autoExpandParent) {
   return {
     type: 'allotStaffResponsibility/stateWillUpdate',
     payload: {
       expandedKeys,
+      autoExpandParent,
     },
   };
 }

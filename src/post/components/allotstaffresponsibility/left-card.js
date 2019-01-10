@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, Tree, Button } from 'antd';
+import { Link } from 'dva/router';
 import '../assets/styles/allot-staff-responsibility.less';
 
 
@@ -23,8 +24,12 @@ const peopleTree = [
 
 const LeftCard = ({
   actions,
+  recordDataOne,
+  recordDataTwo,
 }) => {
-  const { getPeopleTitle, setClickRespId, onUpdateCheck } = actions;
+  const {
+    getPeopleTitle, setClickRespId, onUpdateCheck, onExpandKeys, selectKeyDuty,
+  } = actions;
   /* 选中人员 */
   const select = (selectedKeys, info) => {
     const peopleTitle = info.node.props.title;
@@ -32,9 +37,13 @@ const LeftCard = ({
     const peopleId = info.node.props.respType;
     setClickRespId(peopleId);
     if (peopleId === '10') {
+      selectKeyDuty(recordDataOne);
       onUpdateCheck(['0-0-0']);
+      onExpandKeys(['0'], true);
     } else if (peopleId === '20') {
+      selectKeyDuty(recordDataTwo);
       onUpdateCheck(['1-1-0']);
+      onExpandKeys(['1'], true);
     }
   };
   const renderTreeNodes = (data) => {
@@ -49,17 +58,16 @@ const LeftCard = ({
       return <TreeNode {...item} />;
     });
   };
-  const OnClick = () => {
-  };
+
   return (
     <div>
-      <Card
-        title="人员列表"
-      >
+      <Card title="人员列表">
         <Tree defaultExpandParent onSelect={select} defaultExpandAll>
           {renderTreeNodes(peopleTree)}
         </Tree>
-        <Button className="allot-staff-part-left-btn" onClick={OnClick}>批量维护</Button>
+        <Button className="allot-staff-part-left-btn">
+          <Link to="/post/allotStaffResponsibility/batchMaintain">批量维护</Link>
+        </Button>
       </Card>
     </div>
   );

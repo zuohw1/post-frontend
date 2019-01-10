@@ -3,7 +3,6 @@ import {
   Card, Menu, Input, Button, Tree,
 } from 'antd';
 import '../assets/styles/allot-staff-responsibility.less';
-import AllotWhole from './allot-whole';
 
 const { TreeNode } = Tree;
 let personTree = [];
@@ -19,11 +18,13 @@ const CenterCard = ({
   peopleId,
   personTreeOne,
   personTreeTwo,
+  wholeTree,
   recordData,
   count,
   expandedKeys,
   checkedKeys,
   selectedKeys,
+  autoExpandParent,
 }) => {
   const {
     handleClickMajor,
@@ -64,7 +65,7 @@ const CenterCard = ({
   /* 展开/收起节点时触发 */
   const onExpand = (expandedKeyss) => {
     console.log('onExpand==', expandedKeyss);
-    onExpandKeys(expandedKeyss);
+    onExpandKeys(expandedKeyss, false);
   };
 
   /* 点击树触发 */
@@ -111,6 +112,7 @@ const CenterCard = ({
           <Tree
             showLine
             checkable
+            autoExpandParent={autoExpandParent}
             onExpand={onExpand}
             expandedKeys={expandedKeys}
             onCheck={onCheck}
@@ -127,7 +129,19 @@ const CenterCard = ({
             <Button type="primary" icon="search" style={{ marginRight: 20 }}>查询</Button>
             <Button type="primary" icon="reload">全部</Button>
           </div>
-          <AllotWhole />
+          <Tree
+            showLine
+            checkable
+            autoExpandParent={autoExpandParent}
+            onExpand={onExpand}
+            expandedKeys={expandedKeys}
+            onCheck={onCheck}
+            checkedKeys={checkedKeys}
+            onSelect={onSelect}
+            selectedKeys={selectedKeys}
+          >
+            {renderTreeNodes(wholeTree)}
+          </Tree>
         </div>
         <div style={{ display: checklistDisplay }}>
           <div className="whole-major-search">

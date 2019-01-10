@@ -9,13 +9,13 @@ export default ({
   actions,
   currentDisplay,
   allDisplay,
-  recordData,
   otherDatas,
   checkedBearDuty,
   allRecordsData,
   person,
   count,
   currentRecord,
+  recordData,
 }) => {
   const {
     handleClickRecord,
@@ -24,6 +24,8 @@ export default ({
     isChecked,
     setListCount,
   } = actions;
+  // 右侧列表title名称动态显示
+  console.log(recordData);
   const remove = (records) => {
     console.log(records);
     selectKeyDuty(recordData.filter(item => item.count !== records.count));
@@ -93,7 +95,7 @@ export default ({
           <p>
             <span>
               <span className="major-name">{person}</span>
-            的关键职责 (工作量之和：<span>20%</span>)
+            的关键职责 (工作量之和：<span>100%</span>)
             </span>
             <Button icon="save" style={{ marginLeft: 60 }}>保存</Button>
           </p>

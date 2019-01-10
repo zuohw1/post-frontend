@@ -20,6 +20,40 @@ export default {
     person: '',
     /* 选中人员ID */
     peopleId: '',
+    /* 添加到表格中的数据 */
+    recordData: [],
+    recordDataOne: [
+      {
+        dutyExecute: '市本部部门正职',
+        key: 'keyResp111',
+        dataIndex: 'keyResp111',
+        proportion: '20',
+        count: 1,
+      },
+      {
+        dutyExecute: '技术销售',
+        key: 'keyResp222',
+        dataIndex: 'keyResp222',
+        proportion: '80',
+        count: 2,
+      },
+    ],
+    recordDataTwo: [
+      {
+        dutyExecute: '区县本部部门副职',
+        key: 'keyResp333',
+        dataIndex: 'keyResp333',
+        proportion: '50',
+        count: 3,
+      },
+      {
+        dutyExecute: '技术支援',
+        key: 'keyResp444',
+        dataIndex: 'keyResp555',
+        proportion: '50',
+        count: 4,
+      },
+    ],
     /* 选中人员对应的数据 */
     personTreeOne: [
       {
@@ -131,24 +165,67 @@ export default {
         ],
       },
     ],
+    wholeTree: [
+      {
+        title: '工会',
+        key: '0',
+        children: [
+          {
+            title: '技术销售',
+            key: '0-0',
+            children: [
+              { title: '技术销售', key: '0-0-0' },
+            ],
+          },
+          {
+            title: '其他',
+            key: '0-1',
+            children: [
+              { title: '其他', key: '0-1-0' },
+            ],
+          },
+        ],
+      },
+      {
+        title: 'IT规划',
+        key: '1',
+        children: [
+          {
+            title: 'IT规划',
+            key: '1-0',
+            children: [
+              { title: '系统架构设计', key: '1-0-0' },
+              { title: '行动计划制定', key: '1-0-1' },
+              { title: 'IT系统战略制定', key: '1-0-2' },
+            ],
+          },
+          {
+            title: '技术支援',
+            key: '1-1',
+            children: [
+              { title: '行动计划制定', key: '1-1-0' },
+              { title: 'IT系统战略制定', key: '1-1-1' },
+            ],
+          },
+          {
+            title: '立项评估',
+            key: '1-2',
+            children: [
+              { title: '行动计划制定', key: '1-2-0' },
+              { title: 'IT系统战略制定', key: '1-2-1' },
+            ],
+          },
+        ],
+      },
+    ],
     /* 关键职责 */
     keyDuty: '',
     /* 当前记录的关键职责 */
-    recordData: [
-      {
-        dutyExecute: '公众客户销售.营业厅销售经理',
-        key: 'keyResp111',
-        dataIndex: 'keyResp111',
-        proportion: '100',
-        count: 1,
-      },
-    ],
     /* 默认复选框 */
     checkedKeys: [],
-    // defaultExpandedKeys: ['0-0-0'],
     selectedKeys: [],
     /* 展开收起节点 */
-    expandedKeys: ['0', '1'],
+    expandedKeys: [],
     autoExpandParent: true,
     otherDatas: [],
     checkedBearDuty: false,
@@ -162,6 +239,44 @@ export default {
             key: '0-0',
           }],
       }],
+    /* 表格数据 */
+    tableData: {
+      total: 0,
+      size: 0,
+      current: 1,
+      records: [
+        {
+          key: 1,
+          groupName: '沧州市分公司办公室',
+          name: '高志杰',
+          employeeNumber: '0020478',
+          profession: '市管管理人员',
+          keyResp: '市本部部门副职',
+          work: '100',
+        },
+        {
+          key: 2,
+          groupName: '沧州市分公司办公室',
+          name: '吴涛',
+          employeeNumber: '0020611',
+          profession: '综合行政',
+          keyResp: '督查督办',
+          work: '20',
+
+        },
+        {
+          key: 3,
+          groupName: '沧州市分公司办公室',
+          name: '吴涛',
+          employeeNumber: '0020611',
+          profession: '综合行政',
+          keyResp: '公文管理',
+          work: '60',
+
+        },
+      ],
+      pages: 0,
+    },
   },
   reducers: {
     stateWillUpdate(state, { payload }) {
@@ -285,6 +400,7 @@ export default {
         });
       }
     },
+    /* 选中记录 */
   },
   subscriptions: {
   },
