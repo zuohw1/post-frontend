@@ -9,13 +9,13 @@ export default ({
   actions,
   currentDisplay,
   allDisplay,
-  recordData,
   otherDatas,
   checkedBearDuty,
   allRecordsData,
   person,
   count,
   currentRecord,
+  recordData,
 }) => {
   const {
     handleClickRecord,
@@ -24,6 +24,8 @@ export default ({
     isChecked,
     setListCount,
   } = actions;
+  // 右侧列表title名称动态显示
+  console.log(recordData);
   const remove = (records) => {
     console.log(records);
     selectKeyDuty(recordData.filter(item => item.count !== records.count));
@@ -31,7 +33,7 @@ export default ({
   };
   const onHandleClickRecord = (e) => {
     console.log('click ', e);
-    handleClickRecord(e.key);
+    handleClickRecord(e.keyPath);
     switchRecord(e.key);
   };
   const changeBearDuty = (e) => {
@@ -91,7 +93,10 @@ export default ({
       >
         <div style={{ display: currentDisplay }}>
           <p>
-            <span className="major-name">{person}</span>的关键职责(工作量之和：0%)
+            <span>
+              <span className="major-name">{person}</span>
+            的关键职责 (工作量之和：<span>100%</span>)
+            </span>
             <Button icon="save" style={{ marginLeft: 60 }}>保存</Button>
           </p>
           <Checkbox
@@ -102,6 +107,7 @@ export default ({
             不承担任何工作职责
           </Checkbox>
           <Table
+            rowKey={records => records.count}
             pagination={false}
             columns={columns}
             dataSource={recordData}

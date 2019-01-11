@@ -9,6 +9,7 @@ import SText from './stext';
 const FormItem = Form.Item;
 const EditableContext = React.createContext();
 const { Option } = Select;
+// const initFlag = 0;
 
 const EditableRow = ({ form, index, ...props }) => (
   <EditableContext.Provider value={form}>
@@ -50,6 +51,7 @@ export default ({
   countZzz,
 }) => {
   const {
+    // getDataSource,
     setListDataSourceAll,
     setListDataSourceGwxl,
     setListDataSourceZxl,
@@ -67,6 +69,12 @@ export default ({
   // 右侧列表title名称动态显示
   const vt = (clickRespType !== 'undefined') ? (clickRespType / 10) : 0;
   const showTitle = listTitles[vt];
+
+  // if (initFlag === 0) {
+  //   getDataSource(0);
+  // }
+  // console.log('0000---dataSourceAll', dataSourceAll);
+  // console.log('0000---countAll', countAll);
 
   // 右侧列表根据树节点点击的职责层级确定显示的数据
   const dataSource = (vt === 0) ? dataSourceAll : (
@@ -113,13 +121,13 @@ export default ({
   const columnsMap = {
     columns0: [{
       title: '岗位序列',
-      dataIndex: 'postName',
+      dataIndex: 'posCateName_one',
       width: '30%',
       editable: true,
       itemType: 'Text',
     }, {
       title: '编码',
-      dataIndex: 'postCode',
+      dataIndex: 'elementCode',
       width: '30%',
       editable: true,
       itemType: 'Text',
@@ -139,20 +147,20 @@ export default ({
     }],
     columns1: [{
       title: '子序列',
-      dataIndex: 'zxlName',
+      dataIndex: 'posCateName_two',
       width: '25%',
       editable: true,
       itemType: 'Text',
     }, {
       title: '所属岗位序列',
-      dataIndex: 'ssPostName',
+      dataIndex: 'parentName_two',
       width: '35%',
       editable: true,
       itemType: 'ssText',
       respType: 10,
     }, {
       title: '编码',
-      dataIndex: 'zxlCode',
+      dataIndex: 'elementCode',
       width: '25%',
       editable: true,
       itemType: 'Text',
@@ -172,19 +180,19 @@ export default ({
     }],
     columns2: [{
       title: '专业',
-      dataIndex: 'zyName',
+      dataIndex: 'posCateName_three',
       width: '25%',
       editable: true,
     }, {
       title: '所属子序列',
-      dataIndex: 'ssZxlName',
+      dataIndex: 'parentName_three',
       width: '35%',
       editable: true,
       itemType: 'ssText',
       respType: 20,
     }, {
       title: '编码',
-      dataIndex: 'zyCode',
+      dataIndex: 'elementCode',
       width: '15%',
       editable: true,
     }, {
@@ -203,48 +211,48 @@ export default ({
     }],
     columns3: [{
       title: '关键职责',
-      dataIndex: 'gjzzName',
+      dataIndex: 'posCateName_four',
       width: '7%',
       editable: true,
     }, {
       title: '所属专业',
-      dataIndex: 'ssZyName',
+      dataIndex: 'parentName_four',
       width: '12%',
       editable: true,
       itemType: 'ssText',
       respType: 30,
     }, {
       title: '编码',
-      dataIndex: 'gjzzCode',
+      dataIndex: 'elementCode',
       width: '2%',
       editable: true,
     }, {
       title: '学历要求',
-      dataIndex: 'eduEqr',
+      dataIndex: 'attribute2_four',
       width: '7%',
       editable: true,
     }, {
       title: '工作经验',
-      dataIndex: 'workExp',
+      dataIndex: 'attribute3_four',
       width: '7%',
       editable: true,
     }, {
       title: '组织层级',
-      dataIndex: 'orgLevel',
+      dataIndex: 'attribute4_four',
       width: '100',
       editable: true,
       itemType: 'Checkbox',
       list: [{ label: '集团', value: 'J' }, { label: '省', value: 'S' }, { label: '市', value: 'D' }, { label: '县', value: 'X' }],
     }, {
       title: '是否核心',
-      dataIndex: 'isCore',
+      dataIndex: 'attribute5_four',
       width: '100',
       editable: true,
       itemType: 'Select',
       list: [{ id: '0', title: '是' }, { id: '1', title: '否' }],
     }, {
       title: '标准职级',
-      dataIndex: 'standardZj',
+      dataIndex: 'attribute6_four',
       width: '7%',
       editable: true,
       itemType: 'Select',
@@ -254,7 +262,7 @@ export default ({
         { id: '19', title: '19' }, { id: '20', title: '20' }, { id: '21', title: '21' }, { id: '22', title: '22' }],
     }, {
       title: '集团职级',
-      dataIndex: 'groupZj',
+      dataIndex: 'attribute7_four',
       width: '7%',
       editable: true,
       itemType: 'Select',
@@ -264,7 +272,7 @@ export default ({
         { id: '19', title: '19' }, { id: '20', title: '20' }, { id: '21', title: '21' }, { id: '22', title: '22' }],
     }, {
       title: '省职级',
-      dataIndex: 'provZj',
+      dataIndex: 'attribute8_four',
       width: '7%',
       editable: true,
       itemType: 'Select',
@@ -274,7 +282,7 @@ export default ({
         { id: '19', title: '19' }, { id: '20', title: '20' }, { id: '21', title: '21' }, { id: '22', title: '22' }],
     }, {
       title: '地市职级',
-      dataIndex: 'dsZj',
+      dataIndex: 'attribute9_four',
       width: '7%',
       editable: true,
       itemType: 'Select',
@@ -284,7 +292,7 @@ export default ({
         { id: '19', title: '19' }, { id: '20', title: '20' }, { id: '21', title: '21' }, { id: '22', title: '22' }],
     }, {
       title: '区县职级',
-      dataIndex: 'qxZj',
+      dataIndex: 'attribute10_four',
       width: '7%',
       editable: true,
       itemType: 'Select',
@@ -308,19 +316,19 @@ export default ({
     }],
     columns4: [{
       title: '子职责',
-      dataIndex: 'zzzName',
+      dataIndex: 'posCateName_five',
       width: '35%',
       editable: true,
     }, {
       title: '所属关键职责',
-      dataIndex: 'ssGjzzName',
+      dataIndex: 'parentName_five',
       width: '35%',
       editable: true,
       itemType: 'ssText',
       respType: 40,
     }, {
       title: '编码',
-      dataIndex: 'zzzCode',
+      dataIndex: 'attribute11',
       width: '15%',
       editable: true,
     }, {
@@ -339,19 +347,19 @@ export default ({
     }],
     columns5: [{
       title: '子职责',
-      dataIndex: 'zzzName',
+      dataIndex: 'posCateName_five',
       width: '35%',
       editable: true,
     }, {
       title: '所属关键职责',
-      dataIndex: 'ssGjzzNameN',
+      dataIndex: 'parentName_five',
       width: '35%',
       editable: true,
       itemType: 'ssText',
       respType: 50,
     }, {
       title: '编码',
-      dataIndex: 'zzzCode',
+      dataIndex: 'attribute11',
       width: '15%',
       editable: true,
     }, {
@@ -393,7 +401,7 @@ export default ({
     } else if (vt === 1) {
       newData = {
         key: countGwxl,
-        zxlName: '',
+        posCateName_two: '',
         ssPostName: '',
         zxlCode: '',
       };

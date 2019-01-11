@@ -40,7 +40,7 @@ export function removeCertainDuty(recordData, index, maskDisplay) {
 }
 export function isChecked(checkedBearDuty, recordData, otherDatas) {
   return {
-    type: 'allotStaffResponsibility/isCheacked',
+    type: 'allotStaffResponsibility/isChecked',
     payload: {
       checkedBearDuty, recordData, otherDatas,
     },
@@ -93,6 +93,37 @@ export function updateChecked(defaultCheckedKeys) {
     type: 'allotStaffResponsibility/stateWillUpdate',
     payload: {
       defaultCheckedKeys,
+    },
+  };
+}
+
+/* 收起展开节点 */
+export function onExpandKeys(expandedKeys, autoExpandParent) {
+  return {
+    type: 'allotStaffResponsibility/stateWillUpdate',
+    payload: {
+      expandedKeys,
+      autoExpandParent,
+    },
+  };
+}
+
+/* 收起展开节点 */
+export function onUpdateCheck(checkedKeys) {
+  return {
+    type: 'allotStaffResponsibility/stateWillUpdate',
+    payload: {
+      checkedKeys,
+    },
+  };
+}
+
+/* 点击树触发 */
+export function onSelectKeys(selectedKeys) {
+  return {
+    type: 'allotStaffResponsibility/stateWillUpdate',
+    payload: {
+      selectedKeys,
     },
   };
 }

@@ -1,3 +1,146 @@
+import KeyRespService from '../services/key-resp';
+
+// /* 格式化table数据 */
+// const formatTableData = (dataSourceAll) => {
+//   const treeTableData = dataSourceAll.map((item, index) => {
+//     return { ...item, key: index };
+//   });
+//   return treeTableData;
+// };
+
+/* 格式化职责左树数据 */
+const formatRespTreeData = (resptreebk, dataSourceAll, elementType) => {
+  console.log('formatRespTreeData()---处理数据前，原左树数据：', resptreebk, dataSourceAll, elementType);
+  if (dataSourceAll.length === 0) {
+    return resptreebk;
+  }
+  const treeDataNew = [{
+    title: '全部',
+    key: '0-0',
+    children: [],
+  }];
+  if (elementType === 0) {
+    let title0 = '';
+    const treeDateC = dataSourceAll.map((item, index) => {
+      title0 = item.posCateName_one;
+      return {
+        ...item, key: `0-0-${index}`, title: title0,
+      };
+    });
+    treeDataNew[0].children = treeDateC;
+    return treeDataNew;
+  } else if (elementType === '10') {
+    // 此次查出的上级id
+    const parentId = dataSourceAll[0].parentId.toString();
+    let addChild;
+    let titlechild;
+    // 处理成需要的左树数据-- 将查询到的集合加在对应的children下
+    const dealData = resptreebk[0].children.map((item) => {
+      if (item.posCateId === parentId) {
+        addChild = dataSourceAll.map((itemchild, index) => {
+          titlechild = itemchild.posCateName_two;
+          return { ...itemchild, key: `${item.key}-${index}`, title: titlechild };
+        });
+        return { ...item, children: addChild };
+      } else {
+        return item;
+      }
+    });
+    treeDataNew[0].children = dealData;
+    return treeDataNew;
+  } else if (elementType === '20') {
+    let itemAChild;
+    let resptreebkIChild;
+    const parentIdClick = dataSourceAll[0].parentId.toString();
+    treeDataNew[0].children = resptreebk[0].children.map((resptreebkI) => {
+      if (resptreebkI.children !== undefined) {
+        resptreebkIChild = resptreebkI.children.map((itemA) => {
+          if (itemA.posCateId === parentIdClick) {
+            itemAChild = dataSourceAll.map((itemchild, index) => {
+              return { ...itemchild, key: `${itemA.key}-${index}`, title: itemchild.posCateName_three };
+            });
+            return { ...itemA, children: itemAChild };
+          } else {
+            return itemA;
+          }
+        });
+        return { ...resptreebkI, children: resptreebkIChild };
+      } else {
+        return resptreebkI;
+      }
+    });
+    return treeDataNew;
+  } else if (elementType === '30') {
+    let itemBChild;
+    let itemAChild;
+    let resptreebkIChild;
+    const parentIdClick = dataSourceAll[0].parentId.toString();
+    treeDataNew[0].children = resptreebk[0].children.map((resptreebkI) => {
+      if (resptreebkI.children !== undefined) {
+        resptreebkIChild = resptreebkI.children.map((itemA) => {
+          if (itemA.children !== undefined) {
+            itemAChild = itemA.children.map((itemB) => {
+              if (itemB.posCateId === parentIdClick) {
+                itemBChild = dataSourceAll.map((itemchild, index) => {
+                  return { ...itemchild, key: `${itemB.key}-${index}`, title: itemchild.posCateName_four };
+                });
+                return { ...itemB, children: itemBChild };
+              } else {
+                return itemB;
+              }
+            });
+            return { ...itemA, children: itemAChild };
+          } else {
+            return itemA;
+          }
+        });
+        return { ...resptreebkI, children: resptreebkIChild };
+      } else {
+        return resptreebkI;
+      }
+    });
+    return treeDataNew;
+  } else if (elementType === '40') {
+    let itemCChild;
+    let itemBChild;
+    let itemAChild;
+    let resptreebkIChild;
+    const parentIdClick = dataSourceAll[0].parentId.toString();
+    treeDataNew[0].children = resptreebk[0].children.map((resptreebkI) => {
+      if (resptreebkI.children !== undefined) {
+        resptreebkIChild = resptreebkI.children.map((itemA) => {
+          if (itemA.children !== undefined) {
+            itemAChild = itemA.children.map((itemB) => {
+              if (itemB.children !== undefined) {
+                itemBChild = itemB.children.map((itemC) => {
+                  if (itemC.posCateId === parentIdClick) {
+                    itemCChild = dataSourceAll.map((itemchild, index) => {
+                      return { ...itemchild, key: `${itemC.key}-${index}`, title: itemchild.posCateName_five };
+                    });
+                    return { ...itemC, children: itemCChild };
+                  } else {
+                    return itemC;
+                  }
+                });
+                return { ...itemB, children: itemBChild };
+              } else {
+                return itemB;
+              }
+            });
+            return { ...itemA, children: itemAChild };
+          } else {
+            return itemA;
+          }
+        });
+        return { ...resptreebkI, children: resptreebkIChild };
+      } else {
+        return resptreebkI;
+      }
+    });
+    return treeDataNew;
+  }
+  return resptreebk;
+};
 
 export default {
   namespace: 'keyResp',
@@ -11,136 +154,33 @@ export default {
     /* 右侧列表title数组 */
     listTitles: ['岗位序列列表', '子序列列表', '专业列表', '关键职责列表', '子职责列表', '子职责列表'],
     /* 列表数据-全部 */
-    dataSourceAll: [{
-      key: '0',
-      postName: '技术序列',
-      postCode: '30',
-    }, {
-      key: '1',
-      postName: '支撑序列',
-      postCode: '40',
-    }, {
-      key: '2',
-      postName: '管理序列',
-      postCode: '50',
-    }, {
-      key: '3',
-      postName: '市场序列',
-      postCode: '60',
-    }],
+    dataSourceAll: [],
     /* 列表记录条数-全部 */
-    countAll: 4,
+    // countAll: 4,
+    countAll: 0,
     /* 列表数据-岗位序列 */
-    dataSourceGwxl: [{
-      key: '0',
-      zxlName: '产品与行业应用管理',
-      ssPostName: '市场序列',
-      zxlCode: '250',
-    }, {
-      key: '1',
-      zxlName: '市场业务管理',
-      ssPostName: '市场序列',
-      zxlCode: '260',
-    }, {
-      key: '2',
-      zxlName: '渠道管理',
-      ssPostName: '市场序列',
-      zxlCode: '270',
-    }, {
-      key: '3',
-      zxlName: '终端管理',
-      ssPostName: '市场序列',
-      zxlCode: '280',
-    }, {
-      key: '4',
-      zxlName: '国际业务销售',
-      ssPostName: '市场序列',
-      zxlCode: '290',
-    }],
+    dataSourceGwxl: [],
     /* 列表记录条数-岗位序列 */
-    countGwxl: 5,
+    countGwxl: 0,
     /* 列表数据-子序列 */
-    dataSourceZxl: [{
-      key: '0',
-      zyName: '合作业务管理',
-      ssZxlName: '产品与行业应用管理',
-      zyCode: '0060',
-    }, {
-      key: '1',
-      zyName: '产品管理',
-      ssZxlName: '产品与行业应用管理',
-      zyCode: '0070',
-    }, {
-      key: '2',
-      zyName: '行业应用开发',
-      ssZxlName: '产品与行业应用管理',
-      zyCode: '0080',
-    }],
+    dataSourceZxl: [],
     /* 列表记录条数-子序列 */
-    countZxl: 3,
+    countZxl: 0,
     /* 列表数据-专业 */
-    dataSourceZy: [
-      {
-        key: '0',
-        gjzzName: '合作策略管理',
-        ssZyName: '合作业务管理',
-        gjzzCode: '00270',
-        eduEqr: '本科',
-        workExp: '本科五年以上工作经验',
-        orgLevel: '集团省市县',
-        orgLevel_val: ['J', 'S', 'D', 'X'], // 用于编辑状态下勾选默认值
-        isCore: '是',
-        standardZj: '7',
-        groupZj: '7',
-        provZj: '8',
-        dsZj: '9',
-        qxZj: '9',
-      }, {
-        key: '1',
-        gjzzName: '合作策略管理',
-        ssZyName: '合作业务管理',
-        gjzzCode: '00280',
-        eduEqr: '本科',
-        workExp: '两年以上工作经验',
-        orgLevel: '市县',
-        orgLevel_val: ['D', 'X'],
-        isCore: '是',
-        standardZj: '7',
-        groupZj: '7',
-        provZj: '8',
-        dsZj: '9',
-        qxZj: '9',
-      },
-    ],
+    dataSourceZy: [],
     /* 列表记录条数-专业 */
-    countZy: 2,
+    countZy: 0,
     /* 列表数据-关键职责 */
-    dataSourceZz: [
-      {
-        key: '0',
-        zzzName: '合作协议范本拟定，合作协议签署',
-        ssGjzzName: '合作策略管理',
-        zzzCode: '00123',
-      }, {
-        key: '1',
-        zzzName: '合作管理办法，管理实施细则拟定',
-        ssGjzzName: '合作策略管理',
-        zzzCode: '00124',
-      },
-    ],
+    dataSourceZz: [],
     /* 列表记录条数-关键职责 */
-    countZz: 2,
+    countZz: 0,
     /* 列表数据-子职责 */
-    dataSourceZzz: [
-      {
-        key: '0',
-        zzzName: '合作协议范本拟定，合作协议签署0001',
-        ssGjzzNameN: '合作策略管理',
-        zzzCode: '00123',
-      },
-    ],
+    dataSourceZzz: [],
     /* 列表记录条数-子职责 */
-    countZzz: 1,
+    countZzz: 0,
+    /* 左侧职责树 */
+    resptree: [],
+    elementType: 0,
   },
   reducers: {
     stateWillUpdate(state, { payload }) {
@@ -151,6 +191,52 @@ export default {
     },
   },
   effects: {
+    /* 列表查询 */
+    * getDataSource({ payload: { elementType, posCateId } }, { select, call, put }) {
+      const resptreebk = yield select(state => state.keyResp.resptree);
+      const dataSourceAll = yield select(state => state.keyResp.dataSourceAll);
+      const countAll = yield select(state => state.keyResp.countAll);
+      const dataSourceGwxl = yield select(state => state.keyResp.dataSourceGwxl);
+      const countGwxl = yield select(state => state.keyResp.countGwxl);
+      const dataSourceZxl = yield select(state => state.keyResp.dataSourceZxl);
+      const countZxl = yield select(state => state.keyResp.countZxl);
+      const dataSourceZy = yield select(state => state.keyResp.dataSourceZy);
+      const countZy = yield select(state => state.keyResp.countZy);
+      const dataSourceZz = yield select(state => state.keyResp.dataSourceZz);
+      const countZz = yield select(state => state.keyResp.countZz);
+      const dataSourceZzz = yield select(state => state.dataSourceZzz);
+      const countZzz = yield select(state => state.keyResp.countZzz);
+
+      // console.log('11111111111111resptreebk', resptreebk, elementType, posCateId);
+      const dataSourceGet = yield call(KeyRespService.getDataSource, elementType, posCateId);
+      // const treeTableData = formatTableData(dataSourceGet);
+      // console.log('2222222222222-----dataSourceGet:', dataSourceGet);
+      let formatRespTree = [];
+      setTimeout(
+        formatRespTree = formatRespTreeData(resptreebk, dataSourceGet, elementType),
+        1000,
+      );
+      // console.log('2222222222222-----formatRespTree:', formatRespTree);
+
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          resptree: formatRespTree,
+          dataSourceAll: (elementType === 0) ? dataSourceGet : dataSourceAll,
+          countAll: (elementType === '0') ? dataSourceGet.length : countAll,
+          dataSourceGwxl: (elementType === '10') ? dataSourceGet : dataSourceGwxl,
+          countGwxl: (elementType === '10') ? dataSourceGet.length : countGwxl,
+          dataSourceZxl: (elementType === '20') ? dataSourceGet : dataSourceZxl,
+          countZxl: (elementType === '20') ? dataSourceGet.length : countZxl,
+          dataSourceZy: (elementType === '30') ? dataSourceGet : dataSourceZy,
+          countZy: (elementType === '30') ? dataSourceGet.length : countZy,
+          dataSourceZz: (elementType === '40') ? dataSourceGet : dataSourceZz,
+          countZz: (elementType === '40') ? dataSourceGet.length : countZz,
+          dataSourceZzz: (elementType === '50') ? dataSourceGet : dataSourceZzz,
+          countZzz: (elementType === '50') ? dataSourceGet.length : countZzz,
+        },
+      });
+    },
   },
   subscriptions: {
   },
