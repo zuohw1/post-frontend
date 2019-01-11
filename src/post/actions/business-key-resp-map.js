@@ -70,14 +70,14 @@ export function setListTitle(listTitle, isTitleSelected) {
     },
   };
 }
-export function setLeftExpandedKeys(leftExpandedKeys) {
+/* export function setLeftExpandedKeys(leftExpandedKeys) {
   return {
     type: 'businesskeyrespmap/stateWillUpdate',
     payload: {
       leftExpandedKeys,
     },
   };
-}
+} */
 
 
 export function setKeyCheckedKeys(keyCheckedKeys) {

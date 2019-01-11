@@ -18,6 +18,7 @@ const LeftCard = ({
     deleteTreeNode,
     getLibTree,
     setLibTreeSpinning,
+    primaryBusinessShow,
   } = actions;
   if (vFlag) {
     getLeftCardTree({ majorId: '' });
@@ -48,6 +49,7 @@ const LeftCard = ({
   const addProfModalCancel = () => {
     isAlertShow(false);
     isAddprofModalShow(false);
+    primaryBusinessShow(false);
   };
   const onselect = (keySelected, e) => {
     // 点击更新关键指责库树 异步请求

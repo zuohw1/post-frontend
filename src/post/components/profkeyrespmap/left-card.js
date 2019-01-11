@@ -5,25 +5,34 @@ import {
 import AddProfDivision from './add-prof-division';
 
 const { TreeNode } = Tree;
-
+let vFlag = true;
 const LeftCard = ({
-  actions, addProfModal, leftCardTree, isPrimaryShow, primaryBusinessData, showAlert, selectedKeys,
+  actions, addProfModal, leftCardTree, isPrimaryShow, primaryBusinessData, showAlert, selectedKey,
   keyRespList,
 }) => {
   const {
-    isAddprofModalShow, setPrimaryBusinessData, isAlertShow, updateLeftCardTree, setSelectedKeys,
-    setListTitle, setKeyCheckedKeys, setKeyexpandedKeys,
+    isAddprofModalShow, setPrimaryBusinessData,
+    isAlertShow, setSelectedKey,
+    setListTitle,
+    getLeftCardTree,
+    deleteTreeNode,
+    getLibTree,
+    setLibTreeSpinning,
+    primaryBusinessShow,
   } = actions;
+  if (vFlag) {
+    getLeftCardTree({ majorId: '' });
+    vFlag = false;
+  }
   const addProf = () => {
-    const newLeftCardTree = [...leftCardTree];
-    const newprimaryBusinessData = newLeftCardTree[0].children.map(
-      ele => ele.title,
+    const newprimaryBusinessData = leftCardTree.map(
+      ele => ele.majorName,
     );
     setPrimaryBusinessData(newprimaryBusinessData);
     isAddprofModalShow(true);
   };
   const deleteProf = () => {
-    if (selectedKeys.length === 0) {
+    if (selectedKey.length === 0) {
       return;
     }
     if (keyRespList.length !== 0) {
@@ -35,53 +44,61 @@ const LeftCard = ({
       message.warning('请先删除关联映射');
       return;
     }
-    const newLeftTree = [...leftCardTree];
-    removeTreeNode(newLeftTree);
-    updateLeftCardTree(newLeftTree);
+    removeTreeNode(leftCardTree);
   };
   const addProfModalCancel = () => {
     isAlertShow(false);
     isAddprofModalShow(false);
+    primaryBusinessShow(false);
   };
-  const onselect = (selectedKey, e) => {
+  const onselect = (keySelected, e) => {
+    // 点击更新关键指责库树 异步请求
+    setLibTreeSpinning(true);
+    getLibTree(keySelected[0]);
     const { selected } = e;
-    console.log(selectedKey);
-    if (selectedKey.indexOf('0-1') > -1) {
-      console.log(111);
-      setKeyCheckedKeys(['0', '0-0', '1', '1-0', '2-0', '2-1', '2-2']);
-      setKeyexpandedKeys(['0', '1', '2']);
-    } else {
-      setKeyCheckedKeys([]);
-      setKeyexpandedKeys([]);
-    }
     // 设置要删除的元素
-    setSelectedKeys(selectedKey);
+    setSelectedKey(keySelected);
     // 设置右边card的title
     const { title } = e.node.props;
     setListTitle(title, selected);
   };
 
   const removeTreeNode = (nodes) => {
-    nodes.forEach((ele, index) => {
+    nodes.forEach((ele) => {
       if (typeof ele.children !== 'undefined') {
         removeTreeNode(ele.children);
       }
-      console.log(1111, selectedKeys);
-      if (selectedKeys.indexOf(ele.key) >= 0) {
-        nodes.splice(index, 1);
+      if (selectedKey.indexOf(ele.majorId) >= 0) {
+        const { majorId, majorType } = ele;
+        deleteTreeNode(majorType, majorId);
       }
     });
   };
-
   const renderTreeNodes = data => data.map((item) => {
     if (item.children) {
       return (
-        <TreeNode title={item.title} key={item.key} dataRef={item}>
+        <TreeNode title={item.majorName} key={item.majorId} dataRef={item}>
           {renderTreeNodes(item.children)}
         </TreeNode>
       );
     }
-    return <TreeNode {...item} />;
+    return (
+      <TreeNode
+        title={item.majorName}
+        key={item.majorId}
+        dataRef={item}
+      />
+    );
+  });
+  const onLoadData = treeNode => new Promise((resolve) => {
+    console.log(33333, treeNode);
+    if (treeNode.props.children) {
+      resolve();
+      return;
+    }
+    const { dataRef } = treeNode.props;
+    getLeftCardTree(dataRef, leftCardTree);
+    resolve();
   });
   return (
     <Card
@@ -94,6 +111,7 @@ const LeftCard = ({
       )}
     >
       <Tree
+        loadData={onLoadData}
         showLine
         defaultExpandedKeys={['a']}
         onSelect={onselect}
@@ -102,6 +120,7 @@ const LeftCard = ({
       </Tree>
       <Modal
         title="新增专业划分"
+        destroyOnClose
         visible={addProfModal}
         onCancel={addProfModalCancel}
         footer={null}

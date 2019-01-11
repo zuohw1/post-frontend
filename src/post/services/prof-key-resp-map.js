@@ -3,7 +3,7 @@ import request from '../../utils/request';
 export default {
   getLeftTree(id) {
     return request.post('business/info', {
-      operatorId: '', respId: '200000979', versionId: '407921', style: 'BUSINESS', parentId: id,
+      operatorId: '', respId: '200000979', versionId: '407921', style: 'MAJOR', parentId: id,
     });
   },
   getLibTree(id) {
@@ -11,13 +11,13 @@ export default {
   },
   addTreeNode(majorName, majorDesc, majorType, majorIdParent) {
     return request.post('business/save', {
-      majorType, majorDesc, majorName, majorStyle: 'BUSINESS', majorIdParent, operatorId: 2,
+      majorType, majorDesc, majorName, majorStyle: 'MAJOR', majorIdParent, operatorId: 2,
     });
   },
   deleteTreeNode(type, id) {
-    return request.post('business/del', { majorTpye: type, majorId: id, style: 'BUSINESS' });
+    return request.post('business/del', { majorTpye: type, majorId: id, style: 'MAJOR' });
   },
   getCheckedTreeNodes(respId, subRespId, majorId) {
-    return request.get(`business/mapping?style=BUSINESS&respId=${respId}&subRespId=${subRespId}&majorId=${majorId}`);
+    return request.get(`business/mapping?style=MAJOR&respId=${respId}&subRespId=${subRespId}&majorId=${majorId}`);
   },
 };

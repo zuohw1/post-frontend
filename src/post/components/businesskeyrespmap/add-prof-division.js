@@ -59,12 +59,14 @@ const AddProfDivision = ({
         }
         isAlertShow(false);
         isAddprofModalShow(false);
+        primaryBusinessShow(false);
       }
     });
   };
   const addProfModalCancel = () => {
     isAlertShow(false);
     isAddprofModalShow(false);
+    primaryBusinessShow(false);
   };
   return (
     <div className="addProfDivision">
