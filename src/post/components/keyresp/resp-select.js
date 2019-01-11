@@ -9,49 +9,57 @@ class Search extends Component {
   props;
 
   render() {
-    const { form, respType } = this.props;// tableData, respSelectDivName
+    const { form, respType, getRespSelectData } = this.props;// tableData, respSelectDivName
     const { getFieldDecorator } = form;
-    // const { current, size, total } = tableData;
 
     /* 查询字段 */
     const queryCols = [
       {
-        itemName: '岗位序列', itemKey: 'searchGwxlName', itemType: 'String',
+        itemName: '岗位序列', itemKey: 'posCateName', itemType: 'String',
       },
       {
-        itemName: '子序列', itemKey: 'searchZxlName', itemType: 'String',
+        itemName: '子序列', itemKey: 'posSubCateName', itemType: 'String',
       },
       {
-        itemName: '专业', itemKey: 'searchZyName', itemType: 'String',
+        itemName: '专业', itemKey: 'majorName', itemType: 'String',
       },
       {
-        itemName: '关键职责', itemKey: 'searchGjzzName', itemType: 'String',
+        itemName: '关键职责', itemKey: 'keyDutyName', itemType: 'String',
       },
 
     ];
 
     const onChange = (pageNumber, pageSize) => {
-      console.log(pageNumber, pageSize);
-      // const searchF = { ...search, pageSize, pageNumber };
-      // listTable(searchF);
+      form.validateFields((err, values) => {
+        if (!err) {
+          const select = {
+            ...values, pageSize, pageNumber, respType,
+          };
+          getRespSelectData(select);
+        }
+      });
     };
 
-    const onChangePageSize = () => {
-      console.log('onChangePageSize');
-      // console.log(current, size);
-      // const searchF = { ...search, pageSize: size, pageNumber: current };
-      // listTable(searchF);
+    const onChangePageSize = (pageNumber, pageSize) => {
+      form.validateFields((err, values) => {
+        if (!err) {
+          const select = {
+            ...values, pageSize, pageNumber, respType,
+          };
+          getRespSelectData(select);
+        }
+      });
     };
 
-    const handleSearch = (e) => {
-      e.preventDefault();
+    const handleSearch = () => {
       form.validateFields((err, values) => {
         if (!err) {
           const pageSize = 10;
           const pageNumber = 1;
-          const select = { ...values, pageSize, pageNumber };
-          console.log('select', select);
-          // listTable(select);
+          const select = {
+            ...values, pageSize, pageNumber, respType,
+          };
+          getRespSelectData(select);
         }
       });
     };
@@ -91,26 +99,50 @@ class Search extends Component {
 
     const tableCols = [{
       title: '岗位序列名称',
-      key: 'gwxlName',
-      dataIndex: 'gwxlName',
+      key: 'posCateName',
+      dataIndex: 'posCateName',
       align: 'center',
       width: 150,
     }, {
       title: '子序列名称',
-      key: 'zxlName',
-      dataIndex: 'zxlName',
+      key: 'posSubCateName',
+      dataIndex: 'posSubCateName',
       align: 'center',
       width: 150,
     }, {
       title: '专业名称',
-      key: 'zyName',
-      dataIndex: 'zyName',
+      key: 'majorName',
+      dataIndex: 'majorName',
       align: 'center',
       width: 150,
     }, {
       title: '关键职责名称',
-      key: 'gjzzName',
-      dataIndex: 'gjzzName',
+      key: 'keyDutyName',
+      dataIndex: 'keyDutyName',
+      align: 'center',
+      width: 150,
+    }, {
+      title: 'topCateId', // 隐藏字段 待处理；TODO
+      key: 'topCateId',
+      dataIndex: 'topCateId',
+      align: 'center',
+      width: 150,
+    }, {
+      title: 'posCateID', // 隐藏字段 待处理；TODO
+      key: 'posCateID',
+      dataIndex: 'posCateID',
+      align: 'center',
+      width: 150,
+    }, {
+      title: 'majorId', // 隐藏字段 待处理；TODO
+      key: 'majorId',
+      dataIndex: 'majorId',
+      align: 'center',
+      width: 150,
+    }, {
+      title: 'keyDutyId', // 隐藏字段 待处理；TODO
+      key: 'keyDutyId',
+      dataIndex: 'keyDutyId',
       align: 'center',
       width: 150,
     }];
@@ -125,38 +157,11 @@ class Search extends Component {
       tableColsI.push(tableCols[i]);
     }
 
-    /* 列表信息 */
-    const data = [{
-      key: '000800',
-      gwxlName: '技术序列0',
-      zxlName: '计划规划0',
-      zyName: '市场研究与策略0',
-      gjzzName: '市场策略研究0',
-    }, {
-      key: '000801',
-      gwxlName: '支撑序列',
-      zxlName: '技术研发与管理',
-      zyName: '经营分析与管理',
-      gjzzName: '市场总体规划',
-    }, {
-      key: '000802',
-      gwxlName: '管理序列',
-      zxlName: '工程设计',
-      zyName: '品牌与传播',
-      gjzzName: '经营计划执行',
-    }, {
-      key: '000803',
-      gwxlName: 'test1',
-      zxlName: '采购管理',
-      zyName: '经营监控',
-      gjzzName: '市场信息研究',
-    },
-    ];
-
-    const { handleRespSelect, setRespRowClassName } = this.props;
-    // {respType}, {respSelectDivName}
+    const { handleRespSelect, setRespRowClassName, tableData } = this.props;
+    const { current, size, total } = tableData;
+    const data = tableData.records;
     return (
-      <div>
+      <div style={{ height: 500 }}>
         <Form
           className="ant-advanced-search-form"
           onSubmit={handleSearch}
@@ -171,15 +176,15 @@ class Search extends Component {
           pagination={false}
           size="middle"
           bordered
-          scroll={{ y: document.body.scrollHeight - 160 }}
+          scroll={{ y: document.body.scrollHeight - 80 }}
           onRow={handleRespSelect}
           rowClassName={setRespRowClassName}
         />
         <Pagination
           showQuickJumper
-          // current={current}
-          total={20}// {total}
-          pageSize={10}// {size}
+          current={current}
+          total={total}// {}
+          pageSize={size}// {}
           onChange={onChange}
           onShowSizeChange={onChangePageSize}
           showTotal={tota => `共 ${tota} 条`}
@@ -197,7 +202,9 @@ export default RespSelect;
 
 RespSelect.propTypes = {
   respType: PropTypes.number.isRequired,
+  tableData: PropTypes.array.isRequired,
   respSelectDivName: PropTypes.string.isRequired,
+  getRespSelectData: PropTypes.func.isRequired,
   handleRespSelect: PropTypes.func.isRequired,
   setRespRowClassName: PropTypes.func.isRequired,
 };

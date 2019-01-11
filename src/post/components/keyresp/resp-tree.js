@@ -33,17 +33,16 @@ export default (
     getDataSource,
   } = actions;
 
-  // console.log('22--countAll:', countAll);
-  // console.log('22--dataSourceAll:', dataSourceAll);
-  // console.log('22--dataSourceGwxl:', dataSourceGwxl, countGwxl);
-  // console.log('22--dataSourceZxl:', dataSourceZxl, countZxl);
-  // console.log('22--dataSourceZy:', dataSourceZy, countZy);
-  // console.log('22--dataSourceZz:', dataSourceZz, countZz);
-  // console.log('22--dataSourceZzz:', dataSourceZzz, countZzz);
-  // console.log('22--resptree:', resptree);
+  // console.log('countAll:', countAll);
+  // console.log('dataSourceAll:', dataSourceAll);
+  // console.log('dataSourceGwxl:', dataSourceGwxl, countGwxl);
+  // console.log('dataSourceZxl:', dataSourceZxl, countZxl);
+  // console.log('dataSourceZy:', dataSourceZy, countZy);
+  // console.log('dataSourceZz:', dataSourceZz, countZz);
+  // console.log('dataSourceZzz:', dataSourceZzz, countZzz);
+  // console.log('resptree:', resptree);
   // console.log(clickRespType, clickRespId, clickRespCode);
   const renderTreeNodes = (data) => {
-    // console.log('data:', data);
     return data.map((item) => {
       if (item.children) {
         return (
@@ -57,11 +56,11 @@ export default (
   };
 
   const handleTreeSelect = (selectedKeys, info) => {
-    // console.log('onSelect', info, selectedKeys);
     const respType = `${info.node.props.dataRef.type}`;
     const respId = `${info.node.props.dataRef.posCateId}`;
     const respCode = `${info.node.props.dataRef.elementCode}`;
-    setClickRespIdCode(respType, respId, respCode);
+    const parentId = `${info.node.props.dataRef.parentId}`;
+    setClickRespIdCode(respType, respId, respCode, parentId);
     getDataSource(respType, respId);
     if (info.node.children) {
       resolve();
@@ -73,7 +72,6 @@ export default (
     const type = treeNode.props.dataRef.type;
     const posCateId = treeNode.props.dataRef.posCateId;
     // const elementCode = treeNode.props.dataRef.elementCode;
-    // console.log('点击展开--', type, posCateId,elementCode );
     getDataSource(type, posCateId);
     if (treeNode.props.children) {
       resolve();

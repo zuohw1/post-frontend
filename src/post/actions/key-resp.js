@@ -1,11 +1,12 @@
 /* 设置职责树点击节点信息 */
-export function setClickRespIdCode(clickRespType, clickRespId, clickRespCode) {
+export function setClickRespIdCode(clickRespType, clickRespId, clickRespCode, clickRespParentId) {
   return {
     type: 'keyResp/stateWillUpdate',
     payload: {
       clickRespType,
       clickRespId,
       clickRespCode,
+      clickRespParentId,
     },
   };
 }
@@ -152,6 +153,15 @@ export function getDataSource(elementType, posCateId) {
     payload: {
       elementType: elementType === undefined ? 0 : elementType,
       posCateId,
+    },
+  };
+}
+/* 岗位序列等各层级 数据获取 */
+export function getRespSelectData(respType) {
+  return {
+    type: 'keyResp/getRespSelectData',
+    payload: {
+      respType,
     },
   };
 }

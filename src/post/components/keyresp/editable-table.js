@@ -1,4 +1,3 @@
-// /* eslint-disable no-debugger */
 import React from 'react';
 import {
   Table, Button, Form, Popconfirm, Col, Row, Select, Input, InputNumber, DatePicker, // Icon,
@@ -31,25 +30,26 @@ const handleonchangeckbx = () => {
    scroll={{ y: document.body.scrollHeight - 460 }}
    460为其他控件宽度之和
 */
-export default ({
-  actions,
-  // clickRespId,
-  // clickRespCode,
-  clickRespType,
-  listTitles,
-  dataSourceAll,
-  countAll,
-  dataSourceGwxl,
-  countGwxl,
-  dataSourceZxl,
-  countZxl,
-  dataSourceZy,
-  countZy,
-  dataSourceZz,
-  countZz,
-  dataSourceZzz,
-  countZzz,
-}) => {
+export default (state) => {
+  const {
+    actions,
+    // clickRespId,
+    // clickRespCode,
+    clickRespType,
+    listTitles,
+    dataSourceAll,
+    countAll,
+    dataSourceGwxl,
+    countGwxl,
+    dataSourceZxl,
+    countZxl,
+    dataSourceZy,
+    countZy,
+    dataSourceZz,
+    countZz,
+    dataSourceZzz,
+    countZzz,
+  } = state;
   const {
     // getDataSource,
     setListDataSourceAll,
@@ -73,8 +73,6 @@ export default ({
   // if (initFlag === 0) {
   //   getDataSource(0);
   // }
-  // console.log('0000---dataSourceAll', dataSourceAll);
-  // console.log('0000---countAll', countAll);
 
   // 右侧列表根据树节点点击的职责层级确定显示的数据
   const dataSource = (vt === 0) ? dataSourceAll : (
@@ -490,6 +488,8 @@ export default ({
         list: (col.itemType === 'Select' || col.itemType === 'Checkbox') ? col.list : [],
         // handleSave: this.handleSave,
         respType: col.respType,
+        state,
+        actions,
       }),
     };
   });
@@ -529,7 +529,9 @@ export default ({
         bordered
         dataSource={dataSource}
         columns={columns}
+        state={state}
         size="small"
+        pagination={false}
       />
     </div>
   );
@@ -566,7 +568,7 @@ class EditableCell extends React.Component {
     }
 
     let inputWidth = 160;
-    if (p.props.dataIndex === 'zzzName') {
+    if (p.props.dataIndex === 'posCateName_five') {
       inputWidth = 260;
     }
     return (

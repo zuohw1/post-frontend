@@ -1,17 +1,18 @@
 import KeyRespService from '../services/key-resp';
 
-// /* 格式化table数据 */
-// const formatTableData = (dataSourceAll) => {
-//   const treeTableData = dataSourceAll.map((item, index) => {
-//     return { ...item, key: index };
-//   });
-//   return treeTableData;
-// };
+/* 格式化table数据 */
+const formatTableDataBJ = (dataSourceGet, elementType, posCateId) => {
+  if (elementType && elementType === '50') {
+    const treeTableData = dataSourceGet.filter(item => item.posCateId === posCateId);
+    return treeTableData;
+  } else {
+    return dataSourceGet;
+  }
+};
 
 /* 格式化职责左树数据 */
 const formatRespTreeData = (resptreebk, dataSourceAll, elementType) => {
-  console.log('formatRespTreeData()---处理数据前，原左树数据：', resptreebk, dataSourceAll, elementType);
-  if (dataSourceAll.length === 0) {
+  if (dataSourceAll.length === 0 || elementType === '50') { // 没查到下一级的数据或为最后一级50
     return resptreebk;
   }
   const treeDataNew = [{
@@ -151,6 +152,8 @@ export default {
     clickRespId: '',
     /* 点击的职责树节点职责code */
     clickRespCode: '',
+    /* 点击的职责树节点 上一级职责id */
+    clickRespParentId: '',
     /* 右侧列表title数组 */
     listTitles: ['岗位序列列表', '子序列列表', '专业列表', '关键职责列表', '子职责列表', '子职责列表'],
     /* 列表数据-全部 */
@@ -181,6 +184,8 @@ export default {
     /* 左侧职责树 */
     resptree: [],
     elementType: 0,
+    /* 岗位序列 各层级 可选数据获取 */
+    respSelectData: [],
   },
   reducers: {
     stateWillUpdate(state, { payload }) {
@@ -207,16 +212,22 @@ export default {
       const dataSourceZzz = yield select(state => state.dataSourceZzz);
       const countZzz = yield select(state => state.keyResp.countZzz);
 
-      // console.log('11111111111111resptreebk', resptreebk, elementType, posCateId);
-      const dataSourceGet = yield call(KeyRespService.getDataSource, elementType, posCateId);
-      // const treeTableData = formatTableData(dataSourceGet);
-      // console.log('2222222222222-----dataSourceGet:', dataSourceGet);
+      let dataSourceGet;
+      let dataSourceGetBJ;
+      if (elementType !== '50') {
+        dataSourceGet = yield call(KeyRespService.getDataSource, elementType, posCateId);
+      } else { // 最后一级50 查本级数据
+        const clickRespParentId = yield select(state => state.keyResp.clickRespParentId);
+        dataSourceGet = yield call(
+          KeyRespService.getDataSourceBJ, elementType, posCateId, clickRespParentId,
+        );
+        dataSourceGetBJ = formatTableDataBJ(dataSourceGet, elementType, posCateId);
+      }
       let formatRespTree = [];
       setTimeout(
         formatRespTree = formatRespTreeData(resptreebk, dataSourceGet, elementType),
         1000,
       );
-      // console.log('2222222222222-----formatRespTree:', formatRespTree);
 
       yield put({
         type: 'stateWillUpdate',
@@ -232,8 +243,19 @@ export default {
           countZy: (elementType === '30') ? dataSourceGet.length : countZy,
           dataSourceZz: (elementType === '40') ? dataSourceGet : dataSourceZz,
           countZz: (elementType === '40') ? dataSourceGet.length : countZz,
-          dataSourceZzz: (elementType === '50') ? dataSourceGet : dataSourceZzz,
-          countZzz: (elementType === '50') ? dataSourceGet.length : countZzz,
+          dataSourceZzz: (elementType === '50') ? dataSourceGetBJ : dataSourceZzz,
+          countZzz: (elementType === '50') ? dataSourceGetBJ.length : countZzz,
+        },
+      });
+    },
+
+    /* 岗位序列等各层级 数据获取 */
+    * getRespSelectData({ payload: { respType } }, { call, put }) {
+      const respSelectGet = yield call(KeyRespService.getRespSelectData, respType);
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          respSelectData: respSelectGet,
         },
       });
     },
