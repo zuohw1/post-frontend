@@ -10,11 +10,6 @@ class SText extends React.Component {
     super(props);
 
     this.state = {
-      posCateName: props.record.parentName_two,
-      ssZxlName: props.record.parentName_three,
-      ssZyName: props.record.parentName_four,
-      ssGjzzName: props.record.parentName_five,
-      // ssGjzzNameN: props.record.parentName_five,
       respSelectVisiable: false,
       clickRespName: '', // 选中职责
       clickRespId: '', // 选中职责id
@@ -23,33 +18,37 @@ class SText extends React.Component {
   }
 
   handleReSet = (form, dataIndex) => {
-    console.log(dataIndex);
-    // if (dataIndex === 'ssPostName') {
-    //   this.setState({ ssPostName: '' });
-    //   form.setFieldsValue({
-    //     ssPostName: '',
-    //   });
-    // } else if (dataIndex === 'ssZxlName') {
-    //   this.setState({ ssZxlName: '' });
-    //   form.setFieldsValue({
-    //     ssZxlName: '',
-    //   });
-    // } else if (dataIndex === 'ssZyName') {
-    //   this.setState({ ssZyName: '' });
-    //   form.setFieldsValue({
-    //     ssZyName: '',
-    //   });
-    // } else if (dataIndex === 'ssGjzzName') {
-    //   this.setState({ ssGjzzName: '' });
-    //   form.setFieldsValue({
-    //     ssGjzzName: '',
-    //   });
-    // } else if (dataIndex === 'ssGjzzNameN') {
-    //   this.setState({ ssGjzzNameN: '' });
-    //   form.setFieldsValue({
-    //     ssGjzzNameN: '',
-    //   });
-    // }
+    console.log('重置handleReSet（）-', dataIndex);
+    const { record } = this.props;
+    if (dataIndex === 'parentName_two') {
+      form.setFieldsValue({
+        parentName_two: '',
+        parentId: '',
+      });
+      record.parentName_two = '';
+      record.parentId = '';
+    } else if (dataIndex === 'parentName_three') {
+      form.setFieldsValue({
+        parentName_three: '',
+        parentId: '',
+      });
+      record.parentName_three = '';
+      record.parentId = '';
+    } else if (dataIndex === 'parentName_four') {
+      form.setFieldsValue({
+        parentName_four: '',
+        parentId: '',
+      });
+      record.parentName_four = '';
+      record.parentId = '';
+    } else if (dataIndex === 'parentName_five') {
+      form.setFieldsValue({
+        parentName_five: '',
+        parentId: '',
+      });
+      record.parentName_five = '';
+      record.parentId = '';
+    }
     console.log('form.getFieldsValue()', form.getFieldsValue());
   }
 
@@ -148,24 +147,24 @@ class SText extends React.Component {
 
   /* 将选择的值放回 */
   handleRespSelect = (recordSel) => {
-    const { respType } = this.props; // ,form, record, clickRespName, clickRespId
+    const { resptype } = this.props; // ,form, record, clickRespName, clickRespId
     return {
       onClick: () => {
         let clickRespNameVal = '';
         let clickRespIdVal = '';
-        if (respType === 10) {
+        if (resptype === 10) {
           clickRespIdVal = recordSel.topCateId;
           clickRespNameVal = recordSel.posCateName;
-        } else if (respType === 20) {
+        } else if (resptype === 20) {
           clickRespIdVal = recordSel.posCateID;
           clickRespNameVal = recordSel.posSubCateName;
-        } else if (respType === 30) {
+        } else if (resptype === 30) {
           clickRespIdVal = recordSel.majorId;
           clickRespNameVal = recordSel.majorName;
-        } else if (respType === 40) {
+        } else if (resptype === 40) {
           clickRespIdVal = recordSel.keyDutyId;
           clickRespNameVal = recordSel.keyDutyName;
-        } else if (respType === 50) {
+        } else if (resptype === 50) {
           clickRespIdVal = recordSel.keyDutyId;
           clickRespNameVal = recordSel.keyDutyName;
         }
@@ -175,37 +174,31 @@ class SText extends React.Component {
   };
 
   handleOk = () => {
-    const { respType, form, record } = this.props;
+    const { resptype, form, record } = this.props;
     const { clickRespName, clickRespId } = this.state;
 
-    if (respType === 10) {
-      this.setState({ posCateName: clickRespName });
+    if (resptype === 10) {
       form.setFieldsValue({
-        // posCateName: clickRespName,
         parentName_two: clickRespName,
         parentId: clickRespId,
       });
-      // record.posCateName = clickRespName;
       record.parentName_two = clickRespName;
       record.parentId = clickRespId;
-    } else if (respType === 20) {
-      this.setState({ ssZxlName: clickRespName });
+    } else if (resptype === 20) {
       form.setFieldsValue({
         parentName_three: clickRespName,
         parentId: clickRespId,
       });
       record.parentId = clickRespId; // attribute11 ?
       record.parentName_three = clickRespName;
-    } else if (respType === 30) {
-      this.setState({ ssZyName: clickRespName });
+    } else if (resptype === 30) {
       form.setFieldsValue({
         parentName_four: clickRespName,
         parentId: clickRespId,
       });
       record.parentId = clickRespId;
       record.parentName_four = clickRespName;
-    } else if (respType === 40) {
-      this.setState({ ssGjzzName: clickRespName });
+    } else if (resptype === 40) {
       form.setFieldsValue({
         parentId: clickRespId,
         parentName_five: clickRespName,
@@ -213,15 +206,6 @@ class SText extends React.Component {
       record.parentId = clickRespId;
       record.parentName_five = clickRespName;
     }
-
-
-    // } else if (respType === 50) {
-    //   this.setState({ ssGjzzNameN: clickRespName });
-    //   form.setFieldsValue({
-    //     ssGjzzNameN: clickRespName,
-    //   });
-    //   record.ssGjzzNameN = clickRespName;
-    // }
     this.setState({
       respSelectVisiable: false,
     });
@@ -240,50 +224,38 @@ class SText extends React.Component {
 
   render() {
     const {
-      // ssPostName, ssZxlName, ,  ssGjzzNameN,
-      posCateName, ssZxlName, ssZyName, ssGjzzName,
+      // posCateName, ssZxlName, ssZyName, ssGjzzName, clickRespName,
       respSelectVisiable, tableData,
     } = this.state;
     const {
-      form, respType, dataIndex, value, // record,
+      form, resptype, dataIndex, value, // record,
     } = this.props;
 
-    // const ssValue = value;
-    // let ssValue = '';
-    let ssValue = value;
+    const ssValue = value;
     let respSelectDivName = '';
     if (dataIndex === 'parentName_two') {
-      // ssValue = ssPostName;
-      ssValue = posCateName;
       respSelectDivName = '岗位序列';
     } else if (dataIndex === 'parentName_three') {
-      ssValue = ssZxlName;
       respSelectDivName = '子序列';
     } else if (dataIndex === 'parentName_four') {
-      ssValue = ssZyName;
       respSelectDivName = '专业';
     } else if (dataIndex === 'parentName_five') {
-      ssValue = ssGjzzName;
-      respSelectDivName = '关键职责';
-    } else if (dataIndex === 'parentName_five') {
-      // ssValue = ssGjzzNameN;
       respSelectDivName = '关键职责';
     }
     // 不能直接用 record[dataIndex] 的值，因为修改没有更新节点的state，这样重置之后不会变
-
     return (
       <div>
         <Input
           value={ssValue}
           style={{ width: 160 }}
-          onChange={this.handleChange.bind(this, dataIndex, respType)}
+          onChange={this.handleChange.bind(this, dataIndex, resptype)}
         />
         &nbsp;&nbsp;
         <Popconfirm title="是否重置?" onConfirm={() => this.handleReSet(form, dataIndex)}>
           <a href="jacascript:void(0);">重置</a>
         </Popconfirm>
         &nbsp;&nbsp;
-        <a href="jacascript:void(0);" onClick={this.showRespParentSelect.bind(this, respType)}>请选择</a>
+        <a href="jacascript:void(0);" onClick={this.showRespParentSelect.bind(this, resptype)}>请选择</a>
         <Modal
           title={respSelectDivName}
           visible={respSelectVisiable}
@@ -293,7 +265,7 @@ class SText extends React.Component {
         >
           <div style={{ height: 500 }}>
             <RespSelect
-              respType={respType}
+              resptype={resptype}
               tableData={tableData}
               respSelectDivName={respSelectDivName}
               getRespSelectData={this.getRespSelectData}

@@ -1,12 +1,16 @@
 /* 设置职责树点击节点信息 */
-export function setClickRespIdCode(clickRespType, clickRespId, clickRespCode, clickRespParentId) {
+export function setClickRespIdCode(
+  clickRespType, clickRespId, clickRespCode, clickRespName, clickRespParentId, clickRespParentKey,
+) {
   return {
     type: 'keyResp/stateWillUpdate',
     payload: {
       clickRespType,
       clickRespId,
       clickRespCode,
+      clickRespName,
       clickRespParentId,
+      clickRespParentKey,
     },
   };
 }
@@ -146,6 +150,24 @@ export function setResptree(resptree) {
     },
   };
 }
+/* 更新列表数据删除标识 */
+export function setRespDataDelFlag(respDataDelFlag) {
+  return {
+    type: 'keyResp/stateWillUpdate',
+    payload: {
+      respDataDelFlag,
+    },
+  };
+}
+/* 更新列表数据保存是否成功标识 */
+export function setRespDataSaveFlag(respDataSaveFlag) {
+  return {
+    type: 'keyResp/stateWillUpdate',
+    payload: {
+      respDataSaveFlag,
+    },
+  };
+}
 /* 获取左树及列表数据 */
 export function getDataSource(elementType, posCateId) {
   return {
@@ -162,6 +184,34 @@ export function getRespSelectData(respType) {
     type: 'keyResp/getRespSelectData',
     payload: {
       respType,
+    },
+  };
+}
+
+/* 根据关键字查询左树数据 */
+export function getTreeDataByKey(elementName) {
+  return {
+    type: 'keyResp/getTreeDataByKey',
+    payload: {
+      elementName,
+    },
+  };
+}
+/* 职责库数据保存 */
+export function respDataSave(respData) {
+  return {
+    type: 'keyResp/respDataSave',
+    payload: {
+      respData,
+    },
+  };
+}
+/* 职责库数据保存 */
+export function respDatDelete(elementId) {
+  return {
+    type: 'keyResp/respDatDelete',
+    payload: {
+      elementId,
     },
   };
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import {
-  Table, Button, Form, Popconfirm, Col, Row, Select, Input, InputNumber, DatePicker, // Icon,
+  Table, Button, Form, Popconfirm, Col, Row, Select, Input, InputNumber, DatePicker,
+  message, // Icon,
 } from 'antd';
 import CheckboxGroup from '../../../../node_modules/antd/es/checkbox/Group';
 import SText from './stext';
@@ -33,9 +34,11 @@ const handleonchangeckbx = () => {
 export default (state) => {
   const {
     actions,
-    // clickRespId,
-    // clickRespCode,
+    clickRespId,
+    clickRespCode,
+    clickRespName,
     clickRespType,
+    clickRespParentKey,
     listTitles,
     dataSourceAll,
     countAll,
@@ -48,31 +51,33 @@ export default (state) => {
     dataSourceZz,
     countZz,
     dataSourceZzz,
-    countZzz,
+    // countZzz,
+    respDataSaveFlag,
+    respDataDelFlag,
   } = state;
   const {
-    // getDataSource,
     setListDataSourceAll,
     setListDataSourceGwxl,
     setListDataSourceZxl,
     setListDataSourceZy,
     setListDataSourceZz,
-    setListDataSourceZzz,
+    // setListDataSourceZzz,
     setListCountAll,
     setListCountGwxl,
     setListCountZxl,
     setListCountZy,
     setListCountZz,
-    setListCountZzz,
+    // setListCountZzz,
+    respDataSave,
+    respDatDelete,
+    getDataSource,
+    setRespDataDelFlag,
+    setRespDataSaveFlag,
   } = actions;
 
   // 右侧列表title名称动态显示
   const vt = (clickRespType !== 'undefined') ? (clickRespType / 10) : 0;
   const showTitle = listTitles[vt];
-
-  // if (initFlag === 0) {
-  //   getDataSource(0);
-  // }
 
   // 右侧列表根据树节点点击的职责层级确定显示的数据
   const dataSource = (vt === 0) ? dataSourceAll : (
@@ -83,37 +88,25 @@ export default (state) => {
             vt === 5 ? dataSourceZzz
               : dataSourceAll)))));
 
-  const count = (vt === 0) ? countAll : (
-    vt === 1 ? countGwxl : (
-      vt === 2 ? countZxl : (
-        vt === 3 ? countZy : (
-          vt === 4 ? countZz : (
-            vt === 5 ? countZzz
-              : countAll)))));
+  if (respDataDelFlag === '1') {
+    message.warning('该关键职责已经分配给员工，请先取消分配再进行删除！');
+    setRespDataDelFlag('');
+  } else if (respDataDelFlag === '2') {
+    message.success('该关键职责已删除！1');
+    setRespDataDelFlag('-1');
+    getDataSource(0, '');
+  }
+  if (respDataSaveFlag === 'Y') {
+    message.success('保存成功！');
+    setRespDataSaveFlag('');
+    getDataSource(0, '');
+  } else if (respDataSaveFlag === 'N') {
+    message.error('保存失败，请稍后再试！');
+    setRespDataSaveFlag('');
+  }
 
   const handleDelete = (key) => {
-    if (vt === 0) {
-      setListDataSourceAll(dataSource.filter(item => item.key !== key));
-      setListCountAll(count - 1);
-    } else if (vt === 1) {
-      setListDataSourceGwxl(dataSource.filter(item => item.key !== key));
-      setListCountGwxl(count - 1);
-    } else if (vt === 2) {
-      setListDataSourceZxl(dataSource.filter(item => item.key !== key));
-      setListCountZxl(count - 1);
-    } else if (vt === 3) {
-      setListDataSourceZy(dataSource.filter(item => item.key !== key));
-      setListCountZy(count - 1);
-    } else if (vt === 4) {
-      setListDataSourceZz(dataSource.filter(item => item.key !== key));
-      setListCountZz(count - 1);
-    } else if (vt === 5) {
-      setListDataSourceZzz(dataSource.filter(item => item.key !== key));
-      setListCountZzz(count - 1);
-    } else {
-      setListDataSourceAll(dataSource.filter(item => item.key !== key));
-      setListCountAll(count - 1);
-    }
+    respDatDelete(key);
   };
 
   const columnsMap = {
@@ -136,7 +129,7 @@ export default (state) => {
         return (
           dataSource.length >= 1
             ? (
-              <Popconfirm title="确认要删除?" onConfirm={() => handleDelete(record.key)}>
+              <Popconfirm title="确认要删除?" onConfirm={() => handleDelete(record.posCateId)}>
                 <a href="jacascript:void(0);">删除</a>
               </Popconfirm>
             ) : null
@@ -169,7 +162,7 @@ export default (state) => {
         return (
           dataSource.length >= 1
             ? (
-              <Popconfirm title="确认要删除?" onConfirm={() => handleDelete(record.key)}>
+              <Popconfirm title="确认要删除?" onConfirm={() => handleDelete(record.posCateId)}>
                 <a href="jacascript:void(0);">删除</a>
               </Popconfirm>
             ) : null
@@ -200,7 +193,7 @@ export default (state) => {
         return (
           dataSource.length >= 1
             ? (
-              <Popconfirm title="确认要删除?" onConfirm={() => handleDelete(record.key)}>
+              <Popconfirm title="确认要删除?" onConfirm={() => handleDelete(record.posCateId)}>
                 <a href="jacascript:void(0);">删除</a>
               </Popconfirm>
             ) : null
@@ -236,21 +229,21 @@ export default (state) => {
       editable: true,
     }, {
       title: '组织层级',
-      dataIndex: 'attribute4_four',
+      dataIndex: 'attribute11_four',
       width: '100',
       editable: true,
       itemType: 'Checkbox',
       list: [{ label: '集团', value: 'J' }, { label: '省', value: 'S' }, { label: '市', value: 'D' }, { label: '县', value: 'X' }],
     }, {
       title: '是否核心',
-      dataIndex: 'attribute5_four',
+      dataIndex: 'attribute4_four',
       width: '100',
       editable: true,
       itemType: 'Select',
-      list: [{ id: '0', title: '是' }, { id: '1', title: '否' }],
+      list: [{ id: '是', title: '是' }, { id: '否', title: '否' }],
     }, {
       title: '标准职级',
-      dataIndex: 'attribute6_four',
+      dataIndex: 'attribute5_four',
       width: '7%',
       editable: true,
       itemType: 'Select',
@@ -260,7 +253,7 @@ export default (state) => {
         { id: '19', title: '19' }, { id: '20', title: '20' }, { id: '21', title: '21' }, { id: '22', title: '22' }],
     }, {
       title: '集团职级',
-      dataIndex: 'attribute7_four',
+      dataIndex: 'attribute6_four',
       width: '7%',
       editable: true,
       itemType: 'Select',
@@ -270,7 +263,7 @@ export default (state) => {
         { id: '19', title: '19' }, { id: '20', title: '20' }, { id: '21', title: '21' }, { id: '22', title: '22' }],
     }, {
       title: '省职级',
-      dataIndex: 'attribute8_four',
+      dataIndex: 'attribute7_four',
       width: '7%',
       editable: true,
       itemType: 'Select',
@@ -280,7 +273,7 @@ export default (state) => {
         { id: '19', title: '19' }, { id: '20', title: '20' }, { id: '21', title: '21' }, { id: '22', title: '22' }],
     }, {
       title: '地市职级',
-      dataIndex: 'attribute9_four',
+      dataIndex: 'attribute8_four',
       width: '7%',
       editable: true,
       itemType: 'Select',
@@ -290,7 +283,7 @@ export default (state) => {
         { id: '19', title: '19' }, { id: '20', title: '20' }, { id: '21', title: '21' }, { id: '22', title: '22' }],
     }, {
       title: '区县职级',
-      dataIndex: 'attribute10_four',
+      dataIndex: 'attribute9_four',
       width: '7%',
       editable: true,
       itemType: 'Select',
@@ -305,7 +298,7 @@ export default (state) => {
         return (
           dataSource.length >= 1
             ? (
-              <Popconfirm title="确认要删除?" onConfirm={() => handleDelete(record.key)}>
+              <Popconfirm title="确认要删除?" onConfirm={() => handleDelete(record.posCateId)}>
                 <a href="jacascript:void(0);">删除</a>
               </Popconfirm>
             ) : null
@@ -326,7 +319,7 @@ export default (state) => {
       respType: 40,
     }, {
       title: '编码',
-      dataIndex: 'attribute11',
+      dataIndex: 'elementCode', // attribute11
       width: '15%',
       editable: true,
     }, {
@@ -336,7 +329,7 @@ export default (state) => {
         return (
           dataSource.length >= 1
             ? (
-              <Popconfirm title="确认要删除?" onConfirm={() => handleDelete(record.key)}>
+              <Popconfirm title="确认要删除?" onConfirm={() => handleDelete(record.posCateId)}>
                 <a href="jacascript:void(0);">删除</a>
               </Popconfirm>
             ) : null
@@ -357,7 +350,7 @@ export default (state) => {
       respType: 50,
     }, {
       title: '编码',
-      dataIndex: 'attribute11',
+      dataIndex: 'elementCode', // attribute11
       width: '15%',
       editable: true,
     }, {
@@ -367,7 +360,7 @@ export default (state) => {
         return (
           dataSource.length >= 1
             ? (
-              <Popconfirm title="确认要删除?" onConfirm={() => handleDelete(record.key)}>
+              <Popconfirm title="确认要删除?" onConfirm={() => handleDelete(record.posCateId)}>
                 <a href="jacascript:void(0);">删除</a>
               </Popconfirm>
             ) : null
@@ -387,83 +380,100 @@ export default (state) => {
 
 
   const handleAdd = () => {
+    console.log('clickRespName, clickRespCode, clickRespId:', clickRespName, clickRespCode, clickRespId, clickRespParentKey);
+    console.log('countAll,countGwxl, countZxl, countZy, countZz', countAll, countGwxl, countZxl, countZy, countZz);
     let newData = {};
     if (vt === 0) {
       newData = {
-        key: countAll,
-        postName: '',
-        postCode: '',
+        key: clickRespParentKey + countAll,
+        posCateId: '-9999',
+        type: '10',
+        posCateName_one: '',
+        elementCode: '',
       };
       setListCountAll(countAll + 1);
       setListDataSourceAll([...dataSource, newData]);
     } else if (vt === 1) {
       newData = {
-        key: countGwxl,
+        key: clickRespParentKey + countGwxl,
+        posCateId: '-9999',
+        type: '20',
         posCateName_two: '',
-        ssPostName: '',
-        zxlCode: '',
+        parentId: clickRespId,
+        parentName_two: clickRespName,
+        elementCode: '',
       };
       setListCountGwxl(countGwxl + 1);
       setListDataSourceGwxl([...dataSource, newData]);
     } else if (vt === 2) {
       newData = {
-        key: countZxl,
-        zyName: '',
-        ssZxlName: '',
-        zyCode: '',
+        key: clickRespParentKey + countZxl,
+        posCateId: '-9999',
+        type: '30',
+        posCateName_three: '',
+        parentId: clickRespId,
+        parentName_three: clickRespName,
+        elementCode: '',
       };
       setListCountZxl(countZxl + 1);
       setListDataSourceZxl([...dataSource, newData]);
     } else if (vt === 3) {
       newData = {
-        key: countZy,
-        gjzzName: '',
-        ssZyName: '',
-        gjzzCode: '',
-        eduEqr: '',
-        workExp: '',
-        orgLevel: '',
-        isCore: '',
-        standardZj: '',
-        groupZj: '',
-        provZj: '',
-        dsZj: '',
-        qxZj: '',
+        key: clickRespParentKey + countZy,
+        posCateId: '-9999',
+        type: '40',
+        posCateName_four: '',
+        parentId: clickRespId,
+        parentName_four: clickRespName,
+        elementCode: '',
+        attribute2_four: '',
+        attribute3_four: '',
+        attribute11_four: '',
+        attribute4_four: '',
+        attribute5_four: '',
+        attribute6_four: '',
+        attribute7_four: '',
+        attribute8_four: '',
+        attribute9_four: '',
+        // attribute10_four: '',
       };
       setListCountZy(countZy + 1);
       setListDataSourceZy([...dataSource, newData]);
     } else if (vt === 4) {
       newData = {
-        key: countZz,
-        zzzName: '',
-        ssGjzzName: '',
-        zzzCode: '',
+        key: clickRespParentKey + countZz,
+        posCateId: '-9999',
+        type: '50',
+        posCateName_five: '',
+        parentId: clickRespId,
+        parentName_five: clickRespName,
+        elementCode: '',
       };
       setListCountZz(countZz + 1);
       setListDataSourceZz([...dataSource, newData]);
-    } else if (vt === 5) {
-      newData = {
-        key: countZzz,
-        zzzName: '',
-        ssGjzzNameN: '',
-        zzzCode: '',
-      };
-      setListCountZzz(countZzz + 1);
-      setListDataSourceZzz([...dataSource, newData]);
     } else {
       newData = {
-        key: countAll,
-        postName: '',
-        postCode: '',
+        key: clickRespParentKey + countAll,
+        posCateId: '-9999',
+        type: '10',
+        posCateName_one: '',
+        elementCode: '',
       };
       setListCountAll(countAll + 1);
       setListDataSourceAll([...dataSource, newData]);
     }
   };
 
-  const handleSave = (row) => {
+  const handleSave = () => {
+    const typeValue = Number((clickRespType !== 'undefined') ? clickRespType : 0) + 10;
     const newData = [...dataSource];
-    console.log('handleSave()', row, newData, clickRespType);
+    const dataSave = {
+      dataInfos: newData,
+      type: typeValue,
+      versionId: 1,
+    };
+    respDataSave(dataSave);
+    // console.log('handleSave()', row, newData, clickRespType, dataSave, typeValue);
   };
 
   const components = {
@@ -508,21 +518,28 @@ export default (state) => {
       bottom: 0,
     }}
     >
-      <Row gutter={5}>
-        <Col span={20}>
-          <p>{showTitle}</p>
-        </Col>
-        <Col span={2}>
-          <Button onClick={handleAdd} style={{ marginBottom: 16 }}>
-            新增
-          </Button>
-        </Col>
-        <Col span={2}>
-          <Button onClick={handleSave} style={{ marginBottom: 16 }}>
+      <div>
+        <Row gutter={5}>
+          <Col span={20}>
+            <p>{showTitle}</p>
+          </Col>
+          <Col span={2}>
+            {clickRespType === '50'
+              ? ''
+              : (
+                <Button onClick={handleAdd} style={{ marginBottom: 16 }}>
+              新增
+                </Button>
+              )
+          }
+          </Col>
+          <Col span={2}>
+            <Button onClick={handleSave} style={{ marginBottom: 16 }}>
             保存
-          </Button>
-        </Col>
-      </Row>
+            </Button>
+          </Col>
+        </Row>
+      </div>
       <Table
         components={components}
         rowClassName={() => 'editable-row'}

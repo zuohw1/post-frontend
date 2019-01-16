@@ -1,6 +1,6 @@
 import KeyRespService from '../services/key-resp';
 
-/* 格式化table数据 */
+/* 格式化table数据 本级 */
 const formatTableDataBJ = (dataSourceGet, elementType, posCateId) => {
   if (elementType && elementType === '50') {
     const treeTableData = dataSourceGet.filter(item => item.posCateId === posCateId);
@@ -152,14 +152,17 @@ export default {
     clickRespId: '',
     /* 点击的职责树节点职责code */
     clickRespCode: '',
+    /* 点击的职责树节点职责name */
+    clickRespName: '',
     /* 点击的职责树节点 上一级职责id */
     clickRespParentId: '',
+    /* 点击的职责树节点 上一级职责key */
+    clickRespParentKey: '',
     /* 右侧列表title数组 */
     listTitles: ['岗位序列列表', '子序列列表', '专业列表', '关键职责列表', '子职责列表', '子职责列表'],
     /* 列表数据-全部 */
     dataSourceAll: [],
     /* 列表记录条数-全部 */
-    // countAll: 4,
     countAll: 0,
     /* 列表数据-岗位序列 */
     dataSourceGwxl: [],
@@ -182,10 +185,20 @@ export default {
     /* 列表记录条数-子职责 */
     countZzz: 0,
     /* 左侧职责树 */
-    resptree: [],
+    resptree: [{
+      title: '全部',
+      key: '0-0',
+      children: [],
+    }],
     elementType: 0,
     /* 岗位序列 各层级 可选数据获取 */
     respSelectData: [],
+    /* 列表数据保存是否成功标识： Y-成功 */
+    respDataSaveFlag: '',
+    /* 列表数据删除标识：0-可删除，1-不能删除， 2-已删除 */
+    respDataDelFlag: '',
+    /* 提示 */
+    showMsg: '',
   },
   reducers: {
     stateWillUpdate(state, { payload }) {
@@ -216,6 +229,11 @@ export default {
       let dataSourceGetBJ;
       if (elementType !== '50') {
         dataSourceGet = yield call(KeyRespService.getDataSource, elementType, posCateId);
+        dataSourceGet = dataSourceGet.map((item, index) => {
+          return {
+            ...item, key: index,
+          };
+        });
       } else { // 最后一级50 查本级数据
         const clickRespParentId = yield select(state => state.keyResp.clickRespParentId);
         dataSourceGet = yield call(
@@ -256,6 +274,46 @@ export default {
         type: 'stateWillUpdate',
         payload: {
           respSelectData: respSelectGet,
+        },
+      });
+    },
+    /* 根据关键字查询左树数据 */
+    * getTreeDataByKey({ payload: { elementName } }, { call }) { // , put
+      const treeDataSelectGet = yield call(KeyRespService.getTreeDataByKey, elementName);
+      console.log('getTreeDataByKey()--treeDataSelectGet', treeDataSelectGet);
+      // yield put({
+      //   type: 'stateWillUpdate',
+      //   payload: {
+      //     resptree: treeDataSelectGet,
+      //   },
+      // });
+    },
+    /* 职责库数据保存 */
+    * respDataSave({ payload: { respData } }, { call, put }) {
+      const treeDataSelectGet = yield call(KeyRespService.respDataSave, respData);
+      console.log('respDataSave()--treeDataSelectGet', treeDataSelectGet);
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          respDataSaveFlag: 'Y',
+        },
+      });
+    },
+    /* 职责库数据删除 */
+    * respDatDelete({ payload: { elementId } }, { call, put }) {
+      const isDispath = yield call(KeyRespService.isDispath, elementId);
+      let delFlag;
+      if (!isDispath) {
+        delFlag = '0';
+        yield call(KeyRespService.delete, elementId);
+        delFlag = '2';// 所选数据已成功删除！
+      } else {
+        delFlag = '1';// 关键职责已经分配给员工，请先取消分配再进行删除。！
+      }
+      yield put({
+        type: 'stateWillUpdate',
+        payload: {
+          respDataDelFlag: delFlag,
         },
       });
     },

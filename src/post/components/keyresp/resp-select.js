@@ -9,7 +9,7 @@ class Search extends Component {
   props;
 
   render() {
-    const { form, respType, getRespSelectData } = this.props;// tableData, respSelectDivName
+    const { form, resptype, getRespSelectData } = this.props;// tableData, respSelectDivName
     const { getFieldDecorator } = form;
 
     /* 查询字段 */
@@ -33,7 +33,7 @@ class Search extends Component {
       form.validateFields((err, values) => {
         if (!err) {
           const select = {
-            ...values, pageSize, pageNumber, respType,
+            ...values, pageSize, pageNumber, resptype,
           };
           getRespSelectData(select);
         }
@@ -44,7 +44,7 @@ class Search extends Component {
       form.validateFields((err, values) => {
         if (!err) {
           const select = {
-            ...values, pageSize, pageNumber, respType,
+            ...values, pageSize, pageNumber, resptype,
           };
           getRespSelectData(select);
         }
@@ -57,14 +57,14 @@ class Search extends Component {
           const pageSize = 10;
           const pageNumber = 1;
           const select = {
-            ...values, pageSize, pageNumber, respType,
+            ...values, pageSize, pageNumber, resptype,
           };
           getRespSelectData(select);
         }
       });
     };
 
-    const count = (respType !== 'undefined') ? (respType / 10) : 0;
+    const count = (resptype !== 'undefined') ? (resptype / 10) : 0;
     function getFields() {
       let vvt = count;
       if (queryCols.length < count) {
@@ -201,7 +201,7 @@ const RespSelect = Form.create()(Search);
 export default RespSelect;
 
 RespSelect.propTypes = {
-  respType: PropTypes.number.isRequired,
+  resptype: PropTypes.number.isRequired,
   tableData: PropTypes.array.isRequired,
   respSelectDivName: PropTypes.string.isRequired,
   getRespSelectData: PropTypes.func.isRequired,

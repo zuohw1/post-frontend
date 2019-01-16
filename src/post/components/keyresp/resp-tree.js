@@ -5,6 +5,7 @@ import {
 } from 'antd';
 
 const { TreeNode } = Tree;
+const { Search } = Input;
 
 export default (
   state,
@@ -31,6 +32,7 @@ export default (
   const {
     setClickRespIdCode, // setResptree,
     getDataSource,
+    getTreeDataByKey,
   } = actions;
 
   // console.log('countAll:', countAll);
@@ -40,7 +42,7 @@ export default (
   // console.log('dataSourceZy:', dataSourceZy, countZy);
   // console.log('dataSourceZz:', dataSourceZz, countZz);
   // console.log('dataSourceZzz:', dataSourceZzz, countZzz);
-  // console.log('resptree:', resptree);
+  console.log('resptree:', resptree);
   // console.log(clickRespType, clickRespId, clickRespCode);
   const renderTreeNodes = (data) => {
     return data.map((item) => {
@@ -56,11 +58,14 @@ export default (
   };
 
   const handleTreeSelect = (selectedKeys, info) => {
-    const respType = `${info.node.props.dataRef.type}`;
-    const respId = `${info.node.props.dataRef.posCateId}`;
+    const respType = `${info.node.props.dataRef.type}`==='undefined'?'0':`${info.node.props.dataRef.type}`;
+    const respId = `${info.node.props.dataRef.posCateId}`==='undefined'?'':`${info.node.props.dataRef.posCateId}`;
     const respCode = `${info.node.props.dataRef.elementCode}`;
+    const respName = `${info.node.props.dataRef.title}`;
     const parentId = `${info.node.props.dataRef.parentId}`;
-    setClickRespIdCode(respType, respId, respCode, parentId);
+    const respKey = `${info.node.props.dataRef.key}`;
+    setClickRespIdCode(respType, respId, respCode, respName, parentId, respKey);
+    // console.log('handleTreeSelect()---', respType, respId, respCode, respName, parentId);
     getDataSource(respType, respId);
     if (info.node.children) {
       resolve();
@@ -80,6 +85,16 @@ export default (
     resolve();
     return;
   });
+
+  const handleSearch = (value) =>{
+    console.log(value);
+    getTreeDataByKey(value);
+  }
+
+  const handleTreeReload = () => {
+    getDataSource(0, '');
+  }
+
   return (
     <div style={{
       height: 530,
@@ -94,9 +109,14 @@ export default (
     >
       <div className="siderTopC2">
         <span>关键词</span>
-        <Input />
-        <Button icon="search" size="small">查找</Button>
-        <Button icon="reload" size="small">刷新</Button>
+        <Search
+          id="elementNameSearch"
+          placeholder="请输入需要查询的关键字"
+          enterButton="查找"
+          size="default"
+          onSearch={handleSearch}
+        />
+        <Button icon="reload" size="small" onClick={handleTreeReload}>刷新</Button>
       </div>
       <div>
         <Tree
