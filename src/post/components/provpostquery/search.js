@@ -3,7 +3,6 @@ import React from 'react';
 import {
   Form, Row, Col, Input, Button, Icon, Select, DatePicker,
 } from 'antd';
-import SyncTreeSelect from '../../../components/sync-tree-select';
 import CheckboxGroup from '../../../../node_modules/antd/es/checkbox/Group';
 
 
@@ -35,7 +34,10 @@ export default (state) => {
       if (!err) {
         const recordNum = 10;
         const currentPageNum = 1;
-        const select = { ...values, recordNum, currentPageNum };
+        const levelCode = '.S.D.X';
+        const select = {
+ ...values, recordNum, currentPageNum, levelCode,
+};
         listTable(select);
       }
     });
@@ -96,14 +98,6 @@ export default (state) => {
     return (<Option value={item.id} key={item.id}> {item.title} </Option>);
   };
 
-  const refUrl = 'org/allData?id=';
-
-  const treeSelectChange = (value, label, extra) => {
-    form.setFieldsValue({
-      orgid: `${extra.triggerNode.props.id}`,
-    });
-  };
-
   const handleonchangeckbx = () => {
 
   };
@@ -122,10 +116,10 @@ export default (state) => {
       itemName: '', itemKey: 'state', itemType: 'Checkbox', required: false, list: [{ label: '展示有效岗位', value: 'effectivepos' }, { label: '展示无效岗位  ', value: 'invalidpos' }],
     },
     {
-      itemName: '组织层级', itemKey: 'levelCode', itemType: 'Checkbox', required: false, list: [{ label: '省', value: 's' }, { label: '市', value: 'd' }, { label: '区/县', value: 'x' }],
+      itemName: '组织层级', itemKey: 'levelCode', itemType: 'Checkbox', required: false, list: [{ label: '省', value: '.S' }, { label: '市', value: '.D' }, { label: '区/县', value: '.X' }],
     },
     {
-      itemName: '是否核心', itemKey: 'coreFlag', itemType: 'Select', required: false, list: [{ id: 'Y', title: '是' }, { id: 'N', title: '否' }],
+      itemName: '是否核心', itemKey: 'coreFlag', itemType: 'Select', required: false, list: [{ id: '是', title: '是' }, { id: '否', title: '否' }],
     },
     {
       itemName: '学历要求', itemKey: 'educationDegree', itemType: 'MenSelect', required: false, list: [],
@@ -222,24 +216,9 @@ export default (state) => {
           <Col span={6} key={i} style={{ display: i < count ? 'block' : 'none' }}>
             <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
               {getFieldDecorator('levelCode', {
-                initialValue: 's,d,x',
+                initialValue: ['.S', '.D', '.X', 'effectivepos'],
               })(
                 <CheckboxGroup options={queryCols[i].list} onChange={handleonchangeckbx} />,
-              )}
-            </FormItem>
-          </Col>,
-        );
-      } else if (queryCols[i].itemType === 'OrgSelect') {
-        children.push(
-          <Col span={6} key={i} style={{ display: 'block' }}>
-            <FormItem label={queryCols[i].itemName} labelCol={{ span: 6 }}>
-              {getFieldDecorator(queryCols[i].itemKey)(
-                <SyncTreeSelect
-                  treeId={37838}
-                  treeSelectChange={treeSelectChange}
-                  refUrl={refUrl}
-                  checkbox
-                />,
               )}
             </FormItem>
           </Col>,

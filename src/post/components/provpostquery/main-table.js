@@ -47,6 +47,17 @@ export default ({
       }
     });
   };
+  const translateTime = (time) => { // 将毫秒转换为年月日时分秒
+    if (!time) {
+      return '';
+    } else {
+      const date = new Date(time);// 时间戳为10位需*1000，时间戳为13位的话不需乘1000
+      const Y = `${date.getFullYear()}-`;
+      const M = `${date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1}-`;
+      const D = `${date.getDate() + 1 < 10 ? `0${date.getDate() + 1}` : date.getDate() + 1}`;
+      return Y + M + D;
+    }
+  };
   const handleExportProvPos = () => {
     form.validateFields((err, values) => {
       if (!err) {
@@ -55,7 +66,7 @@ export default ({
         const select = {
           ...values, recordNum, currentPageNum,
         };
-        let expUrl = `${config.api}/posJposV/outExl?currentPageNum=${select.currentPageNum}&recordNum=${select.recordNum}`;
+        let expUrl = `${config.api}/PosElementStructure/exportRespsInfo?1=1`;
         if (select.posCateId && select.posCateId !== '') {
           expUrl += `&posCateId=${select.posCateId}`;
         }
@@ -103,49 +114,52 @@ export default ({
     dataIndex: 'parentPosName',
     key: 'parentPosName',
     align: 'center',
-    width: 150,
+    width: '15%',
   }, {
     title: '省基准岗位名称',
     dataIndex: 'posName',
     key: 'posName',
     align: 'center',
-    width: 150,
+    width: '15%',
   }, {
     title: '所属子序列',
     dataIndex: 'sname',
     key: 'sname',
     align: 'center',
-    width: 150,
+    width: '10%',
   }, {
     title: '组织层级',
     dataIndex: 'orgLevel',
     key: 'levelCode',
     align: 'center',
-    width: 150,
+    width: '10%',
   }, {
     title: '是否核心',
     dataIndex: 'coreFlag',
     key: 'coreFlag',
     align: 'center',
-    width: 150,
+    width: '10%',
   }, {
     title: '学历要求',
     dataIndex: 'educationDegree',
     key: 'educationDegree',
     align: 'center',
-    width: 150,
+    width: '10%',
   }, {
     title: '开始日期',
     dataIndex: 'activeStartDate',
     key: 'activeStartDate',
     align: 'center',
-    width: 150,
+    width: '10%',
+    render: (text, tags) => {
+      return translateTime(tags.activeStartDate);
+    },
   }, {
     title: '结束日期',
     dataIndex: 'activeEndDate',
     key: 'activeEndDate',
     align: 'center',
-    width: 150,
+    width: '10%',
   },];
   function getFields() {
     const children = [];
@@ -196,6 +210,7 @@ export default ({
         size="small"
         scroll={{ y: document.body.scrollHeight - 460 }}
         style={{ marginTop: '10px' }}
+        bordered
       />
       <Pagination
         showQuickJumper

@@ -20,11 +20,12 @@ export default ({
     dataIndex: 'key',
     key: 'key',
     align: 'center',
-    width: 150,
+    width: '10%',
   }, {
     title: '主要岗位职责',
     dataIndex: 'kstr',
     key: 'kstr',
+    width: '90%',
   }];
   return (
     <div>
@@ -111,7 +112,7 @@ export default ({
           <Col span={8} style={{ display: 'block' }}>
             <FormItem label="有效开始日期" labelCol={{ span: 8 }}>
               {getFieldDecorator('activeStartDate', {
-                initialValue: record.activeStartDate ? moment(record.activeStartDate, 'YYYY/MM/DD') : moment(),
+                initialValue: record.activeStartDatePage ? moment(record.activeStartDatePage, 'YYYY/MM/DD') : moment(),
               })(
                 <DatePicker disabled={!formEdit} style={{ width: 220, marginLeft: 5, marginRight: 20 }} />,
               )}
@@ -120,7 +121,7 @@ export default ({
           <Col span={8} style={{ display: 'block' }}>
             <FormItem label="有效结束日期" labelCol={{ span: 8 }}>
               {getFieldDecorator('activeEndDate', {
-                initialValue: record.activeEndDate ? moment(record.activeEndDate, 'YYYY/MM/DD') : '',
+                initialValue: record.activeEndDatePage ? moment(record.activeEndDatePage, 'YYYY/MM/DD') : '',
               })(
                 <DatePicker disabled={!formEdit} style={{ width: 220, marginLeft: 5, marginRight: 20 }} />,
               )}
@@ -128,7 +129,7 @@ export default ({
           </Col>
         </Row>
       </Form>
-      <Table columns={columns} loading={loading} dataSource={record.attachData} pagination={false} size="small" scroll={{ y: document.body.scrollHeight - 460 }} style={{ marginTop: 10 }} />
+      <Table columns={columns} loading={loading} bordered dataSource={record.attachData} pagination={false} size="small" scroll={{ y: document.body.scrollHeight - 460 }} style={{ marginTop: 10 }} />
     </div>
   );
 };

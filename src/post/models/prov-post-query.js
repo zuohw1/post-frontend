@@ -140,7 +140,7 @@ export default {
         if (pathname === '/post/provPostQuery') {
           dispatch({
             type: 'fetch',
-            payload: { search: { currentPageNum: 1, recordNum: 10, levelCode: 's' } },
+            payload: { search: { currentPageNum: 1, recordNum: 10, levelCode: '.S.D.X' } },
           });
         }
       });

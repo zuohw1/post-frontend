@@ -2,7 +2,7 @@ import request from '../../utils/request';
 
 export default {
   list(search) {
-    let url = `posJposV/Poslist?levelCode=s&currentPageNum=${search.currentPageNum}&recordNum=${search.recordNum}`;
+    let url = `posJposV/Poslist?levelCode=.S.D.X&currentPageNum=${search.currentPageNum}&recordNum=${search.recordNum}`;
     if (search.posCateId && search.posCateId !== '') {
       url += `&posCateId=${search.posCateId}`;
     }
@@ -12,11 +12,11 @@ export default {
     if (search.posName && search.posName !== '') {
       url += `&posName=${search.posName}`;
     }
-    if (search.state && search.state !== '') {
-      url += `&state=${search.state}`;
-    }
     if (search.levelCode && search.levelCode !== '') {
       url += `&levelCode=${search.levelCode}`;
+    }
+    if (search.state && search.state !== '') {
+      url += `&state=${search.state}`;
     }
     if (search.coreFlag && search.coreFlag !== '') {
       url += `&coreFlag=${search.coreFlag}`;
